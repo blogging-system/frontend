@@ -7,7 +7,7 @@ export default function Dashboard() {
 			<div className='dashboard_item_left'>
 				<Sidebar />
 			</div>
-			<div className='dashboard_item_right'></div>
+			<div className='dashboard_item_right'>From dashboard overview</div>
 		</div>
 	);
 }
