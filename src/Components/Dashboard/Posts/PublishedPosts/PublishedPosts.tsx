@@ -36,6 +36,7 @@ export default  function PublishedPosts() {
 					list={publishedPosts}
 					totalCount={totalCount}
 					is_posts={true}
+					is_published={true}
 				/>
 			</div>
 		</div>

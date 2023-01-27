@@ -2,7 +2,13 @@ import { useRouter } from "next/router";
 import styles from "./List.module.css";
 import Link from "next/link";
 
-export default function List({ list, title, totalCount, is_posts }: any) {
+export default function List({
+	list,
+	title,
+	totalCount,
+	is_posts,
+	is_published,
+}: any) {
 	const router = useRouter();
 
 	const limit = process.env.NEXT_PUBLIC_LIST_LIMIT,
@@ -48,7 +54,11 @@ export default function List({ list, title, totalCount, is_posts }: any) {
 				{current && current > 1 && (
 					<Link
 						href={
-							is_posts ? `/dashboard/posts/published/page/${previous}` : `/`
+							is_posts
+								? `/dashboard/posts/${
+										is_published ? "published" : "unpublished"
+								  }/page/${previous}`
+								: `/`
 						}
 						className={styles.list_pagination_item}
 					>
@@ -58,7 +68,13 @@ export default function List({ list, title, totalCount, is_posts }: any) {
 
 				{current && current > 1 && (
 					<Link
-						href={is_posts ? `/dashboard/posts/published/page/${current}` : `/`}
+						href={
+							is_posts
+								? `/dashboard/posts/${
+										is_published ? "published" : "unpublished"
+								  }/page/${current}`
+								: `/`
+						}
 						className={`${styles.list_pagination_item} ${styles.list_pagination_item_current}`}
 					>
 						{current}
@@ -67,7 +83,13 @@ export default function List({ list, title, totalCount, is_posts }: any) {
 
 				{next && next <= maxPage && (
 					<Link
-						href={is_posts ? `/dashboard/posts/published/page/${next}` : `/`}
+						href={
+							is_posts
+								? `/dashboard/posts/${
+										is_published ? "published" : "unpublished"
+								  }/page/${next}`
+								: `/`
+						}
 						className={styles.list_pagination_item}
 					>
 						Next Page

@@ -23,3 +23,17 @@ export const GET_PUBLISHED_POSTS = gql`
 		}
 	}
 `;
+
+export const GET_UNPUBLISHED_POSTS = gql`
+	query GET_UNPUBLISHED_POSTS($page: Int) {
+		getUnPublishedPosts(data: { page: $page }) {
+			posts {
+				_id
+				title
+				slug
+				views
+			}
+			totalCount
+		}
+	}
+`;
