@@ -1,1 +1,2 @@
-deleted those shit from here
+- [Take a look here to learn toast]('https://youtu.be/cOJTshh56Zc')
+- react-toastify is amazing take a a look there too!

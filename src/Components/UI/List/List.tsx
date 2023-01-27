@@ -33,6 +33,14 @@ export default function List({
 						</Link>
 
 						<div className={styles.list_item_buttons}>
+							{!is_published && (
+								<Link
+									href={`/dashboard/posts/publish${listItem._id}`}
+									className={styles.list_item_button}
+								>
+									Publish
+								</Link>
+							)}
 							<Link
 								href={`/dashboard/posts/${listItem.slug}`}
 								className={styles.list_item_button}

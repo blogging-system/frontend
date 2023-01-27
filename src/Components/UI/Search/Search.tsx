@@ -22,7 +22,7 @@ export default function SearchInput({ query, is_posts }: any) {
 		variables: {
 			title: searchValue,
 		},
-		onCompleted: (data) => {
+		onCompleted: async (data) => {
 			const list = is_posts ? data?.getPostByTitle : data?.getSeriesByTitle;
 
 			if (list?.length > 0) {

@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const GET_POST_BY_TITLE = gql`
-	query GET_POST_BY_TITLE($title: String) {
+	query GET_POST_BY_TITLE($title: String!) {
 		getPostByTitle(data: { title: $title }) {
 			_id
 			title
