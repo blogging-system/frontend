@@ -7,16 +7,19 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { useMutation } from "@apollo/client";
-import { Create_POST } from "@/GraphQL/Posts/Posts.mutations";
+import { Create_POST, UPDATE_POST } from "@/GraphQL/Posts/Posts.mutations";
 import * as Yup from "yup";
 
-export default function CreatePost() {
+export default function CreatePost({ post }: any) {
 	const router = useRouter();
+	const query = post ? UPDATE_POST : Create_POST;
 
-	const [createPost, { loading, data, error }] = useMutation(Create_POST, {
+	const [createPost, { loading, data, error }] = useMutation(query, {
 		onCompleted: async (data) => {
-			router.push(`/dashboard/posts/${data.createPost.slug}`);
-			toast.success("Post Created Successfully");
+			post
+				? router.push(`/dashboard/posts/${data.updatePost.slug}`)
+				: router.push(`/dashboard/posts/${data.createPost.slug}`);
+			toast.success(`Post ${post ? "Updated" : "Created"} Successfully`);
 		},
 
 		onError: async (error) => {
@@ -35,12 +38,18 @@ export default function CreatePost() {
 
 	const formik = useFormik({
 		initialValues: {
-			title: "",
-			description: "",
-			content: "",
-			tags: "",
-			keywords: "",
-			imageUrl: "",
+			title: post ? post.title : "",
+			description: post && post?.description ? post.description : "",
+			content: post && post?.content ? post.content : "",
+			tags:
+				post && post?.tags
+					? post.tags.map((tag: any) => (tag = tag.name)).join("-")
+					: "",
+			keywords:
+				post && post?.keywords
+					? post.keywords.toString().split(",").join("-")
+					: "",
+			imageUrl: post && post?.imageUrl ? post.imageUrl : "",
 		},
 		validationSchema: Yup.object({
 			title: Yup.string().required("Title Field is required"),
@@ -56,9 +65,12 @@ export default function CreatePost() {
 					title: values.title,
 					description: values.description,
 					content: values.content,
-					tags: values.tags.split("-"),
+					tags: post
+						? values.tags.split("-").join("-")
+						: values.tags.split("-"),
 					keywords: values.keywords.split("-"),
 					imageUrl: values.imageUrl,
+					_id: post && post._id,
 				},
 			});
 		},
@@ -70,7 +82,9 @@ export default function CreatePost() {
 				<Sidebar />
 			</div>
 			<div className="dashboard_item_right">
-				<h2 className={styles.title}>Create New Post:</h2>
+				<h2 className={styles.title}>
+					{post ? "Update Post:" : "Create New Post:"}
+				</h2>
 
 				<form className={styles.form} onSubmit={formik.handleSubmit}>
 					<input
@@ -84,7 +98,9 @@ export default function CreatePost() {
 					/>
 
 					{formik.touched.title && formik.errors.title && (
-						<p className={styles.validation_errors}>{formik.errors.title}</p>
+						<p
+							className={styles.validation_errors}
+						>{`${formik.errors.title}`}</p>
 					)}
 
 					<textarea
@@ -100,7 +116,7 @@ export default function CreatePost() {
 
 					{formik.touched.description && formik.errors.description && (
 						<p className={styles.validation_errors}>
-							{formik.errors.description}
+							{`${formik.errors.description}`}
 						</p>
 					)}
 
@@ -116,7 +132,9 @@ export default function CreatePost() {
 					/>
 
 					{formik.touched.content && formik.errors.content && (
-						<p className={styles.validation_errors}>{formik.errors.content}</p>
+						<p
+							className={styles.validation_errors}
+						>{`${formik.errors.content}`}</p>
 					)}
 
 					<input
@@ -130,7 +148,9 @@ export default function CreatePost() {
 					/>
 
 					{formik.touched.tags && formik.errors.tags && (
-						<p className={styles.validation_errors}>{formik.errors.tags}</p>
+						<p
+							className={styles.validation_errors}
+						>{`${formik.errors.tags}`}</p>
 					)}
 
 					<input
@@ -144,7 +164,9 @@ export default function CreatePost() {
 					/>
 
 					{formik.touched.keywords && formik.errors.keywords && (
-						<p className={styles.validation_errors}>{formik.errors.keywords}</p>
+						<p
+							className={styles.validation_errors}
+						>{`${formik.errors.keywords}`}</p>
 					)}
 
 					<input
@@ -158,14 +180,16 @@ export default function CreatePost() {
 					/>
 
 					{formik.touched.imageUrl && formik.errors.imageUrl && (
-						<p className={styles.validation_errors}>{formik.errors.imageUrl}</p>
+						<p
+							className={styles.validation_errors}
+						>{`${formik.errors.imageUrl}`}</p>
 					)}
 
 					<button
 						className={`${styles.content_item} ${styles.button}`}
 						type="submit"
 					>
-						Create Post
+						{post ? "Update Post" : "Create Post"}
 					</button>
 				</form>
 			</div>

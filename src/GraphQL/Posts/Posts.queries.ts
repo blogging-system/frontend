@@ -37,3 +37,20 @@ export const GET_UNPUBLISHED_POSTS = gql`
 		}
 	}
 `;
+
+export const GET_POST_BY_SLUG = gql`
+	query GET_POST_BY_SLUG($slug: String!) {
+		getPostBySlug(data: { slug: $slug }) {
+			_id
+			title
+			description
+			content
+			tags {
+				_id
+				name
+			}
+			keywords
+			imageUrl
+		}
+	}
+`;

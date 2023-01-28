@@ -42,7 +42,7 @@ export default function List({
 								</Link>
 							)}
 							<Link
-								href={`/dashboard/posts/${listItem.slug}`}
+								href={`/dashboard/posts/update/${listItem.slug}`}
 								className={styles.list_item_button}
 							>
 								Edit
