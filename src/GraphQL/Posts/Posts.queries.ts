@@ -54,3 +54,14 @@ export const GET_POST_BY_SLUG = gql`
 		}
 	}
 `;
+
+export const GET_LATEST_POSTS = gql`
+	query GET_LATEST_POSTS {
+		getLatestPosts {
+			_id
+			title
+			slug
+			views
+		}
+	}
+`;

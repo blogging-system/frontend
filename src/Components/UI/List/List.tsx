@@ -23,43 +23,44 @@ export default function List({
 		<section className={styles.list_wrapper}>
 			<h2 className={styles.list_title}>{title} </h2>
 			<div className={styles.list}>
-				{list.map((listItem: any) => (
-					<div className={styles.list_item} key={listItem._id}>
-						<Link
-							className={styles.list_item_title}
-							href={`/dashboard/posts/${listItem.slug}`}
-						>
-							{listItem.title}
-						</Link>
+				{list &&
+					list.map((listItem: any) => (
+						<div className={styles.list_item} key={listItem._id}>
+							<Link
+								className={styles.list_item_title}
+								href={`/dashboard/posts/${listItem.slug}`}
+							>
+								{listItem.title}
+							</Link>
 
-						<div className={styles.list_item_buttons}>
-							{!is_published && (
+							<div className={styles.list_item_buttons}>
+								{!is_published && (
+									<Link
+										href={`/dashboard/posts/publish${listItem._id}`}
+										className={styles.list_item_button}
+									>
+										Publish
+									</Link>
+								)}
 								<Link
-									href={`/dashboard/posts/publish${listItem._id}`}
+									href={`/dashboard/posts/update/${listItem.slug}`}
 									className={styles.list_item_button}
 								>
-									Publish
+									Edit
 								</Link>
-							)}
-							<Link
-								href={`/dashboard/posts/update/${listItem.slug}`}
-								className={styles.list_item_button}
-							>
-								Edit
-							</Link>
-							<Link
-								href={`/dashboard/posts/${listItem.slug}`}
-								className={styles.list_item_button}
-							>
-								Delete
-							</Link>
+								<Link
+									href={`/dashboard/posts/${listItem.slug}`}
+									className={styles.list_item_button}
+								>
+									Delete
+								</Link>
+							</div>
 						</div>
-					</div>
-				))}
+					))}
 			</div>
 
 			<section className={styles.list_pagination_section}>
-				{current && current > 1 && (
+				{!isNaN(current) && current > 1 && (
 					<Link
 						href={
 							is_posts
@@ -74,7 +75,7 @@ export default function List({
 					</Link>
 				)}
 
-				{current && current > 1 && (
+				{!isNaN(current) && current > 1 && (
 					<Link
 						href={
 							is_posts
@@ -89,7 +90,7 @@ export default function List({
 					</Link>
 				)}
 
-				{next && next <= maxPage && (
+				{!isNaN(next) && next <= maxPage && (
 					<Link
 						href={
 							is_posts

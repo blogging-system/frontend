@@ -9,7 +9,7 @@
 
 .list {
 	width: 95%;
-	height: 71vh;
+	height: auto;
 	margin: auto;
 	border: 2px solid var(--border-color);
 	border-radius: 5px;
