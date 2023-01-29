@@ -4,6 +4,7 @@ import { GET_PUBLISHED_POSTS } from "@/GraphQL/Posts/Posts.queries";
 import { useQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import ButtonsSection from "../PostsButtons/PostsButtons";
 
 export default  function PublishedPosts() {
 	const router = useRouter();
@@ -31,6 +32,7 @@ export default  function PublishedPosts() {
 				<Sidebar />
 			</div>
 			<div className="dashboard_item_right">
+				<ButtonsSection/>
 				<List
 					title="Published Posts:"
 					list={publishedPosts}

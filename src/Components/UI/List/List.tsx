@@ -1,6 +1,12 @@
 import { useRouter } from "next/router";
 import styles from "./List.module.css";
 import Link from "next/link";
+import { useMutation } from "@apollo/client";
+import { PUBLISH_POST } from "@/GraphQL/Posts/Posts.mutations";
+import { useEffect, useState } from "react";
+
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function List({
 	list,
@@ -9,6 +15,7 @@ export default function List({
 	is_posts,
 	is_published,
 }: any) {
+	const [postId, setPostId] = useState("");
 	const router = useRouter();
 
 	const limit = process.env.NEXT_PUBLIC_LIST_LIMIT,
@@ -18,6 +25,30 @@ export default function List({
 	const current = +page,
 		previous = current - 1,
 		next = current + 1;
+
+	const [publishPost] = useMutation(PUBLISH_POST, {
+		onCompleted: (data) => {
+			toast.success(data.publishPost.message);
+			router.push(`/dashboard/posts/published/page/1`);
+		},
+
+		onError: (error: any) => {
+			toast.error(error.message);
+		},
+	});
+
+	useEffect(() => {
+		const HandlePublishPost = () => {
+			if (postId) {
+				publishPost({
+					variables: {
+						postId: postId,
+					},
+				});
+			}
+		};
+		HandlePublishPost();
+	}, [publishPost, postId]);
 
 	return (
 		<section className={styles.list_wrapper}>
@@ -35,12 +66,12 @@ export default function List({
 
 							<div className={styles.list_item_buttons}>
 								{!is_published && (
-									<Link
-										href={`/dashboard/posts/publish${listItem._id}`}
+									<div
 										className={styles.list_item_button}
+										onClick={() => setPostId(listItem._id.toString())}
 									>
 										Publish
-									</Link>
+									</div>
 								)}
 								<Link
 									href={`/dashboard/posts/update/${listItem.slug}`}

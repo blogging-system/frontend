@@ -5,6 +5,7 @@ import { GET_LATEST_POSTS } from "@/GraphQL/Posts/Posts.queries";
 
 import List from "@/Components/UI/List/List";
 import Sidebar from "@/Layouts/Sidebar/Sidebar";
+import ButtonsSection from "../PostsButtons/PostsButtons";
 
 export default function LatestPosts() {
 	const [latestPosts, setLatestPosts] = useState([]);
@@ -24,7 +25,13 @@ export default function LatestPosts() {
 				<Sidebar />
 			</div>
 			<div className="dashboard_item_right">
-				<List title="Latest Posts:" list={latestPosts} />
+				<ButtonsSection />
+				<List
+					title="Latest Posts:"
+					list={latestPosts}
+					is_posts={true}
+					is_published={true}
+				/>
 			</div>
 		</div>
 	);

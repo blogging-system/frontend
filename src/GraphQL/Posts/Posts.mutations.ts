@@ -27,7 +27,7 @@ export const Create_POST = gql`
 
 export const UPDATE_POST = gql`
 	mutation UPDATE_POST(
-        $_id: ID!
+		$_id: ID!
 		$title: String
 		$description: String
 		$content: String
@@ -37,7 +37,7 @@ export const UPDATE_POST = gql`
 	) {
 		updatePost(
 			data: {
-                _id: $_id
+				_id: $_id
 				title: $title
 				description: $description
 				content: $content
@@ -48,6 +48,15 @@ export const UPDATE_POST = gql`
 		) {
 			_id
 			slug
+		}
+	}
+`;
+
+export const PUBLISH_POST = gql`
+	mutation PUBLISH_POST($postId: ID!) {
+		publishPost(data: { postId: $postId }) {
+			success
+			message
 		}
 	}
 `;

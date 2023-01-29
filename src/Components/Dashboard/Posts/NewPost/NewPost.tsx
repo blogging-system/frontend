@@ -9,6 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useMutation } from "@apollo/client";
 import { Create_POST, UPDATE_POST } from "@/GraphQL/Posts/Posts.mutations";
 import * as Yup from "yup";
+import ButtonsSection from "../PostsButtons/PostsButtons";
 
 export default function CreatePost({ post }: any) {
 	const router = useRouter();
@@ -82,6 +83,7 @@ export default function CreatePost({ post }: any) {
 				<Sidebar />
 			</div>
 			<div className="dashboard_item_right">
+				<ButtonsSection />
 				<h2 className={styles.title}>
 					{post ? "Update Post:" : "Create New Post:"}
 				</h2>

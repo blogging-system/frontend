@@ -1,10 +1,11 @@
 import Sidebar from "@/Layouts/Sidebar/Sidebar";
 import List from "@/Components/UI/List/List";
 
-import { useQuery } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import { GET_UNPUBLISHED_POSTS } from "@/GraphQL/Posts/Posts.queries";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import ButtonsSection from "../PostsButtons/PostsButtons";
 
 export default function UnpublishedPosts() {
 	const router = useRouter();
@@ -25,12 +26,15 @@ export default function UnpublishedPosts() {
 			console.log(error);
 		},
 	});
+
+
 	return (
 		<div className="dashboard_wrapper">
 			<div className="dashboard_item_left">
 				<Sidebar />
 			</div>
 			<div className="dashboard_item_right">
+				<ButtonsSection />
 				<List
 					title="Un Published Posts:"
 					list={unPublishedPosts}
