@@ -60,3 +60,13 @@ export const PUBLISH_POST = gql`
 		}
 	}
 `;
+
+export const DELETE_POST = gql`
+	mutation DELETE_POST($postId: ID!) {
+		deletePost(data: { postId: $postId }) {
+			success
+			message
+		}
+	}
+`;
+

@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import styles from "./List.module.css";
 import Link from "next/link";
 import { useMutation } from "@apollo/client";
-import { PUBLISH_POST } from "@/GraphQL/Posts/Posts.mutations";
+import { PUBLISH_POST, DELETE_POST } from "@/GraphQL/Posts/Posts.mutations";
 import { useEffect, useState } from "react";
 
 import { toast } from "react-toastify";
@@ -15,7 +15,10 @@ export default function List({
 	is_posts,
 	is_published,
 }: any) {
-	const [postId, setPostId] = useState("");
+	const [postIdForPublish, setPostIdForPublish] = useState("");
+	const [postIdForDelete, setPostIdForDelete] = useState("");
+	const [errorMessage, setErrorMessage] = useState("");
+
 	const router = useRouter();
 
 	const limit = process.env.NEXT_PUBLIC_LIST_LIMIT,
@@ -28,27 +31,56 @@ export default function List({
 
 	const [publishPost] = useMutation(PUBLISH_POST, {
 		onCompleted: (data) => {
+			setPostIdForPublish("");
 			toast.success(data.publishPost.message);
-			router.push(`/dashboard/posts/published/page/1`);
 		},
 
 		onError: (error: any) => {
-			toast.error(error.message);
+			setErrorMessage(error.message);
+			if (errorMessage) {
+				toast.error(errorMessage);
+			}
+		},
+	});
+
+	const [deletePost] = useMutation(DELETE_POST, {
+		onCompleted: (data) => {
+			setPostIdForDelete("");
+			toast.success(data.deletePost.message);
+		},
+
+		onError: (error: any) => {
+			setErrorMessage(error.message);
+			if (errorMessage) {
+				toast.error(errorMessage);
+			}
 		},
 	});
 
 	useEffect(() => {
 		const HandlePublishPost = () => {
-			if (postId) {
+			if (postIdForPublish) {
 				publishPost({
 					variables: {
-						postId: postId,
+						postId: postIdForPublish,
 					},
 				});
 			}
 		};
+
+		const HandleDeletePost = () => {
+			if (postIdForDelete) {
+				deletePost({
+					variables: {
+						postId: postIdForDelete,
+					},
+				});
+			}
+		};
+
 		HandlePublishPost();
-	}, [publishPost, postId]);
+		HandleDeletePost();
+	}, [publishPost, postIdForPublish, deletePost, postIdForDelete]);
 
 	return (
 		<section className={styles.list_wrapper}>
@@ -68,7 +100,7 @@ export default function List({
 								{!is_published && (
 									<div
 										className={styles.list_item_button}
-										onClick={() => setPostId(listItem._id.toString())}
+										onClick={() => setPostIdForPublish(listItem._id.toString())}
 									>
 										Publish
 									</div>
@@ -79,12 +111,12 @@ export default function List({
 								>
 									Edit
 								</Link>
-								<Link
-									href={`/dashboard/posts/${listItem.slug}`}
+								<div
 									className={styles.list_item_button}
+									onClick={() => setPostIdForDelete(listItem._id)}
 								>
 									Delete
-								</Link>
+								</div>
 							</div>
 						</div>
 					))}

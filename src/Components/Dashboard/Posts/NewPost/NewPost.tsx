@@ -16,14 +16,14 @@ export default function CreatePost({ post }: any) {
 	const query = post ? UPDATE_POST : Create_POST;
 
 	const [createPost, { loading, data, error }] = useMutation(query, {
-		onCompleted: async (data) => {
+		onCompleted: (data) => {
 			post
 				? router.push(`/dashboard/posts/${data.updatePost.slug}`)
 				: router.push(`/dashboard/posts/${data.createPost.slug}`);
 			toast.success(`Post ${post ? "Updated" : "Created"} Successfully`);
 		},
 
-		onError: async (error) => {
+		onError: (error) => {
 			toast.error(error.message, {
 				position: "top-right",
 				autoClose: 5000,
@@ -60,6 +60,7 @@ export default function CreatePost({ post }: any) {
 			keywords: Yup.string().required("Keywords Field is required"),
 			imageUrl: Yup.string().url().required("Image Url Field is required"),
 		}),
+		
 		onSubmit: async (values) => {
 			createPost({
 				variables: {
