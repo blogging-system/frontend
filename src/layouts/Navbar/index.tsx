@@ -4,31 +4,33 @@ export default function Navbar() {
 	return (
 		<div className={styles.navbar_container}>
 			<nav className={styles.navbar}>
-				<a href="/" className={styles.navbar_logo}>
+				<a href="/dashboard" className={styles.navbar_logo}>
 					<span className={styles.navbar_tag}>{"<"}</span>
 					<span className={styles.navbar_title}>Ahmed Elgaidi</span>
 					<span className={styles.navbar_tag}>{"/>"}</span>
 				</a>
 				<ul className={styles.navbar_items}>
 					<li className={styles.navbar_item}>
-						<a className={styles.navbar_item_link} href="/posts">
+						<a className={styles.navbar_item_link} href="/dashboard/posts">
 							Posts
 						</a>
 					</li>
 					<li className={styles.navbar_item}>
-						<a className={styles.navbar_item_link} href="/series">
+						<a className={styles.navbar_item_link} href="/dashboard/series">
 							Series
 						</a>
 					</li>
 					<li className={styles.navbar_item}>
-						<a className={styles.navbar_item_link} href="/walkthroughs">
+						<a className={styles.navbar_item_link} href="/dashboard/walkthroughs">
 							Walkthroughs
 						</a>
 					</li>
 				</ul>
-				<a href="/logout">
-					<p className={styles.navbar_logout}>Log Out</p>
-				</a>
+				<div>
+					<a href="/logout" className={styles.navbar_logout}>
+						Log Out
+					</a>
+				</div>
 			</nav>
 		</div>
 	);
