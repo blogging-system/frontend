@@ -3,6 +3,7 @@ import styles from "./index.module.css";
 import Sidebar from "@/layouts/SideBar";
 
 const links = [
+	{ label: "Home", url: "/dashboard/posts" },
 	{ label: "New Post", url: "/dashboard/posts/new" },
 	{ label: "LatestPosts", url: "/dashboard/posts/latest" },
 	{ label: "Trending Posts", url: "/dashboard/posts/trending" },

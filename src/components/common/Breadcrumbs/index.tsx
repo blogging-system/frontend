@@ -24,9 +24,12 @@ export default function Breadcrumbs() {
 				`;
 				const linkPath = `/${lowerCasedPaths.slice(0, index + 1).join("/")}`;
 
+				// This line is just for making sure the "/" is not orange at last segment
+				const content = index === lastIndex - 1 ? ` / ${segment} /` : index === lastIndex ? segment : `/ ${segment}`;
+
 				return (
 					<a key={index} className={breadcrumbClasses} href={linkPath}>
-						/ {segment}
+						{content}
 					</a>
 				);
 			})}
