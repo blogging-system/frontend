@@ -19,6 +19,8 @@
 	color: #903101e6;
 	font-weight: 900;
 	cursor: pointer;
+	overflow: hidden;
+	white-space: nowrap;
 }
 
 .sidebar_item:hover,
