@@ -1,17 +1,8 @@
-import React from "react"; // Don't forget to import React
+import React from "react";
 import styles from "./index.module.css";
+import { ISidebar } from "./index.types";
 
-const links = [
-	{ label: "New Post", url: "/dashboard/posts/new" },
-	{ label: "LatestPosts", url: "/dashboard/posts/latest" },
-	{ label: "Trending Posts", url: "/dashboard/posts/trending" },
-	{ label: "Popular Posts", url: "/dashboard/posts/popular" },
-	{ label: "Unpopular Posts", url: "/dashboard/posts/unpopular" },
-	{ label: "Published Posts", url: "/dashboard/posts/published" },
-	{ label: "Unpublished Posts", url: "/dashboard/posts/unpublished" },
-];
-
-export default function Sidebar({}) {
+export default function Sidebar({ links }: ISidebar) {
 	return (
 		<div className={styles.sidebar_container}>
 			{links.map((el, i) => (
