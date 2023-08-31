@@ -1,0 +1,23 @@
+* {
+	-webkit-text-size-adjust: none;
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+	font-family: "PT Sans", "Calibri", Tahoma, sans-serif;
+	*:focus {
+		outline: none;
+	}
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+a {
+	text-decoration: none;
+	cursor: pointer;
+}
+
+ul {
+	list-style: none;
+}
