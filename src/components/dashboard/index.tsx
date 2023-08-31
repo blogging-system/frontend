@@ -16,8 +16,10 @@ export default function Dashboard() {
 	return (
 		<div className={styles.dashboard_container}>
 			<Breadcrumbs />
-			<Sidebar links={links} />
-			<div className={styles.dashboard_main}></div>
+			<div className={styles.dashboard_main}>
+				<Sidebar links={links} />
+				<div className={styles.dashboard_content}></div>
+			</div>
 		</div>
 	);
 }

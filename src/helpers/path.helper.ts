@@ -7,9 +7,9 @@ export class PathHelper {
 	 * Words are determined by segments separated by '/'.
 	 *
 	 * @param url - The URL path to be capitalized.
-	 * @returns A new URL path with the first letter of each word capitalized.
+	 * @returns An array containing the capitalized versions of the segments.
 	 */
-	static capitalizePath(url: string): string {
+	static capitalizePath(url: string): string[] {
 		const parts = url.split("/").filter((part) => part !== "");
 
 		const capitalizedParts = parts.map((part) => {
@@ -20,6 +20,23 @@ export class PathHelper {
 			}
 		});
 
-		return "/" + capitalizedParts.join(" / ");
+		return capitalizedParts;
+	}
+
+	/**
+	 * Converts each segment of the URL path to lowercase.
+	 * Words are determined by segments separated by '/'.
+	 *
+	 * @param url - The URL path to be converted to lowercase.
+	 * @returns An array containing the lowercase versions of the segments.
+	 */
+	static lowercasePath(url: string): string[] {
+		const parts = url.split("/").filter((part) => part !== "");
+
+		const lowercaseParts = parts.map((part) => {
+			return part.toLowerCase();
+		});
+
+		return lowercaseParts;
 	}
 }

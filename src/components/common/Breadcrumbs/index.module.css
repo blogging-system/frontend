@@ -1,0 +1,16 @@
+.breadcrumbs_paths {
+	display: flex;
+	margin-left: 35px;
+	padding: 30px 0;
+}
+
+.breadcrumbs_path {
+	padding: 5px;
+
+	font-weight: 900;
+	color: #903101e6;
+}
+
+.breadcrumbs_path_last {
+	color: #ed9f09;
+}
