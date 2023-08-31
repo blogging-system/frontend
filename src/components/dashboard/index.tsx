@@ -1,3 +1,4 @@
+import Breadcrumbs from "../common/Breadcrumbs";
 import styles from "./index.module.css";
 import Sidebar from "@/layouts/SideBar";
 
@@ -14,6 +15,7 @@ const links = [
 export default function Dashboard() {
 	return (
 		<div className={styles.dashboard_container}>
+			<Breadcrumbs />
 			<Sidebar links={links} />
 			<div className={styles.dashboard_main}></div>
 		</div>
