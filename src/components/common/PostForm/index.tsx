@@ -1,58 +1,45 @@
-import TagsInput from "../TagsInput";
+import TagsInput from "./TagsInput";
+import FormItem from "./FormItem";
 import styles from "./index.module.css";
 
-export default function PostForm({ buttonText = "" }) {
+export default function PostForm({ buttonText = "", type = "" }) {
 	return (
 		<div className={styles.form_wrapper}>
 			<form className={styles.form} onSubmit={(e) => e.preventDefault()}>
-				<div className={styles.form_item}>
-					<label className={styles.form_label} htmlFor="title">
-						Title*
-					</label>
-					<input className={styles.form_input} type="text" name="title" id="" placeholder="Please enter the title" />
-				</div>
-				<div className={styles.form_item}>
-					<label className={styles.form_label} htmlFor="title">
-						Description*
-					</label>
-					<textarea
-						className={styles.form_textarea}
-						rows={3}
+				<FormItem type="text" label="Title*" name="title" placeholder="Please enter the title" />
+
+				<FormItem
+					label="Description*"
+					name="content"
+					placeholder="Please enter the content"
+					type="textarea"
+					rowsNumber={3}
+				/>
+
+				{type === "series" ? (
+					<div className={styles.form_item}>
+						<TagsInput label="Items*" prefix="" />
+					</div>
+				) : (
+					<FormItem
+						label="Content*"
 						name="content"
-						id=""
+						type="textarea"
 						placeholder="Please enter the content"
+						rowsNumber={20}
 					/>
-				</div>
+				)}
+
 				<div className={styles.form_item}>
-					<label className={styles.form_label} htmlFor="title">
-						Content*
-					</label>
-					<textarea
-						className={styles.form_textarea}
-						rows={20}
-						name="content"
-						id=""
-						placeholder="Please enter the content"
-					/>
+					<TagsInput label="Tags*" />
 				</div>
+
 				<div className={styles.form_item}>
-					<TagsInput />
+					<TagsInput label="Keywords*" />
 				</div>
-				<div className={styles.form_item}>
-					<TagsInput label="keywords" prefix="" />
-				</div>
-				<div className={styles.form_item}>
-					<label className={styles.form_label} htmlFor="title">
-						Cover Image URL*
-					</label>
-					<input
-						className={styles.form_input}
-						type="text"
-						name="coverImageUrl"
-						id=""
-						placeholder="Please enter the image URL"
-					/>
-				</div>
+
+				<FormItem type="url" label="Cover Image URL*" name="coverImageUrl" placeholder="Please enter the image URL" />
+
 				<div className={styles.form_button_wrapper}>
 					<button className={styles.form_button}>{buttonText}</button>
 				</div>

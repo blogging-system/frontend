@@ -40,7 +40,7 @@ const seriesLinks = [
 
 export default function Dashboard() {
 	const currentPathName = usePathname();
-	console.log({ currentPathName });
+
 	const sidebarLinks = currentPathName.includes("posts")
 		? postsLinks
 		: currentPathName.includes("series")
@@ -55,9 +55,12 @@ export default function Dashboard() {
 				<div className={styles.dashboard_content}>
 					{currentPathName === "/dashboard/posts/new" && <PostForm buttonText={"Save Post"} />}
 					{currentPathName === "/dashboard/posts/update" && <PostForm buttonText={"Update Post"} />}
-			
+
 					{currentPathName === "/dashboard/walkthroughs/new" && <PostForm buttonText={"Save Walkthrough"} />}
 					{currentPathName === "/dashboard/walkthroughs/update" && <PostForm buttonText={"Update Walkthrough"} />}
+
+					{currentPathName === "/dashboard/series/new" && <PostForm buttonText={"Save Series"} type="series" />}
+					{currentPathName === "/dashboard/series/update" && <PostForm buttonText={"Update Series"} type="series" />}
 				</div>
 			</div>
 		</div>

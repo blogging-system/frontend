@@ -3,7 +3,7 @@ import styles from "./index.module.css";
 import { ITagsInput } from "./index.types";
 import { AiFillCloseCircle } from "react-icons/ai";
 
-export default function TagsInput({ label = "Tags*", prefix = "#" }: ITagsInput) {
+export default function TagsInput({ label = "", prefix = "#" }: ITagsInput) {
 	const [tags, setTags] = useState<string[]>([]);
 
 	const addTagHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
