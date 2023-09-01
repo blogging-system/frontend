@@ -42,7 +42,7 @@ export default function PostForm({ buttonText = "", target = "" }) {
 				</div>
 
 				<div className={styles.form_item}>
-					<TagsInput label="Keywords*" />
+					<TagsInput label="Keywords*" prefix="" />
 				</div>
 
 				<FormItem type="url" label="Cover Image URL*" name="coverImageUrl" placeholder="Please enter the image URL" />
