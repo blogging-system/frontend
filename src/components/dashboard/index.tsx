@@ -5,12 +5,13 @@ import styles from "./index.module.css";
 import Sidebar from "@/layouts/SideBar";
 import PostForm from "../common/PostForm";
 import { sections } from "./index.data";
+import List from "../common/List";
 
 export default function Dashboard() {
 	const currentPathName = usePathname();
 
 	const currentSection = Object.keys(sections).find((section) => currentPathName.includes(section)); // "series", "posts", "walkthroughs"
-	
+
 	if (!currentSection) {
 		return null;
 	}
@@ -32,9 +33,11 @@ export default function Dashboard() {
 				<div className={styles.dashboard_content}>
 					{currentPathName.includes("/new") || currentPathName.includes("/update") ? (
 						<PostForm buttonText={formButtonText} target={target} />
-					) : null}
+					) : (
+						<List />
+					)}
 				</div>
 			</div>
 		</div>
 	);
-}	
+}
