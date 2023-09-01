@@ -3,6 +3,7 @@ import { usePathname } from "next/navigation";
 import Breadcrumbs from "../common/Breadcrumbs";
 import styles from "./index.module.css";
 import Sidebar from "@/layouts/SideBar";
+import PostForm from "../common/PostForm";
 
 const postsLinks = [
 	{ label: "Home", url: "/dashboard/posts" },
@@ -39,7 +40,7 @@ const seriesLinks = [
 
 export default function Dashboard() {
 	const currentPathName = usePathname();
-
+	console.log({ currentPathName });
 	const sidebarLinks = currentPathName.includes("posts")
 		? postsLinks
 		: currentPathName.includes("series")
@@ -51,7 +52,13 @@ export default function Dashboard() {
 			<Breadcrumbs />
 			<div className={styles.dashboard_main}>
 				<Sidebar links={sidebarLinks} />
-				<div className={styles.dashboard_content}></div>
+				<div className={styles.dashboard_content}>
+					{currentPathName === "/dashboard/posts/new" && <PostForm buttonText={"Save Post"} />}
+					{currentPathName === "/dashboard/posts/update" && <PostForm buttonText={"Update Post"} />}
+			
+					{currentPathName === "/dashboard/walkthroughs/new" && <PostForm buttonText={"Save Walkthrough"} />}
+					{currentPathName === "/dashboard/walkthroughs/update" && <PostForm buttonText={"Update Walkthrough"} />}
+				</div>
 			</div>
 		</div>
 	);
