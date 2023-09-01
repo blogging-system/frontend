@@ -8,12 +8,10 @@
 .dashboard_main {
 	display: flex;
 	flex-direction: row;
-	align-items: center;
+	align-items: flex-start;
 	width: 100%;
-	height: 500px;
 }
 
 .dashboard_content {
-	height: 500px;
 	width: 100%;
 }
