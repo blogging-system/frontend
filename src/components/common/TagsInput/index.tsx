@@ -1,5 +1,5 @@
-import "./index.css";
 import { useState } from "react";
+import styles from "./index.module.css";
 import { ITagsInput } from "./index.types";
 
 export default function TagsInput({ label = "Tags*", prefix = "#" }: ITagsInput) {
@@ -16,14 +16,14 @@ export default function TagsInput({ label = "Tags*", prefix = "#" }: ITagsInput)
 	};
 
 	return (
-		<div className="tags_input_wrapper">
-			<label className="tags_input_label" htmlFor="tagsInput">
+		<div className={styles.tags_input_wrapper}>
+			<label className={styles.tags_input_label} htmlFor="tagsInput">
 				{label}
 			</label>
-			<div className="tags_input_items_list">
-				<ul className="tags_input_items">
+			<div className={styles.tags_input_items_list}>
+				<ul className={styles.tags_input_items}>
 					{tags.map((el, i) => (
-						<li className="tags_input_item" key={i}>
+						<li className={styles.tags_input_item} key={i}>
 							{prefix ? prefix + el : el}
 						</li>
 					))}
