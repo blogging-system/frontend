@@ -1,8 +1,15 @@
-import TagsInput from "./TagsInput";
+import TagsInput from "../TagsInput";
 import FormItem from "./FormItem";
 import styles from "./index.module.css";
 
-export default function PostForm({ buttonText = "", type = "" }) {
+/**
+ * PostForm component for rendering a form with various input fields.
+ *
+ * @param {string} [buttonText=""] - The text to display on the submit button.
+ * @param {string} [target=""] - The type of form (e.g., "series").
+ * @returns {JSX.Element} - Rendered component
+ */
+export default function PostForm({ buttonText = "", target = "" }) {
 	return (
 		<div className={styles.form_wrapper}>
 			<form className={styles.form} onSubmit={(e) => e.preventDefault()}>
@@ -16,7 +23,7 @@ export default function PostForm({ buttonText = "", type = "" }) {
 					rowsNumber={3}
 				/>
 
-				{type === "series" ? (
+				{target === "series" ? (
 					<div className={styles.form_item}>
 						<TagsInput label="Items*" prefix="" />
 					</div>
