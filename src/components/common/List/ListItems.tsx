@@ -1,6 +1,15 @@
 import styles from "./index.module.css";
 import { IListItem } from "./index.types";
 
+/**
+ * ListItems component displays a list of items.
+ *
+ * @component
+ * @param {Object} props - The component props.
+ * @param {IListItem[]} props.items - An array of items to display in the list.
+ * @returns {JSX.Element} - A JSX element representing the list of items.
+ */
+
 export default function ListItems({ items }: { items: IListItem[] }) {
 	return (
 		<ul className={styles.list_items}>

@@ -1,6 +1,12 @@
 import styles from "./index.module.css";
 import { BsFillArrowLeftSquareFill, BsFillArrowRightSquareFill } from "react-icons/bs";
 
+/**
+ * ListPagination component displays a pagination control with left and right arrows.
+ *
+ * @component
+ * @returns {JSX.Element} - A JSX element representing the pagination control.
+ */
 export default function ListPagination() {
 	return (
 		<div className={styles.list_pagination}>
