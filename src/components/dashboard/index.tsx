@@ -33,7 +33,7 @@ export default function Dashboard() {
 				<div className={styles.dashboard_content}>
 					{currentPathName.includes("/new") || currentPathName.includes("/update") ? (
 						<PostForm buttonText={formButtonText} target={target} />
-					) : (
+					) : currentPathName.includes("/home") ? null : (
 						<List items={listItems} />
 					)}
 				</div>
