@@ -16,9 +16,8 @@ export default function TagsInput({ label = "Tags*", prefix = "#" }: ITagsInput)
 		}
 	};
 
-	const removeTagHandler = (tagIndex: number) => {
-		const updatedTags = tags.filter((_, index) => index !== tagIndex);
-		setTags(updatedTags);
+	const removeTagHandler = (e: any) => {
+		console.log(e.target);
 	};
 
 	return (
@@ -30,8 +29,8 @@ export default function TagsInput({ label = "Tags*", prefix = "#" }: ITagsInput)
 				<ul className={styles.tags_input_items}>
 					{tags.map((el, i) => (
 						<li className={styles.tags_input_item} key={i}>
-							<span className={styles.tags_input_item_text}>{prefix ? prefix + el : el}</span>
-							<span className={styles.tags_input_item_close_icon} onClick={() => removeTagHandler(i)}>
+							<span>{prefix ? prefix + el : el}</span>
+							<span className={styles.tags_input_item_close_icon} onClick={removeTagHandler}>
 								<AiFillCloseCircle />
 							</span>
 						</li>
