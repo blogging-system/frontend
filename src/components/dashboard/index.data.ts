@@ -1,3 +1,4 @@
+import { IListItem } from "../common/List/index.types";
 import { ISection } from "./index.types";
 
 export const sections: Record<string, ISection> = {
@@ -23,3 +24,34 @@ export const sections: Record<string, ISection> = {
 		},
 	},
 };
+
+export const listItems: IListItem[] = [
+	{
+		title: "How to add indexes to NoSQL databases like MongoDB and Redis (Part 1)",
+		views: 0,
+	},
+	{
+		title: "How to add indexes to NoSQL databases like MongoDB and Redis (Part 1)",
+		views: 0,
+	},
+	{
+		title: "How to add indexes to NoSQL databases like MongoDB and Redis (Part 1)",
+		views: 0,
+	},
+	{
+		title: "How to add indexes to NoSQL databases like MongoDB and Redis (Part 1)",
+		views: 0,
+	},
+	{
+		title: "How to add indexes to NoSQL databases like MongoDB and Redis (Part 1)",
+		views: 0,
+	},
+	{
+		title: "How to add indexes to NoSQL databases like MongoDB and Redis (Part 1)",
+		views: 0,
+	},
+	{
+		title: "How to add indexes to NoSQL databases like MongoDB and Redis (Part 1)",
+		views: 0,
+	},
+];

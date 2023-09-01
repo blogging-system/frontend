@@ -4,7 +4,7 @@ import Breadcrumbs from "../common/Breadcrumbs";
 import styles from "./index.module.css";
 import Sidebar from "@/layouts/SideBar";
 import PostForm from "../common/PostForm";
-import { sections } from "./index.data";
+import { sections, listItems } from "./index.data";
 import List from "../common/List";
 
 export default function Dashboard() {
@@ -34,7 +34,7 @@ export default function Dashboard() {
 					{currentPathName.includes("/new") || currentPathName.includes("/update") ? (
 						<PostForm buttonText={formButtonText} target={target} />
 					) : (
-						<List />
+						<List items={listItems} />
 					)}
 				</div>
 			</div>

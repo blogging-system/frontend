@@ -1,62 +1,13 @@
 import styles from "./index.module.css";
+import { IListItem } from "./index.types";
+import ListItems from "./ListItems";
+import ListPagination from "./ListPagination";
 
-export default function List() {
+export default function List({ items }: { items: IListItem[] }) {
 	return (
-		<ul className={styles.list_items}>
-			<li className={styles.list_item}>
-				<p>How to add indexes to databases such as: MongoDB and Redis (Part1)</p>
-				<p>0 views</p>
-				<div className={styles.list_item_links_wrapper}>
-					<a className={styles.list_item_link}>Unpublish</a>
-					<a className={styles.list_item_link}>Edit</a>
-					<a className={`${styles.list_item_link} ${styles.list_item_link_active}`}>Delete</a>
-				</div>
-			</li>
-			<li className={styles.list_item}>
-				<p>How to add indexes to databases such as: MongoDB and Redis (Part1)</p>
-				<p>0 views</p>
-				<div className={styles.list_item_links_wrapper}>
-					<a className={styles.list_item_link}>Unpublish</a>
-					<a className={styles.list_item_link}>Edit</a>
-					<a className={`${styles.list_item_link} ${styles.list_item_link_active}`}>Delete</a>
-				</div>
-			</li>{" "}
-			<li className={styles.list_item}>
-				<p>How to add indexes to databases such as: MongoDB and Redis (Part1)</p>
-				<p>0 views</p>
-				<div className={styles.list_item_links_wrapper}>
-					<a className={styles.list_item_link}>Unpublish</a>
-					<a className={styles.list_item_link}>Edit</a>
-					<a className={`${styles.list_item_link} ${styles.list_item_link_active}`}>Delete</a>
-				</div>
-			</li>{" "}
-			<li className={styles.list_item}>
-				<p>How to add indexes to databases such as: MongoDB and Redis (Part1)</p>
-				<p>0 views</p>
-				<div className={styles.list_item_links_wrapper}>
-					<a className={styles.list_item_link}>Unpublish</a>
-					<a className={styles.list_item_link}>Edit</a>
-					<a className={`${styles.list_item_link} ${styles.list_item_link_active}`}>Delete</a>
-				</div>
-			</li>{" "}
-			<li className={styles.list_item}>
-				<p>How to add indexes to databases such as: MongoDB and Redis (Part1)</p>
-				<p>0 views</p>
-				<div className={styles.list_item_links_wrapper}>
-					<a className={styles.list_item_link}>Unpublish</a>
-					<a className={styles.list_item_link}>Edit</a>
-					<a className={`${styles.list_item_link} ${styles.list_item_link_active}`}>Delete</a>
-				</div>
-			</li>{" "}
-			<li className={styles.list_item}>
-				<p>How to add indexes to databases such as: MongoDB and Redis (Part1)</p>
-				<p>0 views</p>
-				<div className={styles.list_item_links_wrapper}>
-					<a className={styles.list_item_link}>Unpublish</a>
-					<a className={styles.list_item_link}>Edit</a>
-					<a className={`${styles.list_item_link} ${styles.list_item_link_active}`}>Delete</a>
-				</div>
-			</li>
-		</ul>
+		<div className={styles.list_wrapper}>
+			<ListItems items={items} />
+			<ListPagination />
+		</div>
 	);
 }
