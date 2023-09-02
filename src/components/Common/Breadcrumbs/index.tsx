@@ -2,6 +2,7 @@
 import { PathHelper } from "@/helpers/path.helper";
 import styles from "./index.module.css";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 /**
  * Renders breadcrumb navigation links with capitalized and optionally highlighted last segment.
@@ -28,9 +29,9 @@ export default function Breadcrumbs() {
 				const content = index === lastIndex - 1 ? ` / ${segment} /` : index === lastIndex ? segment : `/ ${segment}`;
 
 				return (
-					<a key={index} className={breadcrumbClasses} href={linkPath}>
+					<Link key={index} className={breadcrumbClasses} href={linkPath}>
 						{content}
-					</a>
+					</Link>
 				);
 			})}
 		</div>
