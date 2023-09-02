@@ -27,7 +27,7 @@ export default function Navbar() {
 					</li>
 				</ul>
 				<div className={styles.navbar_logout_wrapper}>
-					<a href="/logout" className={styles.navbar_logout}>
+					<a href="/" className={styles.navbar_logout}>
 						Log Out
 					</a>
 				</div>
