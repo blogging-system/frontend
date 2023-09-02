@@ -1,3 +1,4 @@
+import Link from "next/link";
 import styles from "./index.module.css";
 import { BsFillArrowLeftSquareFill, BsFillArrowRightSquareFill } from "react-icons/bs";
 
@@ -10,17 +11,23 @@ import { BsFillArrowLeftSquareFill, BsFillArrowRightSquareFill } from "react-ico
 export default function ListPagination() {
 	return (
 		<div className={styles.list_pagination}>
-			<a className={styles.list_pagination_icon}>
+			<Link href={"#"} className={styles.list_pagination_icon}>
 				<BsFillArrowLeftSquareFill />
-			</a>
+			</Link>
 
-			<a className={styles.list_pagination_item}>1</a>
-			<a className={`${styles.list_pagination_item} ${styles.list_pagination_item_active}`}>2</a>
-			<a className={styles.list_pagination_item}>3</a>
+			<Link href={"#"} className={styles.list_pagination_item}>
+				1
+			</Link>
+			<Link href={"#"} className={`${styles.list_pagination_item} ${styles.list_pagination_item_active}`}>
+				2
+			</Link>
+			<Link href={"#"} className={styles.list_pagination_item}>
+				3
+			</Link>
 
-			<a className={styles.list_pagination_icon}>
+			<Link href={"#"} className={styles.list_pagination_icon}>
 				<BsFillArrowRightSquareFill />
-			</a>
+			</Link>
 		</div>
 	);
 }

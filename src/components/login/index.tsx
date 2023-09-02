@@ -7,7 +7,7 @@ export default function LogIn() {
 	const router = useRouter();
 
 	function loginHandler() {
-		return router.push("/dashboard/posts/home");
+		return router.replace("/dashboard/posts/home");
 	}
 
 	return (
