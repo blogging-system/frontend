@@ -2,7 +2,7 @@ import PostForm from "@/components/Common/PostForm";
 import { DashboardSections } from "../index.types";
 import Home from "@/components/Common/Home";
 import List from "@/components/Common/List";
-import { listItems } from "./../index.data";
+import { listItems, homeAnalyticsData } from "./../index.data";
 
 /**
  * Renders the main content based on the current section and path.
@@ -27,7 +27,7 @@ export function renderMainContent(
 		return <PostForm buttonText={actionButtonText} target={formTarget} />;
 	}
 	if (isHomeSection) {
-		return <Home />;
+		return <Home analyticsData={homeAnalyticsData} />;
 	}
 	return <List items={listItems} />;
 }
