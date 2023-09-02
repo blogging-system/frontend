@@ -1,8 +1,8 @@
+import { DashboardSections, TCurrentPath } from "../index.types";
+import { analyticsDataByPath, listItems } from "./../index.data";
 import PostForm from "@/components/Common/PostForm";
-import { DashboardSections } from "../index.types";
 import Home from "@/components/Common/Home";
 import List from "@/components/Common/List";
-import { listItems, homeAnalyticsData } from "./../index.data";
 
 /**
  * Renders the main content based on the current section and path.
@@ -17,7 +17,7 @@ export function renderMainContent(
 	isNewOrUpdateSection: boolean,
 	isHomeSection: boolean,
 	activeSectionData: DashboardSections[keyof DashboardSections] | undefined,
-	currentPath: string
+	currentPath: TCurrentPath
 ) {
 	const actionButtonText =
 		activeSectionData && activeSectionData.formButtonText[currentPath.includes("new") ? "new" : "update"];
@@ -26,8 +26,11 @@ export function renderMainContent(
 	if (isNewOrUpdateSection && activeSectionData) {
 		return <PostForm buttonText={actionButtonText} target={formTarget} />;
 	}
+
 	if (isHomeSection) {
-		return <Home analyticsData={homeAnalyticsData} />;
+		const homeData = analyticsDataByPath[currentPath] || [];
+		return <Home analyticsData={homeData} />;
 	}
+
 	return <List items={listItems} />;
 }

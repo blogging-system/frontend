@@ -32,3 +32,8 @@ export interface ISectionData {
 		update: string;
 	};
 }
+
+/**
+ * Represents valid paths for the current location within the dashboard.
+ */
+export type TCurrentPath = "/dashboard/posts/home" | "/dashboard/walkthroughs/home" | "/dashboard/series/home";
