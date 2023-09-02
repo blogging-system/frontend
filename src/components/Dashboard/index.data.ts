@@ -1,4 +1,4 @@
-import { IListItem } from "../common/List/index.types";
+import { IListItem } from "../Common/List/index.types";
 import { ISection } from "./index.types";
 
 export const sections: Record<string, ISection> = {

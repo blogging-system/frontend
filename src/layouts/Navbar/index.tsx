@@ -4,7 +4,7 @@ export default function Navbar() {
 	return (
 		<div className={styles.navbar_container}>
 			<nav className={styles.navbar}>
-				<a href="/dashboard/home" className={styles.navbar_logo}>
+				<a href="/dashboard/posts/home" className={styles.navbar_logo}>
 					<span className={styles.navbar_tag}>{"<"}</span>
 					<span className={styles.navbar_title}>Ahmed Elgaidi</span>
 					<span className={styles.navbar_tag}>{"/>"}</span>

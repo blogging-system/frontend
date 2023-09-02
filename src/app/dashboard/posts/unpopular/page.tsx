@@ -1,4 +1,4 @@
-import Dashboard from "@/components/dashboard";
+import Dashboard from "@/components/Dashboard";
 
 export default function UnpopularPosts() {
 	return <Dashboard />;
