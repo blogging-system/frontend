@@ -1,13 +1,13 @@
 "use client";
 import { useRouter } from "next/navigation";
-import FormItem from "../common/PostForm/FormItem";
+import FormItem from "../Common/PostForm/FormItem";
 import styles from "./index.module.css";
 
 export default function LogIn() {
 	const router = useRouter();
 
 	function loginHandler() {
-		return router.push("/dashboard/home");
+		return router.push("/dashboard/posts/home");
 	}
 
 	return (

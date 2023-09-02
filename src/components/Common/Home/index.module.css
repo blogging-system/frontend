@@ -1,0 +1,38 @@
+.home_section_analytics {
+	border: 3px solid rgba(205, 205, 205, 0.404);
+	border-radius: 10px;
+	padding: 30px;
+}
+
+.home_section {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+
+.home_section_analytics {
+	display: flex;
+	flex-direction: column;
+	margin: 10px;
+	cursor: pointer;
+}
+
+.home_section_analytics:hover {
+	background-color: #fae28c3a;
+}
+
+.home_section_analytics_title {
+	color: #903101e6;
+	font-weight: 900;
+}
+
+.home_section_analytics_body {
+	padding-top: 10px;
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+}
+
+.home_section_analytics_body_value {
+	margin: 5px;
+}
