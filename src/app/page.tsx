@@ -1,3 +1,5 @@
+import LogIn from "@/components/login";
+
 export default function Home() {
-	return <h2> Hello world!</h2>;
+	return <LogIn />;
 }
