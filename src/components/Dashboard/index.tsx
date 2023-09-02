@@ -9,6 +9,12 @@ import { getActiveSection } from "./dashboard-utils/getActivationSection";
 import { generateSidebarLinks } from "./dashboard-utils/generateSidebarLinks";
 import { renderMainContent } from "./dashboard-utils/renderMainContent";
 
+/**
+ * Dashboard component that displays content based on the current section and path.
+ * It provides a sidebar with links, breadcrumbs, and main content.
+ *
+ * @returns The rendered Dashboard component.
+ */
 export default function Dashboard() {
 	const currentPath = usePathname();
 	const activeSection = getActiveSection(currentPath);
