@@ -1,4 +1,4 @@
-import { DashboardSections, TCurrentPath } from "../index.types";
+import { DashboardSections } from "../index.types";
 import { analyticsDataByPath, listItems } from "./../index.data";
 import PostForm from "@/components/Common/PostForm";
 import Home from "@/components/Common/Home";
@@ -17,7 +17,7 @@ export function renderMainContent(
 	isNewOrUpdateSection: boolean,
 	isHomeSection: boolean,
 	activeSectionData: DashboardSections[keyof DashboardSections] | undefined,
-	currentPath: TCurrentPath
+	currentPath: string
 ) {
 	const actionButtonText =
 		activeSectionData && activeSectionData.formButtonText[currentPath.includes("new") ? "new" : "update"];
