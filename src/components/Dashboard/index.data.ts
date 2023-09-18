@@ -1,26 +1,26 @@
 import { IAnalyticsDataItem } from "../Common/Home/index.types";
 import { IListItem } from "../Common/List/index.types";
-import { ISectionData, TCurrentPath } from "./index.types";
+import { ISectionData } from "./index.types";
 
 export const sections: Record<string, ISectionData> = {
 	posts: {
 		links: ["Home", "New", "Latest", "Trending", "Popular", "Unpopular", "Published", "Unpublished"],
 		formButtonText: {
-			new: "Save Post",
+			new: "Create Post",
 			update: "Update Post",
 		},
 	},
 	walkthroughs: {
 		links: ["Home", "New", "Latest", "Trending", "Popular", "Unpopular", "Published", "Unpublished"],
 		formButtonText: {
-			new: "Save Walkthrough",
+			new: "Create Walkthrough",
 			update: "Update Walkthrough",
 		},
 	},
 	series: {
 		links: ["Home", "New", "Latest", "Trending", "Popular", "Unpopular", "Published", "Unpublished"],
 		formButtonText: {
-			new: "Save Series",
+			new: "Create Series",
 			update: "Update Series",
 		},
 	},
@@ -78,7 +78,7 @@ const seriesAnalyticsData: IAnalyticsDataItem[] = [
 	{ title: "Total Unpublished Series:", value: 200, unit: "Series" },
 ];
 
-export const analyticsDataByPath: Record<TCurrentPath, IAnalyticsDataItem[]> = {
+export const analyticsDataByPath: Record<string, IAnalyticsDataItem[]> = {
 	"/dashboard/posts/home": postsAnalyticsData,
 	"/dashboard/walkthroughs/home": walkthroughsAnalyticsData,
 	"/dashboard/series/home": seriesAnalyticsData,
