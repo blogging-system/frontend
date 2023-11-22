@@ -19,12 +19,15 @@
 	display: flex;
 	justify-content: space-around;
 	align-items: center;
-	gap: 5rem;
+	gap: 1rem;
 	padding: 5px;
 }
 
 .list_item p {
 	max-width: 450px;
+}
+.list_item span {
+	min-width: fit-content;
 }
 
 .list_item p {
@@ -64,9 +67,12 @@
 .list_pagination_icon {
 	display: flex;
 	align-items: center;
-	padding: 0 30px;
+	margin: 0 30px;
 	font-size: 30px;
 	color: #903101e6;
+	background-color: transparent;
+	border: none;
+	cursor: pointer;
 }
 
 .list_pagination_item {
@@ -76,7 +82,8 @@
 	border: 3px solid rgba(205, 205, 205, 0.404);
 	padding: 3px 9px;
 	margin: 0 10px;
-	font-size: 5px;
+	font-weight: bold;
+	cursor: pointer;
 }
 
 .list_pagination_item:hover,

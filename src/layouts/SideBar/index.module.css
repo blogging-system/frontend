@@ -1,7 +1,7 @@
 .sidebar_container {
 	display: flex;
 	flex-direction: column;
-	width: 350px;
+	min-width: 250px;
 	height: 100%;
 	margin: 0 40px;
 	border: 3px solid rgba(205, 205, 205, 0.404);
