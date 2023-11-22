@@ -4,21 +4,48 @@ import { ISectionData } from "./index.types";
 
 export const sections: Record<string, ISectionData> = {
 	posts: {
-		links: ["Home", "New", "Latest", "Trending", "Popular", "Unpopular", "Published", "Unpublished"],
+		links: [
+			"Home",
+			"New",
+			"Latest",
+			"Trending",
+			"Popular",
+			"Unpopular",
+			"Published",
+			"Unpublished",
+		],
 		formButtonText: {
 			new: "Create Post",
 			update: "Update Post",
 		},
 	},
 	walkthroughs: {
-		links: ["Home", "New", "Latest", "Trending", "Popular", "Unpopular", "Published", "Unpublished"],
+		links: [
+			"Home",
+			"New",
+			"Latest",
+			"Trending",
+			"Popular",
+			"Unpopular",
+			"Published",
+			"Unpublished",
+		],
 		formButtonText: {
 			new: "Create Walkthrough",
 			update: "Update Walkthrough",
 		},
 	},
 	series: {
-		links: ["Home", "New", "Latest", "Trending", "Popular", "Unpopular", "Published", "Unpublished"],
+		links: [
+			"Home",
+			"New",
+			"Latest",
+			"Trending",
+			"Popular",
+			"Unpopular",
+			"Published",
+			"Unpublished",
+		],
 		formButtonText: {
 			new: "Create Series",
 			update: "Update Series",
@@ -28,31 +55,143 @@ export const sections: Record<string, ISectionData> = {
 
 export const listItems: IListItem[] = [
 	{
-		title: "How to add indexes to NoSQL databases like MongoDB and Redis (Part 1)",
+		title:
+			"How to add indexes to NoSQL databases like MongoDB and Redis (Part 1)",
 		views: 0,
 	},
 	{
-		title: "How to add indexes to NoSQL databases like MongoDB and Redis (Part 1)",
+		title:
+			"How to add indexes to NoSQL databases like MongoDB and Redis (Part 1)",
 		views: 0,
 	},
 	{
-		title: "How to add indexes to NoSQL databases like MongoDB and Redis (Part 1)",
+		title:
+			"How to add indexes to NoSQL databases like MongoDB and Redis (Part 1)",
 		views: 0,
 	},
 	{
-		title: "How to add indexes to NoSQL databases like MongoDB and Redis (Part 1)",
+		title:
+			"How to add indexes to NoSQL databases like MongoDB and Redis (Part 1)",
 		views: 0,
 	},
 	{
-		title: "How to add indexes to NoSQL databases like MongoDB and Redis (Part 1)",
+		title:
+			"How to add indexes to NoSQL databases like MongoDB and Redis (Part 1)",
 		views: 0,
 	},
 	{
-		title: "How to add indexes to NoSQL databases like MongoDB and Redis (Part 1)",
+		title:
+			"How to add indexes to NoSQL databases like MongoDB and Redis (Part 1)",
 		views: 0,
 	},
 	{
-		title: "How to add indexes to NoSQL databases like MongoDB and Redis (Part 1)",
+		title:
+			"How to add indexes to NoSQL databases like MongoDB and Redis (Part 1)",
+		views: 0,
+	},
+	{
+		title:
+			"How to add indexes to NoSQL databases like MongoDB and Redis (Part 1)",
+		views: 0,
+	},
+	{
+		title:
+			"How to add indexes to NoSQL databases like MongoDB and Redis (Part 1)",
+		views: 0,
+	},
+	{
+		title:
+			"How to add indexes to NoSQL databases like MongoDB and Redis (Part 1)",
+		views: 0,
+	},
+	{
+		title:
+			"How to add indexes to NoSQL databases like MongoDB and Redis (Part 1)",
+		views: 0,
+	},
+	{
+		title:
+			"How to add indexes to NoSQL databases like MongoDB and Redis (Part 1)",
+		views: 0,
+	},
+	{
+		title:
+			"How to add indexes to NoSQL databases like MongoDB and Redis (Part 1)",
+		views: 0,
+	},
+	{
+		title:
+			"How to add indexes to NoSQL databases like MongoDB and Redis (Part 1)",
+		views: 0,
+	},
+	{
+		title:
+			"How to add indexes to NoSQL databases like MongoDB and Redis (Part 1)",
+		views: 0,
+	},
+	{
+		title:
+			"How to add indexes to NoSQL databases like MongoDB and Redis (Part 1)",
+		views: 0,
+	},
+	{
+		title:
+			"How to add indexes to NoSQL databases like MongoDB and Redis (Part 1)",
+		views: 0,
+	},
+	{
+		title:
+			"How to add indexes to NoSQL databases like MongoDB and Redis (Part 1)",
+		views: 0,
+	},
+	{
+		title:
+			"How to add indexes to NoSQL databases like MongoDB and Redis (Part 1)",
+		views: 0,
+	},
+	{
+		title:
+			"How to add indexes to NoSQL databases like MongoDB and Redis (Part 1)",
+		views: 0,
+	},
+	{
+		title:
+			"How to add indexes to NoSQL databases like MongoDB and Redis (Part 1)",
+		views: 0,
+	},
+	{
+		title:
+			"How to add indexes to NoSQL databases like MongoDB and Redis (Part 1)",
+		views: 0,
+	},
+	{
+		title:
+			"How to add indexes to NoSQL databases like MongoDB and Redis (Part 1)",
+		views: 0,
+	},
+	{
+		title:
+			"How to add indexes to NoSQL databases like MongoDB and Redis (Part 1)",
+		views: 0,
+	},
+	{
+		title:
+			"How to add indexes to NoSQL databases like MongoDB and Redis (Part 1)",
+		views: 0,
+	},
+	{
+		title:
+			"How to add indexes to NoSQL databases like MongoDB and Redis (Part 1)",
+		views: 0,
+	},
+	{
+		title:
+			"How to add indexes to NoSQL databases like MongoDB and Redis (Part 1)",
+		views: 0,
+	},
+	{
+		title:
+			"How to add indexes to NoSQL databases like MongoDB and Redis (Part 1)",
 		views: 0,
 	},
 ];
@@ -68,7 +207,11 @@ const walkthroughsAnalyticsData: IAnalyticsDataItem[] = [
 	{ title: "Total Walkthroughs Views:", value: 800, unit: "Views" },
 	{ title: "Total Walkthroughs:", value: 600, unit: "Walkthroughs" },
 	{ title: "Total Published Walkthroughs:", value: 400, unit: "Walkthroughs" },
-	{ title: "Total Unpublished Walkthroughs:", value: 200, unit: "Walkthroughs" },
+	{
+		title: "Total Unpublished Walkthroughs:",
+		value: 200,
+		unit: "Walkthroughs",
+	},
 ];
 
 const seriesAnalyticsData: IAnalyticsDataItem[] = [

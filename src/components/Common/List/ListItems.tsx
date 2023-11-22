@@ -17,7 +17,7 @@ export default function ListItems({ items }: { items: IListItem[] }) {
 			{items.map((item, index) => (
 				<li className={styles.list_item} key={index}>
 					<p>{item.title}</p>
-					<p>{item.views} views</p>
+					<span>{item.views} views</span>
 					<div className={styles.list_item_links_wrapper}>
 						<Link href={"#"} className={styles.list_item_link}>
 							Unpublish
@@ -25,7 +25,10 @@ export default function ListItems({ items }: { items: IListItem[] }) {
 						<Link href={"#"} className={styles.list_item_link}>
 							Edit
 						</Link>
-						<Link href={"#"} className={`${styles.list_item_link} ${styles.list_item_link_active}`}>
+						<Link
+							href={"#"}
+							className={`${styles.list_item_link} ${styles.list_item_link_active}`}
+						>
 							Delete
 						</Link>
 					</div>
