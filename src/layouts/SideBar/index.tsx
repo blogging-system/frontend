@@ -1,4 +1,5 @@
 "use client";
+
 import React from "react";
 import styles from "./index.module.css";
 import { ISidebar } from "./index.types";
@@ -13,7 +14,9 @@ export default function Sidebar({ links }: ISidebar) {
 			{links.map((el, i) => (
 				<Link
 					key={i}
-					className={`${styles.sidebar_item} ${el.url === currentPathName ? styles.sidebar_item_active : ""}`}
+					className={`${styles.sidebar_item} ${
+						el.url === currentPathName ? styles.sidebar_item_active : ""
+					}`}
 					href={el.url}
 				>
 					{el.label}

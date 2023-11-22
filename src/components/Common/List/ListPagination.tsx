@@ -1,33 +1,53 @@
-import Link from "next/link";
 import styles from "./index.module.css";
-import { BsFillArrowLeftSquareFill, BsFillArrowRightSquareFill } from "react-icons/bs";
+import {
+	BsFillArrowLeftSquareFill,
+	BsFillArrowRightSquareFill,
+} from "react-icons/bs";
+import PaginationLink from "./PaginationLink";
+import { IListPaginationProps } from "./index.types";
 
 /**
  * ListPagination component displays a pagination control with left and right arrows.
  *
  * @component
+ * @param {Object[]} items - A list of pagination
+ * @param paginationActive - A number of active pagination
  * @returns {JSX.Element} - A JSX element representing the pagination control.
  */
-export default function ListPagination() {
+export default function ListPagination({
+	items,
+	paginationActive,
+	setPaginationActive,
+}: IListPaginationProps) {
 	return (
 		<div className={styles.list_pagination}>
-			<Link href={"#"} className={styles.list_pagination_icon}>
+			<button
+				onClick={() =>
+					paginationActive > 0 && setPaginationActive(paginationActive - 1)
+				}
+				className={styles.list_pagination_icon}
+			>
 				<BsFillArrowLeftSquareFill />
-			</Link>
+			</button>
 
-			<Link href={"#"} className={styles.list_pagination_item}>
-				1
-			</Link>
-			<Link href={"#"} className={`${styles.list_pagination_item} ${styles.list_pagination_item_active}`}>
-				2
-			</Link>
-			<Link href={"#"} className={styles.list_pagination_item}>
-				3
-			</Link>
+			{items.map((_, idx) => (
+				<PaginationLink
+					key={idx + 1}
+					paginationNumber={idx}
+					paginationActive={paginationActive}
+					setPaginationActive={setPaginationActive}
+				/>
+			))}
 
-			<Link href={"#"} className={styles.list_pagination_icon}>
+			<button
+				onClick={() =>
+					paginationActive + 1 < items.length &&
+					setPaginationActive(paginationActive + 1)
+				}
+				className={styles.list_pagination_icon}
+			>
 				<BsFillArrowRightSquareFill />
-			</Link>
+			</button>
 		</div>
 	);
 }

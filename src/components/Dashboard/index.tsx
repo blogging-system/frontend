@@ -19,11 +19,16 @@ export default function Dashboard() {
 	let currentPath = usePathname();
 
 	const activeSection = getActiveSection(currentPath);
+
 	const activeSectionData = activeSection ? sections[activeSection] : undefined;
-	const sidebarLinks: ISidebarLink[] = generateSidebarLinks(activeSectionData, activeSection);
+	const sidebarLinks: ISidebarLink[] = generateSidebarLinks(
+		activeSectionData,
+		activeSection
+	);
 
 	const isHomeSection = currentPath.includes("/home");
-	const isNewOrUpdateSection = currentPath.includes("/new") || currentPath.includes("/update");
+	const isNewOrUpdateSection =
+		currentPath.includes("/new") || currentPath.includes("/update");
 
 	return (
 		<div className={styles.dashboard_container}>
@@ -31,7 +36,12 @@ export default function Dashboard() {
 			<div className={styles.dashboard_main}>
 				<Sidebar links={sidebarLinks} />
 				<div className={styles.dashboard_content}>
-					{renderMainContent(isNewOrUpdateSection, isHomeSection, activeSectionData, currentPath)}
+					{renderMainContent(
+						isNewOrUpdateSection,
+						isHomeSection,
+						activeSectionData,
+						currentPath
+					)}
 				</div>
 			</div>
 		</div>
