@@ -20,8 +20,12 @@ export function renderMainContent(
 	currentPath: string
 ) {
 	const actionButtonText =
-		activeSectionData && activeSectionData.formButtonText[currentPath.includes("new") ? "new" : "update"];
-	const formTarget = activeSectionData && currentPath.includes("series") ? "series" : undefined;
+		activeSectionData &&
+		activeSectionData.formButtonText[
+			currentPath.includes("new") ? "new" : "update"
+		];
+	const formTarget =
+		activeSectionData && currentPath.includes("series") ? "series" : undefined;
 
 	if (isNewOrUpdateSection && activeSectionData) {
 		return <PostForm buttonText={actionButtonText} target={formTarget} />;
@@ -29,7 +33,7 @@ export function renderMainContent(
 
 	if (isHomeSection) {
 		const homeData = analyticsDataByPath[currentPath] || [];
-		return <Home analyticsData={homeData} />;
+		return <Home analyticsData={homeData} listItems={listItems} />;
 	}
 
 	return <List items={listItems} />;

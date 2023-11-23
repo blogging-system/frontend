@@ -2,8 +2,6 @@
 	display: flex;
 	flex-direction: column;
 	width: 100%;
-	margin: 20px auto;
-	padding: 0 20px;
 }
 
 .tags_input_label {
@@ -16,9 +14,13 @@
 	display: flex;
 	flex-direction: column;
 	color: rgb(116, 116, 116);
-	padding: 10px;
+	padding: 10px 0;
 	border: 3px solid rgba(205, 205, 205, 0.404);
 	border-radius: 10px;
+}
+
+.tags_input_items_list:focus-within {
+	border-color: #ed9d093a;
 }
 
 .tags_input_items {
@@ -28,6 +30,7 @@
 	justify-content: center;
 	flex-wrap: wrap;
 	gap: 20px;
+	margin-bottom: 10px;
 }
 
 .tags_input_item {
@@ -54,7 +57,7 @@
 
 .tags_input_items_list input {
 	color: rgb(116, 116, 116);
-	padding: 20px;
+	padding: 10px 20px;
 	border: none;
 	outline: none;
 	flex-grow: 1;

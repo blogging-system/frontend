@@ -19,22 +19,6 @@ export const sections: Record<string, ISectionData> = {
 			update: "Update Post",
 		},
 	},
-	walkthroughs: {
-		links: [
-			"Home",
-			"New",
-			"Latest",
-			"Trending",
-			"Popular",
-			"Unpopular",
-			"Published",
-			"Unpublished",
-		],
-		formButtonText: {
-			new: "Create Walkthrough",
-			update: "Update Walkthrough",
-		},
-	},
 	series: {
 		links: [
 			"Home",
@@ -57,7 +41,7 @@ export const listItems: IListItem[] = [
 	{
 		title:
 			"How to add indexes to NoSQL databases like MongoDB and Redis (Part 1)",
-		views: 0,
+		views: 10,
 	},
 	{
 		title:
@@ -97,7 +81,7 @@ export const listItems: IListItem[] = [
 	{
 		title:
 			"How to add indexes to NoSQL databases like MongoDB and Redis (Part 1)",
-		views: 0,
+		views: 20,
 	},
 	{
 		title:
@@ -117,7 +101,7 @@ export const listItems: IListItem[] = [
 	{
 		title:
 			"How to add indexes to NoSQL databases like MongoDB and Redis (Part 1)",
-		views: 0,
+		views: 555,
 	},
 	{
 		title:
@@ -203,17 +187,6 @@ const postsAnalyticsData: IAnalyticsDataItem[] = [
 	{ title: "Total Unpublished Posts:", value: 1000, unit: "Posts" },
 ];
 
-const walkthroughsAnalyticsData: IAnalyticsDataItem[] = [
-	{ title: "Total Walkthroughs Views:", value: 800, unit: "Views" },
-	{ title: "Total Walkthroughs:", value: 600, unit: "Walkthroughs" },
-	{ title: "Total Published Walkthroughs:", value: 400, unit: "Walkthroughs" },
-	{
-		title: "Total Unpublished Walkthroughs:",
-		value: 200,
-		unit: "Walkthroughs",
-	},
-];
-
 const seriesAnalyticsData: IAnalyticsDataItem[] = [
 	{ title: "Total Series Views:", value: 1200, unit: "Views" },
 	{ title: "Total Series:", value: 900, unit: "Series" },
@@ -223,6 +196,5 @@ const seriesAnalyticsData: IAnalyticsDataItem[] = [
 
 export const analyticsDataByPath: Record<string, IAnalyticsDataItem[]> = {
 	"/dashboard/posts/home": postsAnalyticsData,
-	"/dashboard/walkthroughs/home": walkthroughsAnalyticsData,
 	"/dashboard/series/home": seriesAnalyticsData,
 };

@@ -1,3 +1,5 @@
+import { IListItem } from "../List/index.types";
+
 /**
  * Interface representing an analytics data item.
  *
@@ -18,4 +20,5 @@ export interface IAnalyticsDataItem {
  */
 export interface IHome {
 	analyticsData: IAnalyticsDataItem[];
+	listItems: IListItem[];
 }
