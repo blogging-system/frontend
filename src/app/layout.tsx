@@ -1,7 +1,7 @@
-"use client";
-import Navbar from "@/layouts/Navbar";
 import "@/styles/global.css";
+import Navbar from "@/layouts/Navbar";
 import { Inter } from "next/font/google";
+import ReduxProvider from "@/rtk/ReduxProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -12,9 +12,12 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="en">
+			<head>
+				<title>Admin</title>
+			</head>
 			<body className={inter.className}>
 				<Navbar />
-				{children}
+				<ReduxProvider>{children}</ReduxProvider>
 			</body>
 		</html>
 	);
