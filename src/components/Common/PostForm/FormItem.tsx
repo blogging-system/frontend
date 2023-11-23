@@ -13,7 +13,16 @@ import { IFormItem } from "./index.types";
  * @param {number} [props.rowsNumber=0] - The number of rows for the textarea element.
  * @returns {JSX.Element} - Rendered component
  */
-export default function FormItem({ label, name, placeholder, type, rowsNumber = 0 }: IFormItem) {
+export default function FormItem({
+	label,
+	onChange,
+	value,
+	name,
+	placeholder,
+	type,
+	rowsNumber = 0,
+	autoFocus,
+}: IFormItem) {
 	return (
 		<div className={styles.form_item}>
 			<label className={styles.form_label} htmlFor={name}>
@@ -21,9 +30,26 @@ export default function FormItem({ label, name, placeholder, type, rowsNumber = 
 			</label>
 
 			{type === "textarea" ? (
-				<textarea className={styles.form_textarea} rows={rowsNumber} name={name} id={name} placeholder={placeholder} />
+				<textarea
+					className={styles.form_textarea}
+					rows={rowsNumber}
+					name={name}
+					id={name}
+					placeholder={placeholder}
+					onChange={onChange}
+					value={value}
+				/>
 			) : (
-				<input className={styles.form_input} type={type} name={name} id={name} placeholder={placeholder} />
+				<input
+					className={styles.form_input}
+					type={type}
+					name={name}
+					id={name}
+					placeholder={placeholder}
+					autoFocus={autoFocus}
+					onChange={onChange}
+					value={value}
+				/>
 			)}
 		</div>
 	);

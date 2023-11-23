@@ -1,4 +1,4 @@
-import { sections } from "./../index.data";
+import { ISectionData } from "../index.types";
 
 /**
  * Gets the active section based on the current path.
@@ -6,6 +6,11 @@ import { sections } from "./../index.data";
  * @param currentPath - The current URL path.
  * @returns The name of the active section or an empty string if not found.
  */
-export function getActiveSection(currentPath: string) {
-	return Object.keys(sections).find((section) => currentPath.includes(section)) || "";
+export function getActiveSection(
+	currentPath: string,
+	sections: Record<string, ISectionData>
+) {
+	return (
+		Object.keys(sections).find(section => currentPath.includes(section)) || ""
+	);
 }
