@@ -1,6 +1,10 @@
+import useInput from "@/hooks/useInput";
 import TagsInput from "../TagsInput";
 import FormItem from "./FormItem";
 import styles from "./index.module.css";
+import { useAppSelector } from "@/rtk/hooks";
+import { useEffect } from "react";
+import { redirect } from "next/navigation";
 
 /**
  * PostForm component for rendering a form with various input fields.
@@ -10,10 +14,27 @@ import styles from "./index.module.css";
  * @returns {JSX.Element} - Rendered component
  */
 export default function PostForm({ buttonText = "", target = "" }) {
+	const { postToUpdate } = useAppSelector(state => state.posts);
+
+	if (buttonText === "Update Post" && !postToUpdate) {
+		redirect("/dashboard/posts/home");
+	}
+
+	const title = useInput(postToUpdate ? postToUpdate.title : "");
+	const description = useInput(postToUpdate ? postToUpdate.description : "");
+	const coverUrl = useInput("");
+
 	return (
 		<div className={styles.form_wrapper}>
-			<form className={styles.form} onSubmit={(e) => e.preventDefault()}>
-				<FormItem type="text" label="Title*" name="title" placeholder="Please enter the title" />
+			<form className={styles.form} onSubmit={e => e.preventDefault()}>
+				<FormItem
+					type="text"
+					label="Title*"
+					name="title"
+					placeholder="Please enter the title"
+					autoFocus={true}
+					{...title}
+				/>
 
 				<FormItem
 					label="Description*"
@@ -21,6 +42,7 @@ export default function PostForm({ buttonText = "", target = "" }) {
 					placeholder="Please enter the content"
 					type="textarea"
 					rowsNumber={3}
+					{...description}
 				/>
 
 				{target === "series" ? (
@@ -45,11 +67,17 @@ export default function PostForm({ buttonText = "", target = "" }) {
 					<TagsInput label="Keywords*" prefix="" />
 				</div>
 
-				<FormItem type="url" label="Cover Image URL*" name="coverImageUrl" placeholder="Please enter the image URL" />
+				<FormItem
+					type="url"
+					label="Cover Image URL*"
+					name="coverImageUrl"
+					placeholder="Please enter the image URL"
+					{...coverUrl}
+				/>
 
-				<div className={styles.form_button_wrapper}>
-					<button className={styles.form_button}>{buttonText}</button>
-				</div>
+				<button className={styles.form_button} type="submit">
+					{buttonText}
+				</button>
 			</form>
 		</div>
 	);

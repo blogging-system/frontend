@@ -13,7 +13,7 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<head>
-				<title>Admin</title>
+				<title>Dashboard</title>
 			</head>
 			<body className={inter.className}>
 				<Navbar />
