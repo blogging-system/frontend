@@ -15,13 +15,11 @@ import { useState } from "react";
 export default function List({ items }: { items: IListItem[] }) {
 	const [paginationActive, setPaginationActive] = useState(1);
 
-	const paginationList = generatePaginationList(items);
-
 	return (
 		<div className={styles.list_wrapper}>
-			<ListItems items={paginationList[paginationActive]} />
+			<ListItems items={items} />
 			<ListPagination
-				items={paginationList}
+				items={items}
 				paginationActive={paginationActive}
 				setPaginationActive={setPaginationActive}
 			/>

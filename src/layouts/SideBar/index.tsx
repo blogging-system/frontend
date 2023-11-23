@@ -16,10 +16,16 @@ export default function Sidebar({ links }: ISidebar) {
 					key={i}
 					className={`${styles.sidebar_item} ${
 						el.url === currentPathName ? styles.sidebar_item_active : ""
+					} ${
+						el.label === "New" &&
+						currentPathName.includes("update") &&
+						styles.sidebar_item_active
 					}`}
 					href={el.url}
 				>
-					{el.label}
+					{el.label === "New" && currentPathName.includes("update")
+						? "Update"
+						: el.label}
 				</Link>
 			))}
 		</div>
