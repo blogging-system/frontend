@@ -7,7 +7,7 @@ import { IHome } from "./index.types";
  * @param analyticsData - An array of analytics data items to display.
  * @returns The rendered Home component.
  */
-export default function Home({ analyticsData }: IHome) {
+export default function Home({ analyticsData, listItems }: IHome) {
 	return (
 		<div className={styles.home_section}>
 			{analyticsData.map(({ title, value, unit }, index) => (

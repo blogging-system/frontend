@@ -1,5 +1,13 @@
 .login_wrapper {
-	width: 30%;
+	width: 100vw;
+	height: 100vh;
+	display: grid;
+	place-items: center;
+}
+
+.login_wrapper .login_form {
+	max-width: 600px;
+	width: 100%;
 	margin: 100px auto;
 	border: 3px solid rgba(205, 205, 205, 0.404);
 	border-radius: 10px;
@@ -32,7 +40,6 @@
 
 @media screen and (max-width: 700px) {
 	.login_wrapper {
-		width: 80%;
-		height: 90%;
+		padding: 1rem;
 	}
 }

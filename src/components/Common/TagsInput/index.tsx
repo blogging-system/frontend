@@ -37,17 +37,22 @@ const TagsInput = ({ label = "", prefix = "#" }: ITagsInput) => {
 				{label}
 			</label>
 			<div className={styles.tags_input_items_list}>
-				<ul className={styles.tags_input_items}>
-					{tags.map((el, i) => (
-						<li className={styles.tags_input_item} key={i}>
-							{prefix && <span>{prefix}</span>}
-							{el}
-							<span className={styles.tags_input_item_close_icon} onClick={() => handleRemoveTag(i)}>
-								<AiFillCloseCircle />
-							</span>
-						</li>
-					))}
-				</ul>
+				{tags.length > 0 && (
+					<ul className={styles.tags_input_items}>
+						{tags.map((el, i) => (
+							<li className={styles.tags_input_item} key={i}>
+								{prefix && <span>{prefix}</span>}
+								{el}
+								<span
+									className={styles.tags_input_item_close_icon}
+									onClick={() => handleRemoveTag(i)}
+								>
+									<AiFillCloseCircle />
+								</span>
+							</li>
+						))}
+					</ul>
+				)}
 				<input
 					id="tagsInput"
 					type="text"
