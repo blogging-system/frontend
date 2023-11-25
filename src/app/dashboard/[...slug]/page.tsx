@@ -8,7 +8,7 @@ import { redirect } from "next/navigation";
 export default function DashboardPage() {
 	const { slug } = useParams();
 
-	const isLengthValid = slug.length === 2;
+	const isLengthValid = slug.length <= 3;
 	const isUrlCategoryValid = Object.keys(sections).includes(slug[0]);
 	const isUrlSubCategoryValid = Object.values([
 		...sections.posts.links,
