@@ -2,31 +2,54 @@ import useInput from "@/hooks/useInput";
 import TagsInput from "../TagsInput";
 import FormItem from "./FormItem";
 import styles from "./index.module.css";
-import { useAppSelector } from "@/rtk/hooks";
-import { useEffect } from "react";
-import { redirect } from "next/navigation";
+import { redirect, usePathname, useRouter } from "next/navigation";
+import { IFromProps } from "./index.types";
+import {
+	getSavedItemLocalStorage,
+	removeSavedItemLocalStorage,
+} from "../List/list.helper";
+import { FormEvent } from "react";
 
 /**
  * PostForm component for rendering a form with various input fields.
  *
  * @param {string} [buttonText=""] - The text to display on the submit button.
  * @param {string} [target=""] - The type of form (e.g., "series").
+ * @param getSavedItemLocalStorage - Function to get the current edit item from local storage
  * @returns {JSX.Element} - Rendered component
  */
-export default function PostForm({ buttonText = "", target = "" }) {
-	const { postToUpdate } = useAppSelector(state => state.posts);
+export default function PostForm({ buttonText, target }: IFromProps) {
+	const currentPath = usePathname();
 
-	if (buttonText === "Update Post" && !postToUpdate) {
-		redirect("/dashboard/posts/home");
-	}
+	const { push } = useRouter();
 
-	const title = useInput(postToUpdate ? postToUpdate.title : "");
-	const description = useInput(postToUpdate ? postToUpdate.description : "");
+	const isUpdatePostOrSeries = currentPath.includes("posts")
+		? "posts"
+		: "series";
+
+	const savedItem = getSavedItemLocalStorage(
+		currentPath.split("/").slice(-1)[0],
+		isUpdatePostOrSeries
+	);
+
+	// if there's no saved item in local storage redirect to home
+	if (!savedItem) redirect(`/dashboard/${isUpdatePostOrSeries}/home`);
+
+	const handleSubmit = (e: FormEvent) => {
+		e.preventDefault();
+
+		removeSavedItemLocalStorage(savedItem._id, isUpdatePostOrSeries);
+
+		push("../" + "home");
+	};
+
+	const title = useInput(savedItem ? savedItem.title : "");
+	const description = useInput(savedItem ? savedItem.description : "");
 	const coverUrl = useInput("");
 
 	return (
 		<div className={styles.form_wrapper}>
-			<form className={styles.form} onSubmit={e => e.preventDefault()}>
+			<form className={styles.form} onSubmit={handleSubmit}>
 				<FormItem
 					type="text"
 					label="Title*"

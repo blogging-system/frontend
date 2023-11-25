@@ -13,3 +13,8 @@ export interface IFormItem {
 	rowsNumber?: number;
 	autoFocus?: boolean;
 }
+
+export interface IFromProps {
+	buttonText: string | undefined;
+	target: string | undefined;
+}

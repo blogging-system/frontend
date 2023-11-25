@@ -4,11 +4,12 @@ import { sections } from "@/components/Dashboard/index.data";
 import { useParams } from "next/navigation";
 import Dashboard from "@/components/Dashboard";
 import { redirect } from "next/navigation";
+import { clearSavedItemsLocalStorage } from "@/components/Common/List/list.helper";
 
 export default function DashboardPage() {
 	const { slug } = useParams();
 
-	const isLengthValid = slug.length === 2;
+	const isLengthValid = slug.length <= 3;
 	const isUrlCategoryValid = Object.keys(sections).includes(slug[0]);
 	const isUrlSubCategoryValid = Object.values([
 		...sections.posts.links,
@@ -19,6 +20,11 @@ export default function DashboardPage() {
 
 	if (!isLengthValid || !isUrlCategoryValid || !isUrlSubCategoryValid)
 		return redirect("/not-found");
+
+	// clear saved items from localStorage if the path wasn't update
+	if (!slug.includes("update")) {
+		clearSavedItemsLocalStorage();
+	}
 
 	return (
 		<>
