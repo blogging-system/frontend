@@ -24,6 +24,7 @@ export function renderMainContent(
 		activeSectionData.formButtonText[
 			currentPath.includes("new") ? "new" : "update"
 		];
+
 	const formTarget =
 		activeSectionData && currentPath.includes("series") ? "series" : undefined;
 

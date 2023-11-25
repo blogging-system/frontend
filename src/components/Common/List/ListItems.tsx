@@ -1,9 +1,8 @@
 import Link from "next/link";
 import styles from "./index.module.css";
 import { IListItem } from "./index.types";
-import { useAppDispatch } from "@/rtk/hooks";
-import { fillPostToUpdate } from "@/rtk/slices/postsSlice";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { saveItemLocalStorage } from "./list.helper";
 
 /**
  * ListItems component displays a list of items.
@@ -11,16 +10,24 @@ import { useRouter } from "next/navigation";
  * @component
  * @param {Object} props - The component props.
  * @param {IListItem[]} props.items - An array of items to display in the list.
+ * @param handleEditItem - Handel function to set item to local storage and reroute to edit form
+ * @param saveItemLocalStorage - Function to set the current edit item to local storage
  * @returns {JSX.Element} - A JSX element representing the list of items.
  */
 
 export default function ListItems({ items }: { items: IListItem[] }) {
-	const dispatch = useAppDispatch();
+	const currentPath = usePathname();
+
 	const { push } = useRouter();
 
 	const handleEditItem = (item: IListItem) => {
-		dispatch(fillPostToUpdate(item));
-		push("/dashboard/posts/update");
+		const isUpdatePostOrSeries = currentPath.includes("posts")
+			? "posts"
+			: "series";
+
+		saveItemLocalStorage(item, isUpdatePostOrSeries);
+
+		push(`/dashboard/${isUpdatePostOrSeries}/update/${item.slug}`);
 	};
 
 	return (

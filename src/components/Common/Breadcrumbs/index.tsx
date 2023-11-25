@@ -11,6 +11,7 @@ import Link from "next/link";
  */
 export default function Breadcrumbs() {
 	const pathname = usePathname();
+
 	const capitalizedPaths = PathHelper.capitalizePath(pathname);
 	const lowerCasedPaths = PathHelper.lowercasePath(pathname);
 	const lastIndex = capitalizedPaths.length - 1;
@@ -26,7 +27,12 @@ export default function Breadcrumbs() {
 				const linkPath = `/${lowerCasedPaths.slice(0, index + 1).join("/")}`;
 
 				// This line is just for making sure the "/" is not orange at last segment
-				const content = index === lastIndex - 1 ? ` / ${segment} /` : index === lastIndex ? segment : `/ ${segment}`;
+				const content =
+					index === lastIndex - 1
+						? ` / ${segment} /`
+						: index === lastIndex
+						? segment
+						: `/ ${segment}`;
 
 				return (
 					<Link key={index} className={breadcrumbClasses} href={linkPath}>
