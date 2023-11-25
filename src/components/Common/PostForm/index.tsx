@@ -2,9 +2,13 @@ import useInput from "@/hooks/useInput";
 import TagsInput from "../TagsInput";
 import FormItem from "./FormItem";
 import styles from "./index.module.css";
-import { usePathname } from "next/navigation";
+import { redirect, usePathname, useRouter } from "next/navigation";
 import { IFromProps } from "./index.types";
-import { getSavedItemLocalStorage } from "../List/list.helper";
+import {
+	getSavedItemLocalStorage,
+	removeSavedItemLocalStorage,
+} from "../List/list.helper";
+import { FormEvent } from "react";
 
 /**
  * PostForm component for rendering a form with various input fields.
@@ -17,6 +21,8 @@ import { getSavedItemLocalStorage } from "../List/list.helper";
 export default function PostForm({ buttonText, target }: IFromProps) {
 	const currentPath = usePathname();
 
+	const { push } = useRouter();
+
 	const isUpdatePostOrSeries = currentPath.includes("posts")
 		? "posts"
 		: "series";
@@ -26,13 +32,24 @@ export default function PostForm({ buttonText, target }: IFromProps) {
 		isUpdatePostOrSeries
 	);
 
+	// if there's no saved item in local storage redirect to home
+	if (!savedItem) redirect(`/dashboard/${isUpdatePostOrSeries}/home`);
+
+	const handleSubmit = (e: FormEvent) => {
+		e.preventDefault();
+
+		removeSavedItemLocalStorage(savedItem._id, isUpdatePostOrSeries);
+
+		push("../" + "home");
+	};
+
 	const title = useInput(savedItem ? savedItem.title : "");
 	const description = useInput(savedItem ? savedItem.description : "");
 	const coverUrl = useInput("");
 
 	return (
 		<div className={styles.form_wrapper}>
-			<form className={styles.form} onSubmit={e => e.preventDefault()}>
+			<form className={styles.form} onSubmit={handleSubmit}>
 				<FormItem
 					type="text"
 					label="Title*"
