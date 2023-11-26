@@ -22,11 +22,12 @@ export default function FormItem({
 	type,
 	rowsNumber = 0,
 	autoFocus,
+	required,
 }: IFormItem) {
 	return (
 		<div className={styles.form_item}>
 			<label className={styles.form_label} htmlFor={name}>
-				{label}
+				{`${label} ${required ? "*" : ""}`}
 			</label>
 
 			{type === "textarea" ? (
@@ -38,6 +39,7 @@ export default function FormItem({
 					placeholder={placeholder}
 					onChange={onChange}
 					value={value}
+					required={required}
 				/>
 			) : (
 				<input
@@ -49,6 +51,7 @@ export default function FormItem({
 					autoFocus={autoFocus}
 					onChange={onChange}
 					value={value}
+					required={required}
 				/>
 			)}
 		</div>

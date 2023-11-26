@@ -11,7 +11,7 @@ import { AiFillCloseCircle } from "react-icons/ai";
  * @param {string} [props.prefix="#"] - The prefix to be added to each tag.
  * @returns {JSX.Element} - Rendered component
  */
-const TagsInput = ({ label = "", prefix = "#" }: ITagsInput) => {
+const TagsInput = ({ label = "", prefix = "#", required }: ITagsInput) => {
 	const [tags, setTags] = useState<string[]>([]);
 
 	const handleAddTag = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -34,7 +34,7 @@ const TagsInput = ({ label = "", prefix = "#" }: ITagsInput) => {
 	return (
 		<div className={styles.tags_input_wrapper}>
 			<label className={styles.tags_input_label} htmlFor="tagsInput">
-				{label}
+				{`${label} ${required ? "*" : ""}`}
 			</label>
 			<div className={styles.tags_input_items_list}>
 				{tags.length > 0 && (

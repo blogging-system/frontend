@@ -1,13 +1,14 @@
 import { IListItem } from "./index.types";
 
 export const saveItemLocalStorage = (item: IListItem, path: string) => {
-	const localStorageSavedData = localStorage.getItem("update-" + path);
+	const localStorageSavedData =
+		typeof window !== undefined && localStorage.getItem("update-" + path);
 
 	if (!localStorageSavedData) {
 		localStorage.setItem("update-" + path, JSON.stringify([item]));
 	} else {
 		const itemIsSave = JSON.parse(localStorageSavedData).find(
-			(oldItem: IListItem) => oldItem._id === item._id
+			(oldItem: IListItem) => oldItem.slug === item.slug
 		);
 
 		if (!itemIsSave) {
@@ -20,7 +21,8 @@ export const saveItemLocalStorage = (item: IListItem, path: string) => {
 };
 
 export const getSavedItemLocalStorage = (slug: string, path: string) => {
-	const localStorageSavedData = localStorage.getItem("update-" + path);
+	const localStorageSavedData =
+		typeof window !== undefined && localStorage.getItem("update-" + path);
 
 	if (localStorageSavedData) {
 		return JSON.parse(localStorageSavedData).find(
@@ -29,12 +31,13 @@ export const getSavedItemLocalStorage = (slug: string, path: string) => {
 	}
 };
 
-export const removeSavedItemLocalStorage = (id: string, path: string) => {
-	const savedItems = localStorage.getItem("update-" + path);
+export const removeSavedItemLocalStorage = (slug: string, path: string) => {
+	const savedItems =
+		typeof window !== undefined && localStorage.getItem("update-" + path);
 
 	if (savedItems) {
 		const removed = JSON.parse(savedItems).filter(
-			(savedItem: IListItem) => savedItem._id !== id
+			(savedItem: IListItem) => savedItem.slug !== slug
 		);
 
 		localStorage.setItem(`update-${path}`, JSON.stringify(removed));
@@ -42,10 +45,12 @@ export const removeSavedItemLocalStorage = (id: string, path: string) => {
 };
 
 export const clearSavedItemsLocalStorage = () => {
-	const savedItems = localStorage.getItem("update-posts" || "update-series");
+	if (typeof window !== "undefined") {
+		const savedItems = localStorage.getItem("update-posts" || "update-series");
 
-	if (typeof window !== "undefined" && savedItems) {
-		localStorage.setItem("update-posts", "");
-		localStorage.setItem("update-series", "");
+		if (savedItems) {
+			localStorage.setItem("update-posts", "");
+			localStorage.setItem("update-series", "");
+		}
 	}
 };

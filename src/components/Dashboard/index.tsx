@@ -8,7 +8,6 @@ import { getActiveSection } from "./dashboard-utils/getActivationSection";
 import { generateSidebarLinks } from "./dashboard-utils/generateSidebarLinks";
 import { renderMainContent } from "./dashboard-utils/renderMainContent";
 import { useAppSelector } from "@/rtk/hooks";
-import axios from "axios";
 
 /**
  * Dashboard component that displays content based on the current section and path.
