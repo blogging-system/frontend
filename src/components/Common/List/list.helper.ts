@@ -43,14 +43,3 @@ export const removeSavedItemLocalStorage = (slug: string, path: string) => {
 		localStorage.setItem(`update-${path}`, JSON.stringify(removed));
 	}
 };
-
-export const clearSavedItemsLocalStorage = () => {
-	if (typeof window !== "undefined") {
-		const savedItems = localStorage.getItem("update-posts" || "update-series");
-
-		if (savedItems) {
-			localStorage.setItem("update-posts", "");
-			localStorage.setItem("update-series", "");
-		}
-	}
-};

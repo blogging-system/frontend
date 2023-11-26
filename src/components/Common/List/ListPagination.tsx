@@ -38,8 +38,6 @@ export default function ListPagination({
 				/>
 			))}
 
-			{!items.length && "GO BACK"}
-
 			<Link
 				href={`./${paginationActive < items.length ? paginationActive + 1 : 1}`}
 				className={styles.list_pagination_icon}

@@ -15,13 +15,19 @@ export default function Sidebar({ links }: ISidebar) {
 				<Link
 					key={i}
 					className={`${styles.sidebar_item} ${
-						el.url === currentPathName ? styles.sidebar_item_active : ""
+						currentPathName.includes(el.label.toLowerCase())
+							? styles.sidebar_item_active
+							: ""
 					} ${
-						el.label === "New" &&
-						currentPathName.includes("update") &&
-						styles.sidebar_item_active
+						el.label === "New" && currentPathName.includes("update")
+							? styles.sidebar_item_active
+							: ""
 					}`}
-					href={el.url.includes("home" || "new") ? el.url : el.url + "/1"}
+					href={
+						el.url.includes("home" || "new")
+							? el.url
+							: el.url + "/sort=-1&pageSize=5&pageNumber=1"
+					}
 				>
 					{el.label === "New" && currentPathName.includes("update")
 						? "Update"

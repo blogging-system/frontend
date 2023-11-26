@@ -1,4 +1,3 @@
-import Link from "next/link";
 import styles from "./index.module.css";
 import { IListItem } from "./index.types";
 import { usePathname, useRouter } from "next/navigation";
@@ -37,22 +36,19 @@ export default function ListItems({ items }: { items: IListItem[] }) {
 					<li className={styles.list_item} key={index}>
 						<p>{item.title}</p>
 						<span>{item.views} views</span>
-						<div className={styles.list_item_links_wrapper}>
-							<Link href={"#"} className={styles.list_item_link}>
-								Unpublish
-							</Link>
+						<div className={styles.list_item_buttons_wrapper}>
+							<button className={styles.list_item_button}>Unpublish</button>
 							<button
 								onClick={() => handleEditItem(item)}
-								className={styles.list_item_link}
+								className={styles.list_item_button}
 							>
 								Edit
 							</button>
-							<Link
-								href={"#"}
-								className={`${styles.list_item_link} ${styles.list_item_link_active}`}
+							<button
+								className={`${styles.list_item_button} ${styles.list_item_button_active}`}
 							>
 								Delete
-							</Link>
+							</button>
 						</div>
 					</li>
 				))}

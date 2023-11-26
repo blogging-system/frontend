@@ -2,9 +2,8 @@ import styles from "./index.module.css";
 import ListItems from "./ListItems";
 import ListPagination from "./ListPagination";
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { redirect, usePathname, useRouter } from "next/navigation";
 import { getAllPosts } from "@/services/apiServices";
-import { AxiosError } from "axios";
 
 /**
  * Represents a list component that displays a list of items and pagination controls.
@@ -15,12 +14,15 @@ import { AxiosError } from "axios";
  */
 export default function List() {
 	const [items, setItems] = useState([]);
-	const [error, setError] = useState(null);
 	const [loadingItems, setLoadingItems] = useState(true);
 
-	const { slug } = useParams();
+	const pathname = usePathname();
 
-	const paginationActive = Number(slug[slug.length - 1]);
+	const currentQueriesP = pathname.split("&");
+
+	const paginationActive = Number(currentQueriesP[2].split("=")[1]);
+
+	const { push } = useRouter();
 
 	useEffect(() => {
 		(async () => {
@@ -34,8 +36,11 @@ export default function List() {
 				setItems(data);
 				setLoadingItems(false);
 			} else if (!data && error) {
-				setLoadingItems(false);
-				console.log(error);
+				push(
+					pathname.includes("posts")
+						? "/dashboard/posts/home"
+						: "/dashboard/series/home"
+				);
 			}
 		})();
 	}, [paginationActive]);
@@ -49,8 +54,6 @@ export default function List() {
 					<ListItems items={items} />
 				</>
 			)}
-
-			{error && <h2>{error}</h2>}
 
 			<ListPagination items={items} paginationActive={paginationActive} />
 		</div>

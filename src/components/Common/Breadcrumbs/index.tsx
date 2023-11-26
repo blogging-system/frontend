@@ -14,7 +14,9 @@ export default function Breadcrumbs() {
 
 	const capitalizedPaths = PathHelper.capitalizePath(pathname);
 	const lowerCasedPaths = PathHelper.lowercasePath(pathname);
-	const lastIndex = capitalizedPaths.length - 1;
+	const lastIndex = pathname.includes("pageNumber")
+		? capitalizedPaths.length - 2
+		: capitalizedPaths.length - 1;
 
 	return (
 		<div className={styles.breadcrumbs_paths}>
@@ -24,6 +26,7 @@ export default function Breadcrumbs() {
 					${styles.breadcrumbs_path}
 					${isLastSegment ? styles.breadcrumbs_path_last : ""}
 				`;
+
 				const linkPath = `/${lowerCasedPaths.slice(0, index + 1).join("/")}`;
 
 				// This line is just for making sure the "/" is not orange at last segment
@@ -36,7 +39,7 @@ export default function Breadcrumbs() {
 
 				return (
 					<Link key={index} className={breadcrumbClasses} href={linkPath}>
-						{content}
+						{content.includes("pageNumber") ? "" : content}
 					</Link>
 				);
 			})}
