@@ -12,6 +12,7 @@ export interface IFormItem {
 	placeholder: string;
 	rowsNumber?: number;
 	autoFocus?: boolean;
+	required?: boolean;
 }
 
 export interface IFromProps {

@@ -20,5 +20,4 @@ export interface IAnalyticsDataItem {
  */
 export interface IHome {
 	analyticsData: IAnalyticsDataItem[];
-	listItems: IListItem[];
 }

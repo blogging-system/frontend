@@ -1,5 +1,5 @@
 import { DashboardSections } from "../index.types";
-import { analyticsDataByPath, listItems } from "./../index.data";
+import { analyticsDataByPath } from "./../index.data";
 import PostForm from "@/components/Common/PostForm";
 import Home from "@/components/Common/Home";
 import List from "@/components/Common/List";
@@ -34,8 +34,8 @@ export function renderMainContent(
 
 	if (isHomeSection) {
 		const homeData = analyticsDataByPath[currentPath] || [];
-		return <Home analyticsData={homeData} listItems={listItems} />;
+		return <Home analyticsData={homeData} />;
 	}
 
-	return <List items={listItems} />;
+	return <List />;
 }

@@ -5,6 +5,7 @@ import {
 } from "react-icons/bs";
 import PaginationLink from "./PaginationLink";
 import { IListPaginationProps } from "./index.types";
+import Link from "next/link";
 
 /**
  * ListPagination component displays a pagination control with left and right arrows.
@@ -17,37 +18,34 @@ import { IListPaginationProps } from "./index.types";
 export default function ListPagination({
 	items,
 	paginationActive,
-	setPaginationActive,
 }: IListPaginationProps) {
 	return (
 		<div className={styles.list_pagination}>
-			<button
-				onClick={() =>
-					paginationActive > 0 && setPaginationActive(paginationActive - 1)
-				}
+			<Link
+				href={`./${
+					paginationActive > 1 ? paginationActive - 1 : paginationActive
+				}`}
 				className={styles.list_pagination_icon}
 			>
 				<BsFillArrowLeftSquareFill />
-			</button>
+			</Link>
 
 			{items.map((_, idx) => (
 				<PaginationLink
 					key={idx + 1}
-					paginationNumber={idx}
+					paginationNumber={idx + 1}
 					paginationActive={paginationActive}
-					setPaginationActive={setPaginationActive}
 				/>
 			))}
 
-			<button
-				onClick={() =>
-					paginationActive + 1 < items.length &&
-					setPaginationActive(paginationActive + 1)
-				}
+			{!items.length && "GO BACK"}
+
+			<Link
+				href={`./${paginationActive < items.length ? paginationActive + 1 : 1}`}
 				className={styles.list_pagination_icon}
 			>
 				<BsFillArrowRightSquareFill />
-			</button>
+			</Link>
 		</div>
 	);
 }

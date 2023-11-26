@@ -9,6 +9,8 @@ import {
 	removeSavedItemLocalStorage,
 } from "../List/list.helper";
 import { FormEvent } from "react";
+import axios from "axios";
+import { API_URL } from "@/constants/environment";
 
 /**
  * PostForm component for rendering a form with various input fields.
@@ -33,12 +35,13 @@ export default function PostForm({ buttonText, target }: IFromProps) {
 	);
 
 	// if there's no saved item in local storage redirect to home
-	if (!savedItem) redirect(`/dashboard/${isUpdatePostOrSeries}/home`);
+	if (!savedItem && currentPath.includes("update"))
+		redirect(`/dashboard/${isUpdatePostOrSeries}/home`);
 
 	const handleSubmit = (e: FormEvent) => {
 		e.preventDefault();
 
-		removeSavedItemLocalStorage(savedItem._id, isUpdatePostOrSeries);
+		removeSavedItemLocalStorage(savedItem.slug, isUpdatePostOrSeries);
 
 		push("../" + "home");
 	};
@@ -52,49 +55,53 @@ export default function PostForm({ buttonText, target }: IFromProps) {
 			<form className={styles.form} onSubmit={handleSubmit}>
 				<FormItem
 					type="text"
-					label="Title*"
+					label="Title"
 					name="title"
 					placeholder="Please enter the title"
 					autoFocus={true}
+					required={true}
 					{...title}
 				/>
 
 				<FormItem
-					label="Description*"
+					label="Description"
 					name="content"
 					placeholder="Please enter the content"
 					type="textarea"
 					rowsNumber={3}
+					required={true}
 					{...description}
 				/>
 
 				{target === "series" ? (
 					<div className={styles.form_item}>
-						<TagsInput label="Items*" prefix="" />
+						<TagsInput label="Items" prefix="" />
 					</div>
 				) : (
 					<FormItem
-						label="Content*"
+						label="Content"
 						name="content"
 						type="textarea"
 						placeholder="Please enter the content"
+						required={true}
 						rowsNumber={20}
 					/>
 				)}
 
 				<div className={styles.form_item}>
-					<TagsInput label="Tags*" />
+					<TagsInput label="Tags" required={true} />
 				</div>
 
 				<div className={styles.form_item}>
-					<TagsInput label="Keywords*" prefix="" />
+					<TagsInput label="Keywords" prefix="" required={true} />
 				</div>
 
 				<FormItem
 					type="url"
-					label="Cover Image URL*"
+					label="Cover Image URL"
 					name="coverImageUrl"
 					placeholder="Please enter the image URL"
+					required={true}
 					{...coverUrl}
 				/>
 

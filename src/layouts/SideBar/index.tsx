@@ -21,7 +21,7 @@ export default function Sidebar({ links }: ISidebar) {
 						currentPathName.includes("update") &&
 						styles.sidebar_item_active
 					}`}
-					href={el.url}
+					href={el.url.includes("home" || "new") ? el.url : el.url + "/1"}
 				>
 					{el.label === "New" && currentPathName.includes("update")
 						? "Update"
