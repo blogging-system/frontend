@@ -4,7 +4,6 @@ import { sections } from "@/components/Dashboard/index.data";
 import { useParams } from "next/navigation";
 import Dashboard from "@/components/Dashboard";
 import { redirect } from "next/navigation";
-import { clearSavedItemsLocalStorage } from "@/components/Common/List/list.helper";
 
 export default function DashboardPage() {
 	const { slug } = useParams();
@@ -20,11 +19,6 @@ export default function DashboardPage() {
 
 	if (!isLengthValid || !isUrlCategoryValid || !isUrlSubCategoryValid)
 		return redirect("/not-found");
-
-	// clear saved items from localStorage if the path wasn't update
-	if (!slug.includes("update")) {
-		clearSavedItemsLocalStorage();
-	}
 
 	return (
 		<>
