@@ -1,5 +1,5 @@
-import { ISectionData } from "@/components/Dashboard/index.types";
-import { IAnalyticsDataItem } from "./../../components/Common/Home/index.types";
+import { ISectionData } from "@/components/Dashboard/types/index.types";
+import { IAnalyticsDataItem } from "../../components/Common/Home/types/index.types";
 import { createSlice } from "@reduxjs/toolkit";
 
 interface IState {
