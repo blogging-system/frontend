@@ -2,15 +2,15 @@ import useInput from "@/hooks/inputs/useInput";
 import TagsInput from "../../TagsInput";
 import FormItem from "./FormItem";
 import styles from "../styles/form.module.css";
-import { redirect, useParams, usePathname, useRouter } from "next/navigation";
+import { redirect, useParams, useRouter } from "next/navigation";
 import { IFromProps } from "../types/index.types";
 import { getSavedItemLocalStorage } from "../../../../helpers/local-storage/local-storage.helper";
 import { FormEvent } from "react";
 import { IListItem } from "../../List/types/index.types";
 import { ICreatePostQueries } from "@/services/posts/types/create-post.types";
-import { handleCreateSubmit } from "../helpers/create/create.helper";
 import { handleUpdateSubmit } from "../helpers/update/update.helper";
 import { IInputHook } from "@/hooks/inputs/types/inputHook.type";
+import { createPostApi } from "@/services/posts/create-post";
 
 /**
  * PostForm component for rendering a form with various input fields.
@@ -23,7 +23,7 @@ import { IInputHook } from "@/hooks/inputs/types/inputHook.type";
 export default function Form({ buttonText, target }: IFromProps) {
 	const { slug } = useParams();
 
-	const pathname = usePathname();
+	const { back } = useRouter();
 
 	const isUpdatePostOrSeries = slug.includes("posts") ? "posts" : "series";
 
@@ -57,9 +57,17 @@ export default function Form({ buttonText, target }: IFromProps) {
 				keywords: [],
 				series: [],
 				tags: [],
+				imageUrl: "https://example.com",
 			};
 
-			handleCreateSubmit({ postData, pathname });
+			const { data, error } = await createPostApi(postData);
+
+			if (data) {
+				back();
+			} else {
+				console.log(error);
+				alert(error);
+			}
 		} else {
 			handleUpdateSubmit({ slug, isUpdatePostOrSeries });
 		}

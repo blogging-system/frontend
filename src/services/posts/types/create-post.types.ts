@@ -5,4 +5,9 @@ export interface ICreatePostQueries {
 	tags?: string[];
 	keywords?: string[];
 	series?: string[];
+	imageUrl: string;
+}
+
+export interface IHandleCreateSubmit {
+	postData: ICreatePostQueries;
 }

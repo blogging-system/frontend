@@ -1,4 +1,4 @@
-import { API_URL } from "@/constants/environment";
+import { appConfig } from "@/config/app.config";
 import { IGetAllPostsPrams } from "@/services/posts/types/get-all-posts.types";
 
 export const GET_ALL_POSTS = ({
@@ -8,4 +8,4 @@ export const GET_ALL_POSTS = ({
 	tagId,
 	seriesId,
 }: IGetAllPostsPrams) =>
-	`${API_URL}/posts?sort=${sort}&pageSize=${pageSize}&pageNumber=${pageNumber}`;
+	`${appConfig.apiUrl}/posts?sort=${sort}&pageSize=${pageSize}&pageNumber=${pageNumber}`;
