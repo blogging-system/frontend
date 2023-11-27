@@ -1,0 +1,19 @@
+.dashboard_container {
+	display: flex;
+	max-width: 1350px;
+	margin: auto;
+	flex-direction: column;
+	padding-top: 75px;
+}
+
+.dashboard_main {
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
+	gap: 1rem;
+	width: 100%;
+}
+
+.dashboard_content {
+	width: 100%;
+}

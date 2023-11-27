@@ -1,10 +1,10 @@
 "use client";
 
 import React from "react";
-import styles from "./index.module.css";
-import { ISidebar } from "./index.types";
+import styles from "./styles/index.module.css";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import { ISidebar } from "./types/links.type";
 
 export default function Sidebar({ links }: ISidebar) {
 	const currentPathName = usePathname();
@@ -24,7 +24,7 @@ export default function Sidebar({ links }: ISidebar) {
 							: ""
 					}`}
 					href={
-						el.url.includes("home" || "new")
+						el.url.includes("home") || el.url.includes("new")
 							? el.url
 							: el.url + "/sort=-1&pageSize=5&pageNumber=1"
 					}
