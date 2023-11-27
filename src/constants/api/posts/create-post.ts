@@ -1,3 +1,3 @@
-import { API_URL } from "@/constants/environment";
+import { appConfig } from "@/config/app.config";
 
-export const CREATE_POST = `${API_URL}/posts`;
+export const CREATE_POST = `${appConfig.apiUrl}/posts`;
