@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import styles from "./index.module.css";
+import styles from "../styles/index.module.css";
 import FormItem from "@/components/Common/Form/components/FormItem";
 
 export default function LogIn() {
