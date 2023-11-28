@@ -15,6 +15,7 @@ export interface IListItem {
 	createdAt: string;
 	updatedAt: string;
 	isPublishedAt: string;
+	imageUrl: string;
 }
 
 export interface ITag {

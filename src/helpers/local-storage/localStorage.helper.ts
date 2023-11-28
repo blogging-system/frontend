@@ -39,5 +39,17 @@ export const removeSavedItemLocalStorage = ({
 	slug,
 	path,
 }: ISavedItemParameter) => {
-	localStorage.removeItem("update-" + path);
+	const savedItems = localStorage.getItem("update-" + path);
+
+	if (savedItems) {
+		const removed = JSON.parse(savedItems).filter(
+			(savedItem: IListItem) => savedItem.slug !== slug
+		);
+
+		localStorage.setItem(`update-${path}`, JSON.stringify(removed));
+
+		if (!removed.length) {
+			localStorage.removeItem("update-" + path);
+		}
+	}
 };

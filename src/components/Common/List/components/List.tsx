@@ -3,7 +3,10 @@ import ListItems from "./ListItems";
 import ListPagination from "../../Pagination/components/ListPagination";
 import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { getAllPosts } from "@/services/posts/get-all-posts";
+import { handleApiRequest } from "@/helpers/services/handleApiRequest.helper";
+import { generateQueryString } from "@/helpers/queries-url/generateQueryString";
+import { PathHelper } from "@/helpers/path/path.helper";
+import { getSidebarActiveListItem } from "@/helpers/sidebar/getSidebarActiveListItem";
 
 /**
  * Represents a list component that displays a list of items and pagination controls.
@@ -18,18 +21,23 @@ export default function List() {
 
 	const pathname = usePathname();
 
-	const currentQueriesP = pathname.split("&");
+	const currentQueries = pathname.split("&");
 
-	const paginationActive = Number(currentQueriesP[2].split("=")[1]);
+	const paginationActive = Number(currentQueries[2].split("=")[1]);
+
+	const isPostsOrSeries = PathHelper.isPathPostsOrSeries(pathname);
 
 	const { push } = useRouter();
 
+	const endpoint = `/${isPostsOrSeries}/${getSidebarActiveListItem(
+		pathname
+	)}?${generateQueryString(pathname.split("/").slice(-1)[0])}`;
+
 	useEffect(() => {
 		(async () => {
-			const { data, error } = await getAllPosts({
-				sort: -1,
-				pageSize: 5,
-				pageNumber: paginationActive,
+			const { data, error } = await handleApiRequest({
+				endpoint,
+				method: "GET",
 			});
 
 			if (data && !error) {
@@ -55,7 +63,7 @@ export default function List() {
 				</>
 			)}
 
-			<ListPagination items={items} paginationActive={paginationActive} />
+			<ListPagination />
 		</div>
 	);
 }
