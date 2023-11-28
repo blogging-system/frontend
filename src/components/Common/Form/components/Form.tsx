@@ -30,6 +30,8 @@ export default function Form({ buttonText, target }: IFromProps) {
 	const isPostOrSeries = PathHelper.isPathPostsOrSeries(slug.toString());
 	const isFormCreateOrUpdate = slug.includes("update") ? "update" : "create";
 
+	console.log(isPostOrSeries);
+
 	const savedItem: IListItem = getSavedItemLocalStorage({
 		slug: slug[slug.length - 1],
 		path: isPostOrSeries,
@@ -75,7 +77,7 @@ export default function Form({ buttonText, target }: IFromProps) {
 		if (isFormCreateOrUpdate === "create") {
 			const { data, error } = await handleApiRequest({
 				endpoint: apiUrl,
-				dataPayload: postData,
+				dataPayload: isPostOrSeries === "posts" ? postData : seriesData,
 				method: "POST",
 			});
 
