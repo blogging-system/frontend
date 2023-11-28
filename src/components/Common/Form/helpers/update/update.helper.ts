@@ -21,6 +21,8 @@ export const handleUpdateSubmit = async ({
 		dataPayload,
 	});
 
+	console.log(id, dataPayload, isUpdatePostOrSeries);
+
 	removeSavedItemLocalStorage({
 		path: isUpdatePostOrSeries,
 		slug: slug[slug.length - 1],

@@ -47,6 +47,8 @@ export default function Form({ buttonText, target }: IFromProps) {
 	const content: IInputHook = useInput(savedItem ? savedItem.content : "");
 	const coverUrl: IInputHook = useInput("");
 
+	console.log(isPostOrSeries);
+
 	const handleSubmit = async (e: FormEvent) => {
 		e.preventDefault();
 
@@ -89,7 +91,7 @@ export default function Form({ buttonText, target }: IFromProps) {
 				id: savedItem._id,
 				slug: slug,
 				isUpdatePostOrSeries: isPostOrSeries,
-				dataPayload: isPostOrSeries === "post" ? postData : seriesData,
+				dataPayload: isPostOrSeries === "posts" ? postData : seriesData,
 			});
 
 			if (data || error) {
