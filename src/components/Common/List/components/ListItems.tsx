@@ -1,7 +1,7 @@
 import styles from "../styles/index.module.css";
 import { IListItem } from "../types/index.types";
 import { usePathname, useRouter } from "next/navigation";
-import { saveItemLocalStorage } from "../../../../helpers/local-storage/local-storage.helper";
+import { saveItemLocalStorage } from "../../../../helpers/local-storage/localStorage.helper";
 
 /**
  * ListItems component displays a list of items.

@@ -5,7 +5,9 @@ import {
 } from "react-icons/bs";
 import PaginationLink from "./PaginationLink";
 import Link from "next/link";
-import { IListPaginationProps } from "../types/index.types";
+import { usePathname } from "next/navigation";
+import { useEffect, useMemo, useState } from "react";
+import { fetchPostsOrSeriesCount } from "../services/fetchPostsOrSeriesCount";
 
 /**
  * ListPagination component displays a pagination control with left and right arrows.
@@ -15,10 +17,27 @@ import { IListPaginationProps } from "../types/index.types";
  * @param paginationActive - A number of active pagination
  * @returns {JSX.Element} - A JSX element representing the pagination control.
  */
-export default function ListPagination({
-	items,
-	paginationActive,
-}: IListPaginationProps) {
+export default function ListPagination() {
+	const [countItems, setCountItems] = useState(0);
+
+	const pathname = usePathname();
+
+	const currentQueriesP = pathname.split("&");
+
+	const paginationActive = Number(currentQueriesP[2].split("=")[1]);
+
+	const isPostOrSeries = pathname.includes("posts") ? "posts" : "series";
+
+	async function handleCountItem() {
+		const count = await fetchPostsOrSeriesCount(isPostOrSeries);
+
+		setCountItems(count);
+	}
+
+	useEffect(() => {
+		handleCountItem();
+	}, []);
+
 	return (
 		<div className={styles.list_pagination}>
 			<Link
@@ -29,17 +48,30 @@ export default function ListPagination({
 			>
 				<BsFillArrowLeftSquareFill />
 			</Link>
+			<PaginationLink
+				paginationNumber={1}
+				paginationActive={paginationActive}
+			/>
 
-			{items.map((_, idx) => (
-				<PaginationLink
-					key={idx + 1}
-					paginationNumber={idx + 1}
-					paginationActive={paginationActive}
-				/>
-			))}
+			{Array.from(Array(5)).map((_, index) => {
+				if (index > 1) {
+					return (
+						<PaginationLink
+							key={index}
+							paginationNumber={index}
+							paginationActive={paginationActive}
+						/>
+					);
+				}
+			})}
+
+			<PaginationLink
+				paginationNumber={countItems}
+				paginationActive={paginationActive}
+			/>
 
 			<Link
-				href={`./${paginationActive < items.length ? paginationActive + 1 : 1}`}
+				href={`./${paginationActive < countItems ? paginationActive + 1 : 1}`}
 				className={styles.list_pagination_icon}
 			>
 				<BsFillArrowRightSquareFill />

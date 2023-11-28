@@ -1,5 +1,6 @@
-import { removeSavedItemLocalStorage } from "@/helpers/local-storage/local-storage.helper";
+import { removeSavedItemLocalStorage } from "@/helpers/local-storage/localStorage.helper";
 import { IHandleUpdateSubmit } from "./types";
+import { handleApiRequest } from "@/helpers/services/handleApiRequest.helper";
 
 /**
  * Handles the submit event for updating a post or series.
@@ -9,11 +10,21 @@ import { IHandleUpdateSubmit } from "./types";
  */
 
 export const handleUpdateSubmit = async ({
+	id,
 	slug,
 	isUpdatePostOrSeries,
+	dataPayload,
 }: IHandleUpdateSubmit) => {
 	removeSavedItemLocalStorage({
 		slug: isUpdatePostOrSeries,
 		path: slug[slug.length - 1],
 	});
+
+	const { data, error } = await handleApiRequest({
+		endpoint: `/${isUpdatePostOrSeries}/${id}`,
+		method: "PATCH",
+		dataPayload,
+	});
+
+	return { data, error };
 };
