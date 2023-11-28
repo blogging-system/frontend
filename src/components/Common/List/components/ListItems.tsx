@@ -37,7 +37,9 @@ export default function ListItems({ items }: { items: IListItem[] }) {
 						<p>{item.title}</p>
 						<span>{item.views} views</span>
 						<div className={styles.list_item_buttons_wrapper}>
-							<button className={styles.list_item_button}>Unpublish</button>
+							<button className={styles.list_item_button}>
+								{item.isPublished ? "Unpublish" : "Publish"}
+							</button>
 							<button
 								onClick={() => handleEditItem(item)}
 								className={styles.list_item_button}
