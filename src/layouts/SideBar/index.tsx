@@ -5,9 +5,12 @@ import styles from "./styles/index.module.css";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { ISidebar } from "./types/links.type";
+import { getSidebarActiveListItem } from "@/helpers/sidebar/getSidebarActiveListItem";
 
 export default function Sidebar({ links }: ISidebar) {
-	const currentPathName = usePathname();
+	const pathname = usePathname();
+
+	const activeList = getSidebarActiveListItem(pathname);
 
 	return (
 		<div className={styles.sidebar_container}>
@@ -15,11 +18,11 @@ export default function Sidebar({ links }: ISidebar) {
 				<Link
 					key={i}
 					className={`${styles.sidebar_item} ${
-						currentPathName.includes(el.label.toLowerCase())
+						activeList === el.label.toLowerCase()
 							? styles.sidebar_item_active
 							: ""
 					} ${
-						el.label === "New" && currentPathName.includes("update")
+						el.label === "New" && pathname.includes("update")
 							? styles.sidebar_item_active
 							: ""
 					}`}
@@ -29,7 +32,7 @@ export default function Sidebar({ links }: ISidebar) {
 							: el.url + "/sort=-1&pageSize=5&pageNumber=1"
 					}
 				>
-					{el.label === "New" && currentPathName.includes("update")
+					{el.label === "New" && pathname.includes("update")
 						? "Update"
 						: el.label}
 				</Link>

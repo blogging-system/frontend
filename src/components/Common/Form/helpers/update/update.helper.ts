@@ -15,8 +15,6 @@ export const handleUpdateSubmit = async ({
 	isUpdatePostOrSeries,
 	dataPayload,
 }: IHandleUpdateSubmit) => {
-	console.log(slug);
-
 	const { data, error } = await handleApiRequest({
 		endpoint: `/${isUpdatePostOrSeries}/${id}`,
 		method: "PATCH",
