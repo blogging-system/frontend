@@ -3,14 +3,15 @@ import TagsInput from "../../TagsInput";
 import FormItem from "./FormItem";
 import styles from "../styles/form.module.css";
 import { redirect, useParams, useRouter } from "next/navigation";
+import { useState } from "react";
 import { IFromProps } from "../types/index.types";
-import { getSavedItemLocalStorage } from "../../../../helpers/local-storage/local-storage.helper";
+import { getSavedItemLocalStorage } from "../../../../helpers/local-storage/localStorage.helper";
 import { FormEvent } from "react";
 import { IListItem } from "../../List/types/index.types";
-import { ICreatePostQueries } from "@/services/posts/types/create-post.types";
 import { handleUpdateSubmit } from "../helpers/update/update.helper";
 import { IInputHook } from "@/hooks/inputs/types/inputHook.type";
-import { createPostApi } from "@/services/posts/create-post";
+import { handleApiRequest } from "@/helpers/services/handleApiRequest.helper";
+import { PathHelper } from "@/helpers/path/path.helper";
 
 /**
  * PostForm component for rendering a form with various input fields.
@@ -21,22 +22,23 @@ import { createPostApi } from "@/services/posts/create-post";
  * @returns {JSX.Element} - Rendered component
  */
 export default function Form({ buttonText, target }: IFromProps) {
-	const { slug } = useParams();
+	const [submitButtonIsLoading, setSubmitButtonIsLoading] = useState(false);
 
+	const { slug } = useParams();
 	const { back } = useRouter();
 
-	const isUpdatePostOrSeries = slug.includes("posts") ? "posts" : "series";
+	const isPostOrSeries = PathHelper.isPathPostsOrSeries(slug.toString());
+	const isFormCreateOrUpdate = slug.includes("update") ? "update" : "create";
 
 	const savedItem: IListItem = getSavedItemLocalStorage({
 		slug: slug[slug.length - 1],
-		path: isUpdatePostOrSeries,
+		path: isPostOrSeries,
 	});
 
-	const isFormCreateOrUpdate = slug.includes("update") ? "update" : "create";
-
 	// if there's no saved item in local storage redirect to home
-	if (!savedItem && slug.includes("update"))
-		redirect(`/dashboard/${isUpdatePostOrSeries}/home`);
+	if (!savedItem && slug.includes("update")) {
+		redirect(`/dashboard/${isPostOrSeries}/home`);
+	}
 
 	const title: IInputHook = useInput(savedItem ? savedItem.title : "");
 	const description: IInputHook = useInput(
@@ -48,28 +50,51 @@ export default function Form({ buttonText, target }: IFromProps) {
 	const handleSubmit = async (e: FormEvent) => {
 		e.preventDefault();
 
+		setSubmitButtonIsLoading(true);
+
+		const apiUrl = `/${isPostOrSeries}?sort=-1&pageSize=5&pageNumber=1`;
+
+		const postData = {
+			title: title.value,
+			description: description.value,
+			content: content.value,
+			tags: [],
+			keywords: [],
+			series: [],
+			imageUrl: "https://www.example.com",
+		};
+
+		const seriesData = {
+			title: title.value,
+			description: description.value,
+			imageUrl: "https://www.example.com",
+		};
+
 		if (isFormCreateOrUpdate === "create") {
-			// The post or series data to be created
-			const postData: ICreatePostQueries = {
-				title: title.value,
-				description: description.value,
-				content: content.value,
-				keywords: [],
-				series: [],
-				tags: [],
-				imageUrl: "https://example.com",
-			};
+			const { data, error } = await handleApiRequest({
+				endpoint: apiUrl,
+				dataPayload: postData,
+				method: "POST",
+			});
 
-			const { data, error } = await createPostApi(postData);
-
-			if (data) {
+			if (data && !error) {
 				back();
-			} else {
+				setSubmitButtonIsLoading(false);
+			} else if (error && !data) {
 				console.log(error);
-				alert(error);
+				setSubmitButtonIsLoading(false);
 			}
 		} else {
-			handleUpdateSubmit({ slug, isUpdatePostOrSeries });
+			const { data, error } = await handleUpdateSubmit({
+				id: savedItem._id,
+				slug: slug,
+				isUpdatePostOrSeries: isPostOrSeries,
+				dataPayload: isPostOrSeries === "post" ? postData : seriesData,
+			});
+
+			if (data || error) {
+				setSubmitButtonIsLoading(false);
+			}
 		}
 	};
 
@@ -129,7 +154,7 @@ export default function Form({ buttonText, target }: IFromProps) {
 				/>
 
 				<button className={styles.form_button} type="submit">
-					{buttonText}
+					{submitButtonIsLoading ? "Loading..." : buttonText}
 				</button>
 			</form>
 		</div>
