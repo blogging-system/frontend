@@ -80,7 +80,7 @@ export default function Form({ buttonText, target }: IFromProps) {
 				setSubmitButtonIsLoading(false);
 			}
 		} else {
-			const response = handleUpdateSubmit({
+			const { data, error } = await handleUpdateSubmit({
 				id: savedItem._id,
 				slug: slug,
 				isUpdatePostOrSeries,
@@ -95,9 +95,9 @@ export default function Form({ buttonText, target }: IFromProps) {
 				},
 			});
 
-			console.log(response);
-
-			setSubmitButtonIsLoading(false);
+			if (data || error) {
+				setSubmitButtonIsLoading(false);
+			}
 		}
 	};
 

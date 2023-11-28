@@ -15,15 +15,17 @@ export const handleUpdateSubmit = async ({
 	isUpdatePostOrSeries,
 	dataPayload,
 }: IHandleUpdateSubmit) => {
-	removeSavedItemLocalStorage({
-		slug: isUpdatePostOrSeries,
-		path: slug[slug.length - 1],
-	});
+	console.log(slug);
 
 	const { data, error } = await handleApiRequest({
 		endpoint: `/${isUpdatePostOrSeries}/${id}`,
 		method: "PATCH",
 		dataPayload,
+	});
+
+	removeSavedItemLocalStorage({
+		path: isUpdatePostOrSeries,
+		slug: slug[slug.length - 1],
 	});
 
 	return { data, error };
