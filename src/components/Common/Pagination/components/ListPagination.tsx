@@ -8,6 +8,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { fetchPostsOrSeriesCount } from "../services/fetchPostsOrSeriesCount";
+import { PathHelper } from "@/helpers/path/path.helper";
 
 /**
  * ListPagination component displays a pagination control with left and right arrows.
@@ -26,7 +27,7 @@ export default function ListPagination() {
 
 	const paginationActive = Number(currentQueriesP[2].split("=")[1]);
 
-	const isPostOrSeries = pathname.includes("posts") ? "posts" : "series";
+	const isPostOrSeries = PathHelper.isPathPostsOrSeries(pathname);
 
 	async function handleCountItem() {
 		const count = await fetchPostsOrSeriesCount(isPostOrSeries);

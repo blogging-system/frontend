@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { handleApiRequest } from "@/helpers/services/handleApiRequest.helper";
 import { generateQueryString } from "@/helpers/queries-url/generateQueryString";
+import { PathHelper } from "@/helpers/path/path.helper";
 
 /**
  * Represents a list component that displays a list of items and pagination controls.
@@ -23,9 +24,11 @@ export default function List() {
 
 	const paginationActive = Number(currentQueriesP[2].split("=")[1]);
 
+	const isPostsOrSeries = PathHelper.isPathPostsOrSeries(pathname);
+
 	const { push } = useRouter();
 
-	const endpoint = `/posts?${generateQueryString(
+	const endpoint = `/${isPostsOrSeries}?${generateQueryString(
 		pathname.split("/").slice(-1)[0]
 	)}`;
 

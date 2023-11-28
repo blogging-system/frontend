@@ -10,9 +10,9 @@ export class PathHelper {
 	 * @returns An array containing the capitalized versions of the segments.
 	 */
 	static capitalizePath(url: string): string[] {
-		const parts = url.split("/").filter((part) => part !== "");
+		const parts = url.split("/").filter(part => part !== "");
 
-		const capitalizedParts = parts.map((part) => {
+		const capitalizedParts = parts.map(part => {
 			if (part.length > 0) {
 				return part.charAt(0).toUpperCase() + part.slice(1);
 			} else {
@@ -31,12 +31,22 @@ export class PathHelper {
 	 * @returns An array containing the lowercase versions of the segments.
 	 */
 	static lowercasePath(url: string): string[] {
-		const parts = url.split("/").filter((part) => part !== "");
+		const parts = url.split("/").filter(part => part !== "");
 
-		const lowercaseParts = parts.map((part) => {
+		const lowercaseParts = parts.map(part => {
 			return part.toLowerCase();
 		});
 
 		return lowercaseParts;
+	}
+
+	/**
+	 * Determines whether the given URL is for the "posts" or "series" path.
+	 *
+	 * @param {string} url - The URL to check.
+	 * @return {string} Returns "posts" if the URL includes "posts", otherwise returns "series".
+	 */
+	static isPathPostsOrSeries(url: string): string {
+		return url.includes("posts") ? "posts" : "series";
 	}
 }
