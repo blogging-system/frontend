@@ -1,11 +1,11 @@
 import axios from "axios";
 
-const axiosInstance = axios.create({});
+const axiosInstance = axios.create();
 
 axiosInstance.interceptors.request.use(
 	config => {
 		const token =
-			"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTYxY2IzYzcwODNkZDA2OWNlODZmOTUiLCJpYXQiOjE3MDExNDc1MjYsImV4cCI6MTcwMTE5MDcyNn0.IjxGXq6w9qXxFGtJgM6u68QquatbFH9RP3dihlXkF_s";
+			"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTYxY2IzYzcwODNkZDA2OWNlODZmOTUiLCJpYXQiOjE3MDEyMzIwMzgsImV4cCI6MTcwMTI3NTIzOH0.l84G1N8ICcxiPcOnFetT4hTh-LFQwoBvEZ4XZ5_FdKk";
 
 		if (token) {
 			config.headers.Authorization = `Bearer ${token}`;

@@ -2,11 +2,13 @@ import styles from "../styles/index.module.css";
 import ListItems from "./ListItems";
 import ListPagination from "../../Pagination/components/ListPagination";
 import { useEffect, useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
-import { handleApiRequest } from "@/helpers/services/handleApiRequest.helper";
+import { usePathname } from "next/navigation";
 import { generateQueryString } from "@/helpers/queries-url/generateQueryString";
 import { PathHelper } from "@/helpers/path/path.helper";
 import { getSidebarActiveListItem } from "@/helpers/sidebar/getSidebarActiveListItem";
+import { useAppDispatch, useAppSelector } from "@/rtk/hooks";
+import { fetchList } from "@/rtk/slices/listSlice";
+import { IListItem } from "../types/index.types";
 
 /**
  * Represents a list component that displays a list of items and pagination controls.
@@ -16,8 +18,9 @@ import { getSidebarActiveListItem } from "@/helpers/sidebar/getSidebarActiveList
  * @param paginationList - A list of pagination
  */
 export default function List() {
-	const [items, setItems] = useState([]);
-	const [loadingItems, setLoadingItems] = useState(true);
+	const [items, setItems] = useState<IListItem[]>([]);
+	const [loadingItems, setLoadingItems] = useState<boolean>(true);
+	const [errorMsg, setErrorMsg] = useState<string>("");
 
 	const pathname = usePathname();
 
@@ -27,42 +30,30 @@ export default function List() {
 
 	const isPostsOrSeries = PathHelper.isPathPostsOrSeries(pathname);
 
-	const { push } = useRouter();
-
 	const endpoint = `/${isPostsOrSeries}/${getSidebarActiveListItem(
 		pathname
 	)}?${generateQueryString(pathname.split("/").slice(-1)[0])}`;
 
-	useEffect(() => {
-		(async () => {
-			const { data, error } = await handleApiRequest({
-				endpoint,
-				method: "GET",
-			});
+	const dispatch = useAppDispatch();
+	const { list, isLoading, error } = useAppSelector(state => state.list);
 
-			if (data && !error) {
-				setItems(data);
-				setLoadingItems(false);
-			} else if (!data && error) {
-				push(
-					pathname.includes("posts")
-						? "/dashboard/posts/home"
-						: "/dashboard/series/home"
-				);
-			}
-		})();
+	useEffect(() => {
+		dispatch(fetchList(endpoint));
 	}, [paginationActive]);
 
+	useEffect(() => {
+		setItems(list);
+		setLoadingItems(isLoading);
+	}, [list, isLoading, error]);
 	return (
 		<div className={styles.list_wrapper}>
 			{loadingItems ? (
 				<h1>Loading</h1>
+			) : items.length ? (
+				<ListItems items={items} />
 			) : (
-				<>
-					<ListItems items={items} />
-				</>
+				<h1>{errorMsg}</h1>
 			)}
-
 			<ListPagination />
 		</div>
 	);
