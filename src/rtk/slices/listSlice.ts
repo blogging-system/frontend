@@ -56,7 +56,7 @@ const listSlice = createSlice({
 			state.isLoading = false;
 			state.error = action.payload.error;
 		});
-		builder.addCase(fetchList.pending, (state, action) => {
+		builder.addCase(fetchList.pending, state => {
 			state.isLoading = true;
 		});
 	},
