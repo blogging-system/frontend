@@ -1,6 +1,7 @@
 import { appConfig } from "@/config/app.config";
 import axiosInstance from "@/services/axiosInstance";
 import { IHandleApiRequest } from "./types";
+import axios, { AxiosError } from "axios";
 
 export const handleApiRequest = async <D, H>({
 	endpoint,
@@ -18,9 +19,13 @@ export const handleApiRequest = async <D, H>({
 			error: null,
 		};
 	} catch (error) {
-		return {
-			data: null,
-			error,
-		};
+		if (axios.isAxiosError(error)) {
+			const axiosError: AxiosError = error;
+
+			return {
+				error: axiosError.response?.data,
+				data: null,
+			};
+		}
 	}
 };

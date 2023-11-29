@@ -22,7 +22,7 @@ import { AxiosError } from "axios";
 export default function List() {
 	const [items, setItems] = useState<IListItem[]>([]);
 	const [loadingItems, setLoadingItems] = useState<boolean>(true);
-	const [errorMsg, setErrorMsg] = useState<AxiosError | null | unknown>(null);
+	const [errorMsg, setErrorMsg] = useState<string | undefined>("");
 
 	const pathname = usePathname();
 
@@ -39,8 +39,6 @@ export default function List() {
 	const dispatch = useAppDispatch();
 	const { list, isLoading, error } = useAppSelector(state => state.list);
 
-	console.log(list);
-
 	useEffect(() => {
 		dispatch(fetchList(endpoint));
 	}, [paginationActive]);
@@ -48,15 +46,18 @@ export default function List() {
 	useEffect(() => {
 		setItems(list);
 		setLoadingItems(isLoading);
-		setErrorMsg(error);
+		setErrorMsg(error?.message);
 	}, [list, isLoading, error]);
-
-	console.log(errorMsg);
 
 	return (
 		<div className={styles.list_wrapper}>
-			{loadingItems ? <h1>Loading</h1> : <ListItems items={items} />}
-
+			{loadingItems ? (
+				<h1>Loading</h1>
+			) : items ? (
+				<ListItems items={items} />
+			) : (
+				<h1>{errorMsg}</h1>
+			)}
 			<ListPagination />
 		</div>
 	);

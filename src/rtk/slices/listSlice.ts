@@ -6,7 +6,7 @@ import { AxiosError } from "axios";
 interface IState {
 	list: IListItem[];
 	isLoading: boolean;
-	error: AxiosError | null | unknown;
+	error: AxiosError | null;
 }
 
 const initialState: IState = {
@@ -32,7 +32,21 @@ const listSlice = createSlice({
 	name: "list",
 	reducers: {
 		deleteItem: (state, action) => {
-			const updated = state.list.filter(item => item._id !== action.payload);
+			const filtered = state.list.filter(item => item._id !== action.payload);
+			state.list = filtered;
+		},
+		togglePublishItem: (state, action) => {
+			const updated = state.list.map(item => {
+				if (item._id === action.payload) {
+					return {
+						...item,
+						isPublished: !item.isPublished,
+					};
+				} else {
+					return item;
+				}
+			});
+
 			state.list = updated;
 		},
 	},
@@ -49,4 +63,4 @@ const listSlice = createSlice({
 });
 
 export default listSlice.reducer;
-export const { deleteItem } = listSlice.actions;
+export const { deleteItem, togglePublishItem } = listSlice.actions;

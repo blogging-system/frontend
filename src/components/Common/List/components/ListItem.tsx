@@ -1,25 +1,39 @@
 import React from "react";
 import styles from "../styles/index.module.css";
 import { IListItem } from "../types/index.types";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { saveItemLocalStorage } from "@/helpers/local-storage/localStorage.helper";
 import { useAppDispatch } from "@/rtk/hooks";
-import { deleteItem } from "@/rtk/slices/listSlice";
+import { deleteItem, togglePublishItem } from "@/rtk/slices/listSlice";
 import { PathHelper } from "@/helpers/path/path.helper";
-import { deleteListItem } from "../services/deleteItem";
+import { handleApiRequest } from "@/helpers/services/handleApiRequest.helper";
 
 const ListItem = ({ item }: { item: IListItem }) => {
 	const currentPath = usePathname();
 
-	const { push } = useRouter();
-	const handleEditItem = (item: IListItem) => {
-		const isUpdatePostOrSeries = currentPath.includes("posts")
-			? "posts"
-			: "series";
+	const isUpdatePostOrSeries = currentPath.includes("posts")
+		? "posts"
+		: "series";
 
-		saveItemLocalStorage(item, isUpdatePostOrSeries);
-
-		push(`/dashboard/${isUpdatePostOrSeries}/update/${item.slug}`);
+	const handleItemOperation = async (buttonOperation: string) => {
+		if (buttonOperation === "edit") {
+			saveItemLocalStorage(item, isUpdatePostOrSeries);
+		} else if (buttonOperation === "delete") {
+			dispatch(deleteItem(item._id));
+			const { data, error } = await handleApiRequest({
+				endpoint: `/${isPostsOrSeries}/${item._id}`,
+				method: "DELETE",
+			});
+		} else if (buttonOperation === "publish") {
+			const { data, error } = await handleApiRequest({
+				endpoint: `/${isPostsOrSeries}/${
+					item.isPublished ? "unpublish" : "publish"
+				}/${item._id}`,
+				method: "POST",
+			});
+			dispatch(togglePublishItem(item._id));
+			dispatch(deleteItem(item._id));
+		}
 	};
 
 	const dispatch = useAppDispatch();
@@ -31,21 +45,21 @@ const ListItem = ({ item }: { item: IListItem }) => {
 			<p>{item.title}</p>
 			<span>{item.views} views</span>
 			<div className={styles.list_item_buttons_wrapper}>
-				<button className={styles.list_item_button}>
+				<button
+					className={styles.list_item_button}
+					onClick={() => handleItemOperation("publish")}
+				>
 					{item.isPublished ? "Unpublish" : "Publish"}
 				</button>
 				<button
-					onClick={() => handleEditItem(item)}
+					onClick={() => handleItemOperation("edit")}
 					className={styles.list_item_button}
 				>
 					Edit
 				</button>
 				<button
 					className={`${styles.list_item_button} ${styles.list_item_button_active}`}
-					onClick={() => {
-						dispatch(deleteItem(item._id));
-						deleteListItem(`/${isPostsOrSeries}/${item._id}`);
-					}}
+					onClick={() => handleItemOperation("delete")}
 				>
 					Delete
 				</button>
