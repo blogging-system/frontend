@@ -1,21 +1,27 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getUser } from "./services/auth/getUser";
 
 /**
  * Middleware to product the routes
  * @param user - Authenticated user
  */
 
-export function middleware(request: NextRequest) {
+const middleware = async (request: NextRequest) => {
 	// Redirects
 
+	const accessToken = request.cookies.get("accessToken");
+
+	console.log(await getUser());
+
 	// if not authenticated redirect to login page
-	const user = "authenticated";
+	const user = "adfsa";
 
 	if (!request.nextUrl.pathname.includes("auth") && !user) {
 		return NextResponse.redirect(new URL("/auth/login", request.url));
 	} else if (request.nextUrl.pathname.includes("auth") && user) {
 		return NextResponse.redirect(new URL("/dashboard", request.url));
 	}
-}
+};
 
 export const config = { matcher: "/((?!.*\\.).*)" };
+export default middleware;
