@@ -1,14 +1,18 @@
 import { IListItem } from "@/components/Common/List/types/index.types";
-import { AxiosError } from "axios";
+import { AxiosError, AxiosHeaders, HeadersDefaults } from "axios";
 
-export interface IHandleApiRequest<D, H> {
+export interface IHandleApiRequest<D> {
 	endpoint: string;
 	dataPayload?: D;
 	method: string;
-	headers?: H;
+	headers?: HeadersDefaults;
 }
 
 export interface IHandleApiResponse {
 	data: IListItem[];
 	error: AxiosError | null;
+}
+
+export interface ICommonHeaders extends HeadersDefaults {
+	Authorization: string;
 }

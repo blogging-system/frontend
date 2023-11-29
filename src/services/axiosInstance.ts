@@ -5,7 +5,7 @@ const axiosInstance = axios.create();
 axiosInstance.interceptors.request.use(
 	config => {
 		const token =
-			"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTYxY2IzYzcwODNkZDA2OWNlODZmOTUiLCJpYXQiOjE3MDEyMzIwMzgsImV4cCI6MTcwMTI3NTIzOH0.l84G1N8ICcxiPcOnFetT4hTh-LFQwoBvEZ4XZ5_FdKk";
+			"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTY3MDNkY2I2ODlhYzUyMWU5NDkyMWQiLCJpYXQiOjE3MDEyNTU1ODAsImV4cCI6MTcwMTI5ODc4MH0.41T-ws9pVOBT_J74YVkve0Syd-xfxFHdcPQ7uIebZEg";
 
 		if (token) {
 			config.headers.Authorization = `Bearer ${token}`;
