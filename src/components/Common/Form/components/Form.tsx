@@ -45,37 +45,37 @@ export default function Form({ buttonText, target }: IFromProps) {
 		savedItem ? savedItem.description : ""
 	);
 	const content: IInputHook = useInput(savedItem ? savedItem.content : "");
-	const coverUrl: IInputHook = useInput("");
+	const imageUrl: IInputHook = useInput(savedItem ? savedItem.imageUrl : "");
 
-	console.log(isPostOrSeries);
+	console.log(imageUrl);
 
-	const handleSubmit = async (e: FormEvent) => {
+	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-
 		setSubmitButtonIsLoading(true);
 
 		const apiUrl = `/${isPostOrSeries}?sort=-1&pageSize=5&pageNumber=1`;
 
-		const postData = {
-			title: title.value,
-			description: description.value,
-			content: content.value,
-			tags: [],
-			keywords: [],
-			series: [],
-			imageUrl: "https://www.example.com",
-		};
-
-		const seriesData = {
-			title: title.value,
-			description: description.value,
-			imageUrl: "https://www.example.com",
-		};
+		const dataPayload =
+			isPostOrSeries === "posts"
+				? {
+						title: title.value,
+						description: description.value,
+						content: content.value,
+						tags: [],
+						keywords: [],
+						series: [],
+						imageUrl: imageUrl.value,
+				  }
+				: {
+						title: title.value,
+						description: description.value,
+						imageUrl: imageUrl.value,
+				  };
 
 		if (isFormCreateOrUpdate === "create") {
 			const { data, error } = await handleApiRequest({
 				endpoint: apiUrl,
-				dataPayload: postData,
+				dataPayload,
 				method: "POST",
 			});
 
@@ -86,12 +86,16 @@ export default function Form({ buttonText, target }: IFromProps) {
 				console.log(error);
 				setSubmitButtonIsLoading(false);
 			}
+
+			if (data || error) {
+				setSubmitButtonIsLoading(false);
+			}
 		} else {
 			const { data, error } = await handleUpdateSubmit({
 				id: savedItem._id,
 				slug: slug,
 				isUpdatePostOrSeries: isPostOrSeries,
-				dataPayload: isPostOrSeries === "posts" ? postData : seriesData,
+				dataPayload,
 			});
 
 			if (data || error) {
@@ -152,7 +156,7 @@ export default function Form({ buttonText, target }: IFromProps) {
 					label="Cover Image URL"
 					name="coverImageUrl"
 					placeholder="Please enter the image URL"
-					{...coverUrl}
+					{...imageUrl}
 				/>
 
 				<button className={styles.form_button} type="submit">

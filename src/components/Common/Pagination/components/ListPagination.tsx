@@ -6,9 +6,9 @@ import {
 import PaginationLink from "./PaginationLink";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
-import { fetchPostsOrSeriesCount } from "../services/fetchPostsOrSeriesCount";
+import { useEffect, useState } from "react";
 import { PathHelper } from "@/helpers/path/path.helper";
+import { handleApiRequest } from "@/helpers/services/handleApiRequest.helper";
 
 /**
  * ListPagination component displays a pagination control with left and right arrows.
@@ -30,9 +30,12 @@ export default function ListPagination() {
 	const isPostOrSeries = PathHelper.isPathPostsOrSeries(pathname);
 
 	async function handleCountItem() {
-		const count = await fetchPostsOrSeriesCount(isPostOrSeries);
+		const { data } = await handleApiRequest({
+			endpoint: `/${isPostOrSeries}/analytics/count`,
+			method: "GET",
+		});
 
-		setCountItems(count);
+		setCountItems(data.count);
 	}
 
 	useEffect(() => {
