@@ -2,6 +2,7 @@ import styles from "../styles/index.module.css";
 import { IListItem } from "../types/index.types";
 import { usePathname, useRouter } from "next/navigation";
 import { saveItemLocalStorage } from "../../../../helpers/local-storage/localStorage.helper";
+import ListItem from "./ListItem";
 
 /**
  * ListItems component displays a list of items.
@@ -15,44 +16,11 @@ import { saveItemLocalStorage } from "../../../../helpers/local-storage/localSto
  */
 
 export default function ListItems({ items }: { items: IListItem[] }) {
-	const currentPath = usePathname();
-
-	const { push } = useRouter();
-
-	const handleEditItem = (item: IListItem) => {
-		const isUpdatePostOrSeries = currentPath.includes("posts")
-			? "posts"
-			: "series";
-
-		saveItemLocalStorage(item, isUpdatePostOrSeries);
-
-		push(`/dashboard/${isUpdatePostOrSeries}/update/${item.slug}`);
-	};
-
 	return (
 		<>
 			<ul className={styles.list_items}>
 				{items.map((item, index) => (
-					<li className={styles.list_item} key={index}>
-						<p>{item.title}</p>
-						<span>{item.views} views</span>
-						<div className={styles.list_item_buttons_wrapper}>
-							<button className={styles.list_item_button}>
-								{item.isPublished ? "Unpublish" : "Publish"}
-							</button>
-							<button
-								onClick={() => handleEditItem(item)}
-								className={styles.list_item_button}
-							>
-								Edit
-							</button>
-							<button
-								className={`${styles.list_item_button} ${styles.list_item_button_active}`}
-							>
-								Delete
-							</button>
-						</div>
-					</li>
+					<ListItem item={item} key={index} />
 				))}
 			</ul>
 		</>

@@ -9,6 +9,8 @@ import { PathHelper } from "@/helpers/path/path.helper";
 import { getSidebarActiveListItem } from "@/helpers/sidebar/getSidebarActiveListItem";
 import { useAppDispatch, useAppSelector } from "@/rtk/hooks";
 import { fetchList } from "@/rtk/slices/listSlice";
+import { IListItem } from "../types/index.types";
+import { AxiosError } from "axios";
 
 /**
  * Represents a list component that displays a list of items and pagination controls.
@@ -18,8 +20,9 @@ import { fetchList } from "@/rtk/slices/listSlice";
  * @param paginationList - A list of pagination
  */
 export default function List() {
-	const [items, setItems] = useState([]);
-	const [loadingItems, setLoadingItems] = useState(true);
+	const [items, setItems] = useState<IListItem[]>([]);
+	const [loadingItems, setLoadingItems] = useState<boolean>(true);
+	const [errorMsg, setErrorMsg] = useState<AxiosError | null | unknown>(null);
 
 	const pathname = usePathname();
 
@@ -34,7 +37,9 @@ export default function List() {
 	)}?${generateQueryString(pathname.split("/").slice(-1)[0])}`;
 
 	const dispatch = useAppDispatch();
-	const { list, isLoading } = useAppSelector(state => state.list);
+	const { list, isLoading, error } = useAppSelector(state => state.list);
+
+	console.log(list);
 
 	useEffect(() => {
 		dispatch(fetchList(endpoint));
@@ -43,17 +48,14 @@ export default function List() {
 	useEffect(() => {
 		setItems(list);
 		setLoadingItems(isLoading);
-	}, [list]);
+		setErrorMsg(error);
+	}, [list, isLoading, error]);
+
+	console.log(errorMsg);
 
 	return (
 		<div className={styles.list_wrapper}>
-			{loadingItems ? (
-				<h1>Loading</h1>
-			) : (
-				<>
-					<ListItems items={items} />
-				</>
-			)}
+			{loadingItems ? <h1>Loading</h1> : <ListItems items={items} />}
 
 			<ListPagination />
 		</div>
