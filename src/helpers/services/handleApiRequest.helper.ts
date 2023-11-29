@@ -3,11 +3,11 @@ import axiosInstance from "@/services/axiosInstance";
 import { IHandleApiRequest } from "./types";
 import { AxiosError } from "axios";
 
-export const handleApiRequest = async <D, H>({
+export const handleApiRequest = async <D>({
 	endpoint,
 	dataPayload,
 	method,
-}: IHandleApiRequest<D, H>) => {
+}: IHandleApiRequest<D>) => {
 	try {
 		const { data } = await axiosInstance(`${appConfig.apiUrl}${endpoint}`, {
 			method: method,
