@@ -2,15 +2,13 @@ import styles from "../styles/index.module.css";
 import ListItems from "./ListItems";
 import ListPagination from "../../Pagination/components/ListPagination";
 import { useEffect, useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
-import { handleApiRequest } from "@/helpers/services/handleApiRequest.helper";
+import { usePathname } from "next/navigation";
 import { generateQueryString } from "@/helpers/queries-url/generateQueryString";
 import { PathHelper } from "@/helpers/path/path.helper";
 import { getSidebarActiveListItem } from "@/helpers/sidebar/getSidebarActiveListItem";
 import { useAppDispatch, useAppSelector } from "@/rtk/hooks";
 import { fetchList } from "@/rtk/slices/listSlice";
 import { IListItem } from "../types/index.types";
-import { AxiosError } from "axios";
 
 /**
  * Represents a list component that displays a list of items and pagination controls.
@@ -22,7 +20,7 @@ import { AxiosError } from "axios";
 export default function List() {
 	const [items, setItems] = useState<IListItem[]>([]);
 	const [loadingItems, setLoadingItems] = useState<boolean>(true);
-	const [errorMsg, setErrorMsg] = useState<string | undefined>("");
+	const [errorMsg, setErrorMsg] = useState<string>("");
 
 	const pathname = usePathname();
 
@@ -46,14 +44,12 @@ export default function List() {
 	useEffect(() => {
 		setItems(list);
 		setLoadingItems(isLoading);
-		setErrorMsg(error?.message);
 	}, [list, isLoading, error]);
-
 	return (
 		<div className={styles.list_wrapper}>
 			{loadingItems ? (
 				<h1>Loading</h1>
-			) : items ? (
+			) : items.length ? (
 				<ListItems items={items} />
 			) : (
 				<h1>{errorMsg}</h1>

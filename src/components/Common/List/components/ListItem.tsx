@@ -20,11 +20,14 @@ const ListItem = ({ item }: { item: IListItem }) => {
 			saveItemLocalStorage(item, isUpdatePostOrSeries);
 		} else if (buttonOperation === "delete") {
 			dispatch(deleteItem(item._id));
+
+			//! access data or error for the modal
 			const { data, error } = await handleApiRequest({
 				endpoint: `/${isPostsOrSeries}/${item._id}`,
 				method: "DELETE",
 			});
 		} else if (buttonOperation === "publish") {
+			//! access data or error for the modal
 			const { data, error } = await handleApiRequest({
 				endpoint: `/${isPostsOrSeries}/${
 					item.isPublished ? "unpublish" : "publish"
