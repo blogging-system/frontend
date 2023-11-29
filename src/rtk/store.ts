@@ -1,10 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import postsSlice from "./slices/postsSlice";
+import listSlice from "./slices/listSlice";
 import uiDataSlice from "./slices/sectionsSlice";
 
 export const store = configureStore({
 	reducer: {
-		posts: postsSlice,
+		list: listSlice,
 		uiDataSlice: uiDataSlice,
 	},
 });

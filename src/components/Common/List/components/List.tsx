@@ -7,6 +7,8 @@ import { handleApiRequest } from "@/helpers/services/handleApiRequest.helper";
 import { generateQueryString } from "@/helpers/queries-url/generateQueryString";
 import { PathHelper } from "@/helpers/path/path.helper";
 import { getSidebarActiveListItem } from "@/helpers/sidebar/getSidebarActiveListItem";
+import { useAppDispatch, useAppSelector } from "@/rtk/hooks";
+import { fetchList } from "@/rtk/slices/listSlice";
 
 /**
  * Represents a list component that displays a list of items and pagination controls.
@@ -27,31 +29,21 @@ export default function List() {
 
 	const isPostsOrSeries = PathHelper.isPathPostsOrSeries(pathname);
 
-	const { push } = useRouter();
-
 	const endpoint = `/${isPostsOrSeries}/${getSidebarActiveListItem(
 		pathname
 	)}?${generateQueryString(pathname.split("/").slice(-1)[0])}`;
 
-	useEffect(() => {
-		(async () => {
-			const { data, error } = await handleApiRequest({
-				endpoint,
-				method: "GET",
-			});
+	const dispatch = useAppDispatch();
+	const { list, isLoading } = useAppSelector(state => state.list);
 
-			if (data && !error) {
-				setItems(data);
-				setLoadingItems(false);
-			} else if (!data && error) {
-				push(
-					pathname.includes("posts")
-						? "/dashboard/posts/home"
-						: "/dashboard/series/home"
-				);
-			}
-		})();
+	useEffect(() => {
+		dispatch(fetchList(endpoint));
 	}, [paginationActive]);
+
+	useEffect(() => {
+		setItems(list);
+		setLoadingItems(isLoading);
+	}, [list]);
 
 	return (
 		<div className={styles.list_wrapper}>
