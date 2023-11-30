@@ -46,16 +46,16 @@ export default function List() {
 		setLoadingItems(isLoading);
 	}, [list, isLoading, error]);
 
-
+	console.log(error);
 
 	return (
 		<div className={styles.list_wrapper}>
 			{loadingItems ? (
 				<h1>Loading</h1>
-			) : items.length ? (
+			) : items ? (
 				<ListItems items={items} />
 			) : (
-				<h1>{errorMsg}</h1>
+				<h1>{error.message}</h1>
 			)}
 			<ListPagination />
 		</div>

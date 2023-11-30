@@ -30,12 +30,16 @@ export default function ListPagination() {
 	const isPostOrSeries = PathHelper.isPathPostsOrSeries(pathname);
 
 	async function handleCountItem() {
-		const { data } = await handleApiRequest({
-			endpoint: `/${isPostOrSeries}/analytics/count`,
-			method: "GET",
-		});
-
-		setCountItems(data.count);
+		try {
+			const { data } = await handleApiRequest({
+				endpoint: `/${isPostOrSeries}/analytics/count`,
+				method: "GET",
+			});
+			setCountItems(data.count);
+		} catch (error) {
+			console.log(error);
+			setCountItems(0);
+		}
 	}
 
 	useEffect(() => {

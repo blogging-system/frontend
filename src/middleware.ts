@@ -9,8 +9,8 @@ const middleware = async (request: NextRequest) => {
 	// Redirects
 
 	// if not authenticated redirect to login page
+	const user = "asd";
 
-	const user = "asdf"
 	if (!request.nextUrl.pathname.includes("auth") && !user) {
 		return NextResponse.redirect(new URL("/auth/login", request.url));
 	} else if (request.nextUrl.pathname.includes("auth") && user) {
