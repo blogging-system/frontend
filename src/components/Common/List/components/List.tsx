@@ -44,7 +44,12 @@ export default function List() {
 	useEffect(() => {
 		setItems(list);
 		setLoadingItems(isLoading);
-		setErrorMsg(error.response.data.message || error.message);
+
+		if (error && error.response) {
+			setErrorMsg(error.response.data.message);
+		} else if (error && !error.response) {
+			setErrorMsg(error.message);
+		}
 	}, [list, isLoading, error]);
 
 	return (
