@@ -1,23 +1,18 @@
-import axios from "axios";
-import Cookies from "js-cookie";
+import { cookies } from "next/headers";
+
 
 export const getUser = async () => {
-	const accessToken = Cookies.get("accessToken");
+	const cookieStore = cookies()
 
-	try {
-		const response = await fetch(
-			"https://api.ahmedelgaidi.com/admin/auth/whoami",
-			{
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: `Bearer ${accessToken}`,
-				},
-			}
-		);
+	const accessToken = cookieStore.get("accessToken");
 
-		console.log(response);
-	} catch (error) {
-		console.log(error);
-	}
+
+	const response = await fetch("http://localhost:3000/admin/auth/whoami", {
+		method: "GET",
+		headers: {
+			"Content-Type": "application/json",
+			"Authorization": `Bearer ${accessToken}`,
+		},
+	});
+	return response;
 };

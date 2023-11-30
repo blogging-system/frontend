@@ -1,7 +1,9 @@
 import { IListItem } from "@/components/Common/List/types/index.types";
-import { handleApiRequest } from "@/helpers/services/handleApiRequest.helper";
+import { appConfig } from "@/config/app.config";
+import axiosInstance from "@/services/axiosInstance";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
+
 
 interface IState {
 	list: IListItem[];
@@ -18,12 +20,27 @@ const initialState: IState = {
 export const fetchList = createAsyncThunk(
 	"list/listSlice",
 	async (endpoint: string) => {
-		const { data, error } = await handleApiRequest({ endpoint, method: "GET" });
-
-		return {
-			data,
-			error,
-		};
+		try {
+			const { data } = await axiosInstance(`${appConfig.apiUrl}${endpoint}`, {
+				method: 'GET',
+				headers: {
+					'Access-Control-Allow-Origin': '*',
+					"Authorization": `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTY3MDNkY2I2ODlhYzUyMWU5NDkyMWQiLCJpYXQiOjE3MDEzMjkzNjksImV4cCI6MTcwMTM3MjU2OX0.YuJj3i9-aQZsCk5wNG2esIrki3qKWo4j20wOgFJSBUo`
+				
+				},
+				
+			});
+	
+			return {
+				data,
+				error: null
+			};
+		} catch(error) {
+			return {
+				data: null,
+				error
+			};
+		}
 	}
 );
 
@@ -54,7 +71,7 @@ const listSlice = createSlice({
 		builder.addCase(fetchList.fulfilled, (state, action) => {
 			state.list = action.payload.data;
 			state.isLoading = false;
-			state.error = action.payload.error;
+			// state.error = action.payload.error;
 		});
 		builder.addCase(fetchList.pending, state => {
 			state.isLoading = true;

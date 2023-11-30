@@ -5,12 +5,10 @@ import { login } from "../services/login.service";
 import styles from "../styles/index.module.css";
 import useInput from "@/hooks/inputs/useInput";
 import { FormEvent } from "react";
-import { useRouter } from "next/navigation";
 
 export default function LogIn() {
 	const email = useInput("");
 	const password = useInput("");
-	const router = useRouter();
 
 	const handleLoginSubmit = async (e: FormEvent) => {
 		e.preventDefault();

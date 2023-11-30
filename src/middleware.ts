@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getUser } from "./services/auth/getUser";
 
 /**
  * Middleware to product the routes
@@ -9,13 +8,9 @@ import { getUser } from "./services/auth/getUser";
 const middleware = async (request: NextRequest) => {
 	// Redirects
 
-	const accessToken = request.cookies.get("accessToken");
-
-	console.log(await getUser());
-
 	// if not authenticated redirect to login page
-	const user = "adfsa";
 
+	const user = "asdf"
 	if (!request.nextUrl.pathname.includes("auth") && !user) {
 		return NextResponse.redirect(new URL("/auth/login", request.url));
 	} else if (request.nextUrl.pathname.includes("auth") && user) {
