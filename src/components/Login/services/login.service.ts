@@ -10,14 +10,18 @@ export const login = async ({ email, password }: ILoginData) => {
 				email,
 				password,
 			},
+			headers: {
+				"Content-Type": "application/json",
+			},
 		});
+
+		console.log(data);
 
 		const { accessToken, refreshToken } = data;
 
 		Cookies.set("accessToken", accessToken);
 		Cookies.set("refreshToken", refreshToken);
 	} catch (error) {
-		console.error(error);
 		throw error;
 	}
 };
