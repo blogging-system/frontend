@@ -5,7 +5,7 @@ export const getUser = async () => {
 			method: "GET",
 			headers: {
 				"Content-Type": "application/json",
-				Authorization: `Bearer ${"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTY3MDNkY2I2ODlhYzUyMWU5NDkyMWQiLCJpYXQiOjE3MDEzNDc3NzMsImV4cCI6MTcwMTM5MDk3M30.uLVdno8BDaQYsjXPNEdKQiLDG_yu6KWwZqi7oMG9EOc"}`,
+				Authorization: `Bearer ${"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTY3MDNkY2I2ODlhYzUyMWU5NDkyMWQiLCJpYXQiOjE3MDEzNTE1NjcsImV4cCI6MTcwMTM5NDc2N30.CPr8JlJ3-jbNDDeeiKhhnR-BdUD-jOcg-iSR_h5I-Og"}`,
 			},
 		}
 	);
