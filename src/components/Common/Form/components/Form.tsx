@@ -47,7 +47,6 @@ export default function Form({ buttonText, target }: IFromProps) {
 	const content: IInputHook = useInput(savedItem ? savedItem.content : "");
 	const imageUrl: IInputHook = useInput(savedItem ? savedItem.imageUrl : "");
 
-	console.log(imageUrl);
 
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -83,7 +82,6 @@ export default function Form({ buttonText, target }: IFromProps) {
 				back();
 				setSubmitButtonIsLoading(false);
 			} else if (error && !data) {
-				console.log(error);
 				setSubmitButtonIsLoading(false);
 			}
 
