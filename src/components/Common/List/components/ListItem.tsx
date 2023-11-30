@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "../styles/index.module.css";
 import { IListItem } from "../types/index.types";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { saveItemLocalStorage } from "@/helpers/local-storage/localStorage.helper";
 import { useAppDispatch } from "@/rtk/hooks";
 import { deleteItem, togglePublishItem } from "@/rtk/slices/listSlice";
@@ -10,6 +10,7 @@ import { handleApiRequest } from "@/helpers/services/handleApiRequest.helper";
 
 const ListItem = ({ item }: { item: IListItem }) => {
 	const currentPath = usePathname();
+	const { push } = useRouter();
 
 	const isUpdatePostOrSeries = currentPath.includes("posts")
 		? "posts"
@@ -18,6 +19,7 @@ const ListItem = ({ item }: { item: IListItem }) => {
 	const handleItemOperation = async (buttonOperation: string) => {
 		if (buttonOperation === "edit") {
 			saveItemLocalStorage(item, isUpdatePostOrSeries);
+			push(`/dashboard/${isPostsOrSeries}/update/${item.slug}`);
 		} else if (buttonOperation === "delete") {
 			dispatch(deleteItem(item._id));
 

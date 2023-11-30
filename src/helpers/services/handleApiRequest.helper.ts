@@ -19,6 +19,7 @@ export const handleApiRequest = async <D>({
 			error: null,
 		};
 	} catch (error) {
+		console.error(error)
 		return {
 			error: error as AxiosError,
 			data: [],

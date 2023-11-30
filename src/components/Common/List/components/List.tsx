@@ -9,7 +9,6 @@ import { getSidebarActiveListItem } from "@/helpers/sidebar/getSidebarActiveList
 import { useAppDispatch, useAppSelector } from "@/rtk/hooks";
 import { fetchList } from "@/rtk/slices/listSlice";
 import { IListItem } from "../types/index.types";
-import { getUser } from "@/services/auth/getUser";
 
 /**
  * Represents a list component that displays a list of items and pagination controls.
@@ -47,12 +46,8 @@ export default function List() {
 		setLoadingItems(isLoading);
 	}, [list, isLoading, error]);
 
-	useEffect(() => {
-		(async () => {
-			const res = await getUser();
-			console.log(res);
-		})();
-	}, []);
+
+
 	return (
 		<div className={styles.list_wrapper}>
 			{loadingItems ? (
