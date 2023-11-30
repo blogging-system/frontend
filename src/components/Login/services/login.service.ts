@@ -4,7 +4,7 @@ import Cookies from "js-cookie";
 
 export const login = async ({ email, password }: ILoginData) => {
 	try {
-		const { data } = await axios("https://api.ahmedelgaidi.com/auth/login", {
+		const { data } = await axios("http://localhost:3000/auth/login", {
 			method: "POST",
 			data: {
 				email,
@@ -14,8 +14,6 @@ export const login = async ({ email, password }: ILoginData) => {
 				"Content-Type": "application/json",
 			},
 		});
-
-		console.log(data);
 
 		const { accessToken, refreshToken } = data;
 

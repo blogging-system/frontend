@@ -8,18 +8,15 @@ export const handleApiRequest = async <D>({
 	dataPayload,
 }: IHandleApiRequest<D>) => {
 	try {
-		const { data } = await axiosInstance(`${appConfig.apiUrl}${endpoint}`, {
+		const { data } = await axiosInstance(`${appConfig.apiUrl}/${endpoint}`, {
 			method,
 			data: dataPayload,
 		});
-		console.log({ data });
 		return {
 			data,
 			error: null,
 		};
 	} catch (error) {
-		console.log({ error });
-
 		return {
 			error,
 			data: null,

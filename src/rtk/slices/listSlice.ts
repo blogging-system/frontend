@@ -63,7 +63,6 @@ const listSlice = createSlice({
 		});
 		builder.addCase(fetchList.rejected, state => {
 			state.isLoading = false;
-			console.log("Hello");
 		});
 	},
 });
