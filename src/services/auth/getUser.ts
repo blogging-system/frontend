@@ -14,5 +14,5 @@ export const getUser = async () => {
 			"Authorization": `Bearer ${accessToken}`,
 		},
 	});
-	return response.data;
+	return response;
 };
