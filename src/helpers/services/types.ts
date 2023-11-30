@@ -10,7 +10,7 @@ export interface IHandleApiRequest<D> {
 
 export interface IHandleApiResponse {
 	data: IListItem[];
-	error: AxiosError | null;
+	error: any;
 }
 
 export interface ICommonHeaders extends HeadersDefaults {

@@ -1,28 +1,28 @@
 import { appConfig } from "@/config/app.config";
-import axiosInstance from "@/services/axiosInstance";
 import { IHandleApiRequest } from "./types";
-import { AxiosError } from "axios";
+import axiosInstance from "@/services/axiosInstance";
 
 export const handleApiRequest = async <D>({
 	endpoint,
-	dataPayload,
 	method,
+	dataPayload,
 }: IHandleApiRequest<D>) => {
 	try {
 		const { data } = await axiosInstance(`${appConfig.apiUrl}${endpoint}`, {
-			method: method,
+			method,
 			data: dataPayload,
 		});
-
+		console.log({ data });
 		return {
 			data,
 			error: null,
 		};
 	} catch (error) {
-		console.error(error)
+		console.log({ error });
+
 		return {
-			error: error as AxiosError,
-			data: [],
+			error,
+			data: null,
 		};
 	}
 };
