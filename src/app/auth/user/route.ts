@@ -7,7 +7,7 @@ export const GET = async () => {
 	const accessToken = cookieStore.get("accessToken");
 
 	try {
-		const data = await fetch("https://api.ahmedelgaidi.com/admin/auth/whoami", {
+		const data = await fetch("http://localhost:3000/admin/auth/whoami", {
 			method: "GET",
 			headers: {
 				"Content-Type": "application/json",
