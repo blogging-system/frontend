@@ -1,5 +1,5 @@
 import { IListItem } from "@/components/Common/List/types/index.types";
-import { AxiosError, AxiosHeaders, HeadersDefaults } from "axios";
+import { HeadersDefaults } from "axios";
 
 export interface IHandleApiRequest<D> {
 	endpoint: string;

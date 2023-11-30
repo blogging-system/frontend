@@ -1,9 +1,9 @@
 import axios from "axios";
 
 const accessToken =
-	"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTY3MDNkY2I2ODlhYzUyMWU5NDkyMWQiLCJpYXQiOjE3MDEzNDE3MDksImV4cCI6MTcwMTM4NDkwOX0.DdIJr8lt8KGkJFVL9Dgu5docqfFnph9IRbQVwPnds84";
+	"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTY3MDNkY2I2ODlhYzUyMWU5NDkyMWQiLCJpYXQiOjE3MDEzNDUzODcsImV4cCI6MTcwMTM4ODU4N30.7mjqpSX9kiqb0nGOub68gV98ciGLZ4HvskmYyqK7EZc";
 
-const axiosInstance = axios.create();
+const axiosInstance = axios.create({});
 
 axiosInstance.interceptors.request.use(
 	config => {
