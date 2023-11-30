@@ -30,7 +30,7 @@ export default function List() {
 
 	const isPostsOrSeries = PathHelper.isPathPostsOrSeries(pathname);
 
-	const endpoint = `/${isPostsOrSeries}/${getSidebarActiveListItem(
+	const endpoint = `${isPostsOrSeries}/${getSidebarActiveListItem(
 		pathname
 	)}?${generateQueryString(pathname.split("/").slice(-1)[0])}`;
 
@@ -44,9 +44,8 @@ export default function List() {
 	useEffect(() => {
 		setItems(list);
 		setLoadingItems(isLoading);
+		setErrorMsg(error.response.data.message || error.message);
 	}, [list, isLoading, error]);
-
-	console.log(error);
 
 	return (
 		<div className={styles.list_wrapper}>
@@ -55,7 +54,7 @@ export default function List() {
 			) : items ? (
 				<ListItems items={items} />
 			) : (
-				<h1>{error.message}</h1>
+				<h1>{errorMsg}</h1>
 			)}
 			<ListPagination />
 		</div>
