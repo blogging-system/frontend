@@ -47,12 +47,11 @@ export default function Form({ buttonText, target }: IFromProps) {
 	const content: IInputHook = useInput(savedItem ? savedItem.content : "");
 	const imageUrl: IInputHook = useInput(savedItem ? savedItem.imageUrl : "");
 
-
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		setSubmitButtonIsLoading(true);
 
-		const apiUrl = `/${isPostOrSeries}?sort=-1&pageSize=5&pageNumber=1`;
+		const apiUrl = `${isPostOrSeries}?sort=-1&pageSize=5&pageNumber=1`;
 
 		const dataPayload =
 			isPostOrSeries === "posts"

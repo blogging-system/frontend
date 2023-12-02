@@ -1,4 +1,5 @@
 "use client";
+
 import { PathHelper } from "@/helpers/path/path.helper";
 import styles from "../styles/index.module.css";
 import { usePathname } from "next/navigation";
@@ -14,9 +15,11 @@ export default function Breadcrumbs() {
 
 	const capitalizedPaths = PathHelper.capitalizePath(pathname);
 	const lowerCasedPaths = PathHelper.lowercasePath(pathname);
-	const lastIndex = pathname.includes("pageNumber")
-		? capitalizedPaths.length - 2
-		: capitalizedPaths.length - 1;
+	const lastIndex = PathHelper.getLastBreadcrumbIndex(
+		pathname,
+		capitalizedPaths,
+		"pageNumber"
+	);
 
 	return (
 		<div className={styles.breadcrumbs_paths}>

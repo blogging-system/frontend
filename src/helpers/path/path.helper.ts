@@ -40,6 +40,16 @@ export class PathHelper {
 		return lowercaseParts;
 	}
 
+	static getLastBreadcrumbIndex(
+		pathname: string,
+		paths: string[],
+		searchString: string
+	): number {
+		return pathname.includes(searchString)
+			? paths.length - 2
+			: paths.length - 1;
+	}
+
 	/**
 	 * Determines whether the given URL is for the "posts" or "series" path.
 	 *
