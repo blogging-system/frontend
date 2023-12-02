@@ -1,14 +1,15 @@
-export const getUser = async () => {
-	const response = await fetch(
-		"https://api.ahmedelgaidi.com/admin/auth/whoami",
-		{
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: `Bearer ${"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTY3MDNkY2I2ODlhYzUyMWU5NDkyMWQiLCJpYXQiOjE3MDEzNjEyNjEsImV4cCI6MTcwMTQwNDQ2MX0.DgbE9pDpzKq23YwEiQKC8sL-SMEDp2FFbZdDdiC6Agc"}`,
-			},
-		}
-	);
+import { NextRequest, NextResponse } from "next/server";
 
-	return response.json().then(data => (data.error ? null : data));
+export const getUser = async (request: NextRequest) => {
+	const accessToken = request.cookies.get("accessToken");
+
+	const userResponse = await fetch("http://localhost:3000/admin/auth/whoami", {
+		method: "GET",
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${accessToken?.value}`,
+		},
+	});
+
+	return userResponse.json().then(data => (data.error ? null : data));
 };
