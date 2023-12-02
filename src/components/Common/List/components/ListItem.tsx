@@ -19,19 +19,19 @@ const ListItem = ({ item }: { item: IListItem }) => {
 	const handleItemOperation = async (buttonOperation: string) => {
 		if (buttonOperation === "edit") {
 			saveItemLocalStorage(item, isUpdatePostOrSeries);
-			push(`/dashboard/${isPostsOrSeries}/update/${item.slug}`);
+			push(`dashboard/${isPostsOrSeries}/update/${item.slug}`);
 		} else if (buttonOperation === "delete") {
 			dispatch(deleteItem(item._id));
 
 			//! access data or error for the modal
 			const { data, error } = await handleApiRequest({
-				endpoint: `/${isPostsOrSeries}/${item._id}`,
+				endpoint: `${isPostsOrSeries}/${item._id}`,
 				method: "DELETE",
 			});
 		} else if (buttonOperation === "publish") {
 			//! access data or error for the modal
 			const { data, error } = await handleApiRequest({
-				endpoint: `/${isPostsOrSeries}/${
+				endpoint: `${isPostsOrSeries}/${
 					item.isPublished ? "unpublish" : "publish"
 				}/${item._id}`,
 				method: "POST",

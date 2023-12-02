@@ -32,7 +32,7 @@ export default function ListPagination() {
 	async function handleCountItem() {
 		try {
 			const { data } = await handleApiRequest({
-				endpoint: `/${isPostOrSeries}/analytics/count`,
+				endpoint: `${isPostOrSeries}/analytics/count`,
 				method: "GET",
 			});
 			setCountItems(data.count);

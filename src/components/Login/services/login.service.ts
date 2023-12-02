@@ -1,6 +1,6 @@
 import { ILoginData } from "../types/login";
 import axios from "axios";
-import Cookies from "js-cookie";
+import { serialize } from "cookie";
 
 export const login = async ({ email, password }: ILoginData) => {
 	try {
@@ -17,8 +17,17 @@ export const login = async ({ email, password }: ILoginData) => {
 
 		const { accessToken, refreshToken } = data;
 
-		Cookies.set("accessToken", accessToken);
-		Cookies.set("refreshToken", refreshToken);
+		console.log(accessToken);
+
+		const cookieSerialized = serialize("accessToken", accessToken, {
+			httpOnly: false,
+			secure: true,
+			sameSite: true,
+			maxAge: 60 * 60,
+			path: "/",
+		});
+
+		document.cookie = cookieSerialized;
 	} catch (error) {
 		throw error;
 	}
