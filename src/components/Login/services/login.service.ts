@@ -4,7 +4,7 @@ import { serialize } from "cookie";
 
 export const login = async ({ email, password }: ILoginData) => {
 	try {
-		const { data } = await axios("https://api.ahmedelgaidi.com/auth/login", {
+		const { data } = await axios("http://localhost:3000/auth/login", {
 			method: "POST",
 			data: {
 				email,
@@ -27,7 +27,13 @@ export const login = async ({ email, password }: ILoginData) => {
 		document.cookie = cookieSerialized;
 
 		document.location = "./dashboard";
-	} catch (error) {
-		throw error;
+
+		return {
+			error: null,
+		};
+	} catch (error: any) {
+		return {
+			error: error.response.data.message,
+		};
 	}
 };

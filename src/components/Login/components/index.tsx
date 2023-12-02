@@ -4,19 +4,33 @@ import FormItem from "@/components/Common/Form/components/FormItem";
 import { login } from "../services/login.service";
 import styles from "../styles/index.module.css";
 import useInput from "@/hooks/inputs/useInput";
-import { FormEvent } from "react";
+import { FormEvent, useEffect, useState } from "react";
 
 export default function LogIn() {
 	const email = useInput("");
 	const password = useInput("");
+	const [isLoading, setIsLoading] = useState(false);
+	const [errorMsg, setErrorMsg] = useState(null);
 
 	const handleLoginSubmit = async (e: FormEvent) => {
 		e.preventDefault();
-		await login({
+		setIsLoading(true);
+
+		const { error } = await login({
 			email: email.value,
 			password: password.value,
 		});
+
+		setIsLoading(false);
+
+		if (error) {
+			setErrorMsg(error);
+		}
 	};
+
+	useEffect(() => {
+		setErrorMsg(prev => prev && null);
+	}, [email.value, password.value]);
 
 	return (
 		<div className={styles.login_wrapper}>
@@ -44,9 +58,11 @@ export default function LogIn() {
 					{...password}
 				/>
 
+				{errorMsg && <p className={styles.errorMsg}>{[...errorMsg]}</p>}
+
 				<div className={styles.login_button_wrapper}>
 					<button className={styles.login_button} type="submit">
-						Log In
+						{isLoading ? "Loading..." : "Log In"}
 					</button>
 				</div>
 			</form>

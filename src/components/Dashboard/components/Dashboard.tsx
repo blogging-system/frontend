@@ -2,12 +2,12 @@
 import styles from "../styles/index.module.css";
 import { usePathname } from "next/navigation";
 import Breadcrumbs from "@/components/Common/Breadcrumbs/components";
-import Sidebar from "@/layouts/SideBar";
 import { ISidebarLink } from "../types/index.types";
 import { getActiveSection } from "../helpers/getActivationSection";
 import { generateSidebarLinks } from "../helpers/generateSidebarLinks";
 import { useAppSelector } from "@/rtk/hooks";
 import { renderMainContent } from "./renderMainContent";
+import Sidebar from "@/layouts/SideBar";
 
 /**
  * Dashboard component that displays content based on the current section and path.
