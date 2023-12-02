@@ -2,16 +2,11 @@ import useInput from "@/hooks/inputs/useInput";
 import TagsInput from "../../TagsInput";
 import FormItem from "./FormItem";
 import styles from "../styles/form.module.css";
-import { redirect, useParams, useRouter } from "next/navigation";
-import { useState } from "react";
+import { redirect, useParams } from "next/navigation";
 import { IFromProps } from "../types/index.types";
-import { getSavedItemLocalStorage } from "../../../../helpers/local-storage/localStorage.helper";
-import { FormEvent } from "react";
-import { IListItem } from "../../List/types/index.types";
-import { handleUpdateSubmit } from "../helpers/update/update.helper";
 import { IInputHook } from "@/hooks/inputs/types/inputHook.type";
-import { handleApiRequest } from "@/helpers/services/handleApiRequest.helper";
 import { PathHelper } from "@/helpers/path/path.helper";
+import { useHandleSubmit } from "@/hooks/form/useHandleSubmitForm";
 
 /**
  * PostForm component for rendering a form with various input fields.
@@ -22,18 +17,11 @@ import { PathHelper } from "@/helpers/path/path.helper";
  * @returns {JSX.Element} - Rendered component
  */
 export default function Form({ buttonText, target }: IFromProps) {
-	const [submitButtonIsLoading, setSubmitButtonIsLoading] = useState(false);
+	const { submit, savedItem, submitButtonIsLoading } = useHandleSubmit();
 
 	const { slug } = useParams();
-	const { back } = useRouter();
 
 	const isPostOrSeries = PathHelper.isPathPostsOrSeries(slug.toString());
-	const isFormCreateOrUpdate = slug.includes("update") ? "update" : "create";
-
-	const savedItem: IListItem = getSavedItemLocalStorage({
-		slug: slug[slug.length - 1],
-		path: isPostOrSeries,
-	});
 
 	// if there's no saved item in local storage redirect to home
 	if (!savedItem && slug.includes("update")) {
@@ -47,63 +35,26 @@ export default function Form({ buttonText, target }: IFromProps) {
 	const content: IInputHook = useInput(savedItem ? savedItem.content : "");
 	const imageUrl: IInputHook = useInput(savedItem ? savedItem.imageUrl : "");
 
-	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
-		setSubmitButtonIsLoading(true);
-
-		const apiUrl = `${isPostOrSeries}?sort=-1&pageSize=5&pageNumber=1`;
-
-		const dataPayload =
-			isPostOrSeries === "posts"
-				? {
-						title: title.value,
-						description: description.value,
-						content: content.value,
-						tags: [],
-						keywords: [],
-						series: [],
-						imageUrl: imageUrl.value,
-				  }
-				: {
-						title: title.value,
-						description: description.value,
-						imageUrl: imageUrl.value,
-				  };
-
-		if (isFormCreateOrUpdate === "create") {
-			const { data, error } = await handleApiRequest({
-				endpoint: apiUrl,
-				dataPayload,
-				method: "POST",
-			});
-
-			if (data && !error) {
-				back();
-				setSubmitButtonIsLoading(false);
-			} else if (error && !data) {
-				setSubmitButtonIsLoading(false);
-			}
-
-			if (data || error) {
-				setSubmitButtonIsLoading(false);
-			}
-		} else {
-			const { data, error } = await handleUpdateSubmit({
-				id: savedItem._id,
-				slug: slug,
-				isUpdatePostOrSeries: isPostOrSeries,
-				dataPayload,
-			});
-
-			if (data || error) {
-				setSubmitButtonIsLoading(false);
-			}
-		}
-	};
+	const dataPayload =
+		isPostOrSeries === "posts"
+			? {
+					title: title.value,
+					description: description.value,
+					content: content.value,
+					tags: [],
+					keywords: [],
+					series: [],
+					imageUrl: imageUrl.value,
+			  }
+			: {
+					title: title.value,
+					description: description.value,
+					imageUrl: imageUrl.value,
+			  };
 
 	return (
 		<div className={styles.form_wrapper}>
-			<form className={styles.form} onSubmit={handleSubmit}>
+			<form className={styles.form} onSubmit={e => submit(e, dataPayload)}>
 				<FormItem
 					type="text"
 					label="Title"

@@ -3,6 +3,13 @@ import styles from "../styles/index.module.css";
 import { IListItem } from "../types/index.types";
 import { useHandleItemOperations } from "@/hooks/list/usehandleItemOperations";
 
+/**
+ * Renders a single list item.
+ *
+ * @param {IListItem} item - The item to be rendered.
+ * @return {JSX.Element} The rendered list item.
+ */
+
 const ListItem = ({ item }: { item: IListItem }) => {
 	const { handleItemOperations } = useHandleItemOperations();
 

@@ -56,7 +56,11 @@ export class PathHelper {
 	 * @param {string} url - The URL to check.
 	 * @return {string} Returns "posts" if the URL includes "posts", otherwise returns "series".
 	 */
-	static isPathPostsOrSeries(url: string): string {
+	static isPathPostsOrSeries(url: string | string[]): string {
 		return url.includes("posts") ? "posts" : "series";
+	}
+
+	static isFormCreateOrUpdate(url: string | string[]): string {
+		return url.includes("update") ? "update" : "create";
 	}
 }
