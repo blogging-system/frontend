@@ -6,14 +6,14 @@ import { deleteItem, togglePublishItem } from "@/rtk/slices/listSlice";
 import { handleApiRequest } from "@/helpers/services/handleApiRequest.helper";
 import { IListItem } from "@/components/Common/List/types/index.types";
 
-export const useHandleItemOperation = () => {
+export const useHandleItemOperations = () => {
 	const currentPath = usePathname();
 	const dispatch = useAppDispatch();
 	const { push } = useRouter();
 
 	const isPostsOrSeries = PathHelper.isPathPostsOrSeries(currentPath);
 
-	const handleItemOperation = async (
+	const handleItemOperations = async (
 		buttonOperation: string,
 		item: IListItem
 	) => {
@@ -42,6 +42,6 @@ export const useHandleItemOperation = () => {
 	};
 
 	return {
-		handleItemOperation,
+		handleItemOperations,
 	};
 };
