@@ -47,6 +47,11 @@
 	font-weight: 900;
 }
 
+.navbar_logout {
+	border-bottom: 4px solid transparent;
+	margin: 0 30px;
+}
+
 .navbar_item_link,
 .navbar_logout {
 	color: #903101e6;
