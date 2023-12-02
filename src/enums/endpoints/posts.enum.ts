@@ -1,6 +1,6 @@
 export enum postsEndpoints {
-	GET_ALL_POSTS = "https://api.ahmedelgaidi.com/admin/posts",
-	CREATE_POST = "https://api.ahmedelgaidi.com/admin/posts",
-	UPDATE_POST = "https://api.ahmedelgaidi.com/admin/posts",
-	DELETE_POST = "https://api.ahmedelgaidi.com/admin/posts",
+	GET_ALL_POSTS = "http://localhost:3000/admin/posts",
+	CREATE_POST = "http://localhost:3000/admin/posts",
+	UPDATE_POST = "http://localhost:3000/admin/posts",
+	DELETE_POST = "http://localhost:3000/admin/posts",
 }
