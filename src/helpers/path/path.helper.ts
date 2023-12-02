@@ -66,7 +66,7 @@ export class PathHelper {
 	 * @param {IPathProps} path - The path to check.
 	 * @return {string} Either "posts" or "series".
 	 */
-	static isPathPostsOrSeries(path: IPathProps): string {
+	static isPathPostsOrSeries(path: IPathProps): "posts" | "series" {
 		return path.includes("posts") ? "posts" : "series";
 	}
 

@@ -2,7 +2,6 @@ import { DashboardSections } from "../types/index.types";
 import Form from "@/components/Common/Form/components/Form";
 import Home from "@/components/Common/Home/components";
 import List from "@/components/Common/List/components/List";
-import { analyticsDataByPath } from "../data/analytics.data";
 
 /**
  * Renders the main content based on the current section and path.
@@ -33,8 +32,7 @@ export function renderMainContent(
 	}
 
 	if (isHomeSection) {
-		const homeData = analyticsDataByPath[currentPath] || [];
-		return <Home analyticsData={homeData} />;
+		return <Home />;
 	}
 
 	return <List />;
