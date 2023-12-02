@@ -76,7 +76,7 @@ export class PathHelper {
 	 * @param {IPathProps} path - The path to be checked.
 	 * @returns {string} - Either "update" or "create" based on the path.
 	 */
-	static isFormCreateOrUpdate(path: IPathProps): string {
+	static isFormCreateOrUpdate(path: IPathProps): "update" | "create" {
 		return path.includes("update") ? "update" : "create";
 	}
 
