@@ -1,9 +1,9 @@
+import { getCookie } from "@/helpers/cookie/getCookie";
 import axios from "axios";
 
-const accessToken =
-	"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTY3MDNkY2I2ODlhYzUyMWU5NDkyMWQiLCJpYXQiOjE3MDEzNjEyNjEsImV4cCI6MTcwMTQwNDQ2MX0.DgbE9pDpzKq23YwEiQKC8sL-SMEDp2FFbZdDdiC6Agc";
+const axiosInstance = axios.create();
 
-const axiosInstance = axios.create({});
+const accessToken = getCookie("accessToken");
 
 axiosInstance.interceptors.request.use(
 	config => {
