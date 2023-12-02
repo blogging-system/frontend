@@ -1,7 +1,7 @@
 import "@/styles/global.css";
-import Navbar from "@/layouts/Navbar/components";
 import { Inter } from "next/font/google";
 import ReduxProvider from "@/rtk/ReduxProvider";
+import Navbar from "@/layouts/Navbar/components";
 
 const inter = Inter({ subsets: ["latin"] });
 
