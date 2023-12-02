@@ -1,9 +1,9 @@
-import { getCookie } from "@/helpers/cookie/getCookie";
+import Cookies from "js-cookie";
 import axios from "axios";
 
 const axiosInstance = axios.create();
 
-const accessToken = getCookie("accessToken");
+const accessToken = Cookies.get("accessToken");
 
 axiosInstance.interceptors.request.use(
 	config => {
