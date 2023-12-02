@@ -6,12 +6,11 @@ import { getUser } from "./services/auth/getUser";
  * @param user - Authenticated user
  */
 
-const middleware = async (request: NextRequest) => {
+const middleware = async (request: NextRequest, response: NextResponse) => {
 	// Redirects
 
 	// if not authenticated redirect to login page
-	const user = await getUser();
-	console.log(user);
+	const user = await getUser(request);
 
 	if (!request.nextUrl.pathname.includes("auth") && !user) {
 		return NextResponse.redirect(new URL("/auth/login", request.url));
