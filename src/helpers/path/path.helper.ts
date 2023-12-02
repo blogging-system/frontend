@@ -1,3 +1,5 @@
+import { IPathProps } from "./types";
+
 /**
  * A utility class for manipulating URL paths.
  */
@@ -40,6 +42,14 @@ export class PathHelper {
 		return lowercaseParts;
 	}
 
+	/**
+	 * Returns the index of the last breadcrumb based on the given pathname, paths, and searchString.
+	 *
+	 * @param {string} pathname - The current pathname.
+	 * @param {string[]} paths - The list of breadcrumbs.
+	 * @param {string} searchString - The string to search for in the pathname.
+	 * @return {number} The index of the last breadcrumb.
+	 */
 	static getLastBreadcrumbIndex(
 		pathname: string,
 		paths: string[],
@@ -51,16 +61,32 @@ export class PathHelper {
 	}
 
 	/**
-	 * Determines whether the given URL is for the "posts" or "series" path.
+	 * Determines whether the given path represents "posts" or "series".
 	 *
-	 * @param {string} url - The URL to check.
-	 * @return {string} Returns "posts" if the URL includes "posts", otherwise returns "series".
+	 * @param {IPathProps} path - The path to check.
+	 * @return {string} Either "posts" or "series".
 	 */
-	static isPathPostsOrSeries(url: string | string[]): string {
-		return url.includes("posts") ? "posts" : "series";
+	static isPathPostsOrSeries(path: IPathProps): string {
+		return path.includes("posts") ? "posts" : "series";
 	}
 
-	static isFormCreateOrUpdate(url: string | string[]): string {
-		return url.includes("update") ? "update" : "create";
+	/**
+	 * Determines whether the given path indicates a form creation or update.
+	 *
+	 * @param {IPathProps} path - The path to be checked.
+	 * @returns {string} - Either "update" or "create" based on the path.
+	 */
+	static isFormCreateOrUpdate(path: IPathProps): string {
+		return path.includes("update") ? "update" : "create";
+	}
+
+	/**
+	 * Checks if the given path includes "/new" or "/update".
+	 *
+	 * @param {IPathProps} path - The path to check.
+	 * @return {boolean} True if the path includes "/new" or "/update", false otherwise.
+	 */
+	static isNewOrUpdateSection(path: IPathProps): boolean {
+		return path.includes("/new") || path.includes("/update");
 	}
 }

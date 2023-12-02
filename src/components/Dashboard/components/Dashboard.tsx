@@ -8,6 +8,7 @@ import { generateSidebarLinks } from "../helpers/generateSidebarLinks";
 import { useAppSelector } from "@/rtk/hooks";
 import { renderMainContent } from "./renderMainContent";
 import Sidebar from "@/layouts/SideBar";
+import { PathHelper } from "@/helpers/path/path.helper";
 
 /**
  * Dashboard component that displays content based on the current section and path.
@@ -31,8 +32,7 @@ export default function Dashboard() {
 
 	const isHomeSection = currentPath.includes("/home");
 
-	const isNewOrUpdateSection =
-		currentPath.includes("/new") || currentPath.includes("/update");
+	const isNewOrUpdateSection = PathHelper.isNewOrUpdateSection(currentPath);
 
 	return (
 		<div className={styles.dashboard_container}>
