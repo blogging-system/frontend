@@ -17,17 +17,16 @@ export const login = async ({ email, password }: ILoginData) => {
 
 		const { accessToken, refreshToken } = data;
 
-		console.log(accessToken);
-
 		const cookieSerialized = serialize("accessToken", accessToken, {
 			httpOnly: false,
 			secure: true,
 			sameSite: true,
-			maxAge: 60 * 60,
 			path: "/",
 		});
 
 		document.cookie = cookieSerialized;
+
+		document.location = "./dashboard";
 	} catch (error) {
 		throw error;
 	}
