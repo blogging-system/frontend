@@ -13,10 +13,6 @@ export const fetchAllAnalyticsData = createAsyncThunk(
 				method: "GET",
 			}),
 			await handleApiRequest({
-				endpoint: `${currentSection}/${ANALYTICS_API_ENDPOINTS.COUNT}`,
-				method: "GET",
-			}),
-			await handleApiRequest({
 				endpoint: `${currentSection}/${ANALYTICS_API_ENDPOINTS.PUBLISHED_COUNT}`,
 				method: "GET",
 			}),
@@ -44,13 +40,11 @@ interface IState {
 
 const initialState: IState = {
 	posts: [
-		{ title: "Total Posts Views:", value: 0, unit: "Views" },
 		{ title: "Total Posts:", value: 0, unit: "Posts" },
 		{ title: "Total Published Posts:", value: 0, unit: "Posts" },
 		{ title: "Total Unpublished Posts:", value: 0, unit: "Posts" },
 	],
 	series: [
-		{ title: "Total Series Views:", value: 0, unit: "Views" },
 		{ title: "Total Series:", value: 0, unit: "Series" },
 		{ title: "Total Published Series:", value: 0, unit: "Series" },
 		{ title: "Total Unpublished Series:", value: 0, unit: "Series" },
