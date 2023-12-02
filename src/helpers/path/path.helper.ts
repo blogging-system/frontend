@@ -1,3 +1,5 @@
+import { IPathProps } from "./types";
+
 /**
  * A utility class for manipulating URL paths.
  */
@@ -41,12 +43,50 @@ export class PathHelper {
 	}
 
 	/**
-	 * Determines whether the given URL is for the "posts" or "series" path.
+	 * Returns the index of the last breadcrumb based on the given pathname, paths, and searchString.
 	 *
-	 * @param {string} url - The URL to check.
-	 * @return {string} Returns "posts" if the URL includes "posts", otherwise returns "series".
+	 * @param {string} pathname - The current pathname.
+	 * @param {string[]} paths - The list of breadcrumbs.
+	 * @param {string} searchString - The string to search for in the pathname.
+	 * @return {number} The index of the last breadcrumb.
 	 */
-	static isPathPostsOrSeries(url: string): string {
-		return url.includes("posts") ? "posts" : "series";
+	static getLastBreadcrumbIndex(
+		pathname: string,
+		paths: string[],
+		searchString: string
+	): number {
+		return pathname.includes(searchString)
+			? paths.length - 2
+			: paths.length - 1;
+	}
+
+	/**
+	 * Determines whether the given path represents "posts" or "series".
+	 *
+	 * @param {IPathProps} path - The path to check.
+	 * @return {string} Either "posts" or "series".
+	 */
+	static isPathPostsOrSeries(path: IPathProps): "posts" | "series" {
+		return path.includes("posts") ? "posts" : "series";
+	}
+
+	/**
+	 * Determines whether the given path indicates a form creation or update.
+	 *
+	 * @param {IPathProps} path - The path to be checked.
+	 * @returns {string} - Either "update" or "create" based on the path.
+	 */
+	static isFormCreateOrUpdate(path: IPathProps): "update" | "create" {
+		return path.includes("update") ? "update" : "create";
+	}
+
+	/**
+	 * Checks if the given path includes "/new" or "/update".
+	 *
+	 * @param {IPathProps} path - The path to check.
+	 * @return {boolean} True if the path includes "/new" or "/update", false otherwise.
+	 */
+	static isNewOrUpdateSection(path: IPathProps): boolean {
+		return path.includes("/new") || path.includes("/update");
 	}
 }
