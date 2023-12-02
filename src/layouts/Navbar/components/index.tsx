@@ -4,7 +4,7 @@ import Link from "next/link";
 import styles from "../styles/index.module.css";
 import { usePathname } from "next/navigation";
 import NavbarLink from "./NavbarLink";
-import { removeCookie } from "@/helpers/cookie/removeCookie";
+import { logout } from "@/helpers/auth/logout";
 
 export default function Navbar() {
 	const pathname = usePathname();
@@ -22,13 +22,9 @@ export default function Navbar() {
 					<NavbarLink href="/dashboard/series/home" label="Series" />
 				</ul>
 				<div className={styles.navbar_logout_wrapper}>
-					<Link
-						href="/auth/login"
-						className={styles.navbar_logout}
-						onClick={() => removeCookie("accessToken")}
-					>
+					<button className={styles.navbar_logout} onClick={logout}>
 						Log Out
-					</Link>
+					</button>
 				</div>
 			</nav>
 		</div>
