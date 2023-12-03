@@ -89,4 +89,10 @@ export class PathHelper {
 	static isNewOrUpdateSection(path: IPathProps): boolean {
 		return path.includes("/new") || path.includes("/update");
 	}
+
+	static getSlug(path: string): string {
+		const spited = path.split("/");
+
+		return spited[spited.length - 1];
+	}
 }

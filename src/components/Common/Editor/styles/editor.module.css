@@ -1,0 +1,14 @@
+.form_label {
+	color: rgb(45, 45, 45);
+	font-weight: 900 !important;
+	padding: 10px 0;
+}
+
+.editor {
+	margin: 10px 0;
+}
+
+.quill {
+	margin-top: 10px;
+	min-height: 300px;
+}

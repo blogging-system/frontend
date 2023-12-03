@@ -7,6 +7,7 @@ import { IFromProps } from "../types/index.types";
 import { IInputHook } from "@/hooks/inputs/types/inputHook.type";
 import { PathHelper } from "@/helpers/path/path.helper";
 import { useHandleSubmit } from "@/hooks/form/useHandleSubmitForm";
+import Editor from "../../Editor/Editor";
 
 /**
  * PostForm component for rendering a form with various input fields.
@@ -33,6 +34,7 @@ export default function Form({ buttonText, target }: IFromProps) {
 		savedItem ? savedItem.description : ""
 	);
 	const content: IInputHook = useInput(savedItem ? savedItem.content : "");
+
 	const imageUrl: IInputHook = useInput(savedItem ? savedItem.imageUrl : "");
 
 	const dataPayload =
@@ -80,15 +82,7 @@ export default function Form({ buttonText, target }: IFromProps) {
 						<TagsInput label="Items" prefix="" />
 					</div>
 				) : (
-					<FormItem
-						label="Content"
-						name="content"
-						type="textarea"
-						placeholder="Please enter the content"
-						required={true}
-						rowsNumber={20}
-						{...content}
-					/>
+					<Editor title={title.value} />
 				)}
 
 				<div className={styles.form_item}>
