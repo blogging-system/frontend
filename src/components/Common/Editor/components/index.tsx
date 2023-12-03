@@ -1,9 +1,8 @@
 "use client";
 
-import { uploadCloudinaryFile } from "@/helpers/cloudinary/uploadFile";
-import styles from "./styles/editor.module.css";
+import styles from "../styles/editor.module.css";
 import "react-quill/dist/quill.snow.css";
-import React, { useState } from "react";
+import React from "react";
 import ReactQuill from "react-quill";
 
 var modules = {
@@ -28,20 +27,7 @@ var modules = {
 	],
 };
 
-const Editor = ({ title }: { title: string }) => {
-	const [value, setValue] = useState("");
-
-	const parser = new DOMParser();
-	const htmlElements = parser.parseFromString(value, "text/html");
-	const images: any = Array.from(htmlElements.querySelectorAll("img"));
-
-	images.map(async (img: any) => {
-		const imageUrl = await uploadCloudinaryFile(img.attributes.src.value);
-
-		img.setAttribute("src", imageUrl);
-		img.setAttribute("alt", title.replace(" ", "-"));
-	});
-
+const Editor = ({ value, setContent }: any) => {
 	return (
 		<div className={styles.editor}>
 			<label className={styles.form_label}>Content *</label>
@@ -49,7 +35,7 @@ const Editor = ({ title }: { title: string }) => {
 				modules={modules}
 				theme="snow"
 				value={value}
-				onChange={setValue}
+				onChange={setContent}
 				className={styles.quill}
 			/>
 		</div>

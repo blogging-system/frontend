@@ -15,8 +15,6 @@ export const uploadCloudinaryFile = async (base64: string) => {
 		);
 
 		const result = await resp.json();
-
-		console.log(result);
 		return result.secure_url;
 	} catch (error) {
 		throw error;

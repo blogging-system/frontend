@@ -7,7 +7,9 @@ import { IFromProps } from "../types/index.types";
 import { IInputHook } from "@/hooks/inputs/types/inputHook.type";
 import { PathHelper } from "@/helpers/path/path.helper";
 import { useHandleSubmit } from "@/hooks/form/useHandleSubmitForm";
-import Editor from "../../Editor/Editor";
+import Editor from "../../Editor/components";
+import { getEditorContent } from "@/helpers/editor/getEditorContent";
+import { useState } from "react";
 
 /**
  * PostForm component for rendering a form with various input fields.
@@ -33,7 +35,7 @@ export default function Form({ buttonText, target }: IFromProps) {
 	const description: IInputHook = useInput(
 		savedItem ? savedItem.description : ""
 	);
-	const content: IInputHook = useInput(savedItem ? savedItem.content : "");
+	const [content, setContent] = useState(savedItem ? savedItem.content : "");
 
 	const imageUrl: IInputHook = useInput(savedItem ? savedItem.imageUrl : "");
 
@@ -42,7 +44,7 @@ export default function Form({ buttonText, target }: IFromProps) {
 			? {
 					title: title.value,
 					description: description.value,
-					content: content.value,
+					content: content,
 					tags: [],
 					keywords: [],
 					series: [],
@@ -53,6 +55,9 @@ export default function Form({ buttonText, target }: IFromProps) {
 					description: description.value,
 					imageUrl: imageUrl.value,
 			  };
+
+	const htmlElements = getEditorContent(content, title.value);
+	console.log("👨🏼‍💻 ~ Form ~ htmlElements:", htmlElements);
 
 	return (
 		<div className={styles.form_wrapper}>
@@ -82,7 +87,7 @@ export default function Form({ buttonText, target }: IFromProps) {
 						<TagsInput label="Items" prefix="" />
 					</div>
 				) : (
-					<Editor title={title.value} />
+					<Editor title={title.value} value={content} setContent={setContent} />
 				)}
 
 				<div className={styles.form_item}>
