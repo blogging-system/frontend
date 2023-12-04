@@ -1,10 +1,9 @@
-import { useState } from "react";
-import styles from "./index.module.css";
-import { ITagsProps } from "./index.types";
+import styles from "./styles/index.module.css";
+import { ITagsProps } from "./types/index.types";
 import { AiFillCloseCircle } from "react-icons/ai";
-import { handleApiRequest } from "@/helpers/services/handleApiRequest.helper";
-import { TAGS_ENDPOINTS } from "@/enums/endpoints/tags";
 import { ImSpinner4 } from "react-icons/im";
+import { useHandleAddTags } from "@/hooks/form/useHandleAddTags";
+import { useHandleRemoveTags } from "@/hooks/form/useHandleRemoveTags";
 
 /**
  * TagsInput component allows users to enter and display tags.
@@ -21,43 +20,15 @@ const TagsInput = ({
 	value,
 	setValue,
 }: ITagsProps) => {
-	const [isLoading, setIsLoading] = useState(false);
-	const handleAddTag = async (e: React.KeyboardEvent<HTMLInputElement>) => {
-		const { key, currentTarget } = e;
+	const metadata = label.toLowerCase();
 
-		if (key === "Enter") {
-			const { data, error } = await handleApiRequest({
-				endpoint: `${TAGS_ENDPOINTS.CREATE_TAG}`,
-				method: "POST",
-				dataPayload: { name: currentTarget.value },
-			});
+	const { handleAddTag } = useHandleAddTags({ value, setValue, metadata });
 
-			const newTag = data;
-
-			if (data) {
-				setValue([...value, { _id: newTag._id, name: newTag.name }]);
-			}
-			currentTarget.value = "";
-		}
-	};
-
-	const handleRemoveTag = async (_id: string) => {
-		setIsLoading(true);
-
-		const { error } = await handleApiRequest({
-			endpoint: `${TAGS_ENDPOINTS.CREATE_TAG}/${_id}`,
-			method: "DELETE",
-		});
-
-		if (error) {
-			throw error;
-		} else {
-			const updatedTags = value.filter(tag => tag._id !== _id);
-			setValue(updatedTags);
-		}
-
-		setIsLoading(false);
-	};
+	const { isLoading, handleRemoveTag } = useHandleRemoveTags({
+		metadata,
+		value,
+		setValue,
+	});
 
 	return (
 		<div className={styles.tags_input_wrapper}>

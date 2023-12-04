@@ -10,7 +10,8 @@ import { useHandleSubmit } from "@/hooks/form/useHandleSubmitForm";
 import Editor from "../../Editor/components";
 import { getEditorContent } from "@/helpers/editor/getEditorContent";
 import { useState } from "react";
-import { ITag } from "../../TagsInput/index.types";
+import { ITag } from "../../TagsInput/types/index.types";
+import SeriesInput from "../../Series";
 
 /**
  * PostForm component for rendering a form with various input fields.
@@ -95,7 +96,7 @@ export default function Form({ buttonText }: IFromProps) {
 							value={content}
 							setContent={setContent}
 						/>
-						<TagsInput label="Series" value={series} setValue={setSeries} />
+						<SeriesInput />
 					</>
 				)}
 

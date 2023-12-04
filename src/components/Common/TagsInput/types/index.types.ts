@@ -16,3 +16,9 @@ export interface ITagsProps extends ITagsInput {
 	value: ITag[];
 	setValue: (e: ITag[]) => void;
 }
+
+export interface ITagsPropsHook {
+	metadata: string;
+	value: ITag[];
+	setValue: (e: ITag[]) => void;
+}
