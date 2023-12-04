@@ -40,8 +40,10 @@ const TagsInput = ({
 					<ul className={styles.tags_input_items}>
 						{value.map((el, i) => (
 							<li className={styles.tags_input_item} key={i}>
-								{prefix && <span>{prefix}</span>}
-								{el.name}
+								<p>
+									{prefix && <span>{prefix}</span>}
+									{el.name}
+								</p>
 								{!isLoading ? (
 									<span
 										className={styles.tags_input_item_close_icon}

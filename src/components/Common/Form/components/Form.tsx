@@ -12,6 +12,7 @@ import { getEditorContent } from "@/helpers/editor/getEditorContent";
 import { useState } from "react";
 import { ITag } from "../../TagsInput/types/index.types";
 import SeriesInput from "../../Series";
+import { ISeriesTag } from "../../Series/types/index.types";
 
 /**
  * PostForm component for rendering a form with various input fields.
@@ -38,12 +39,12 @@ export default function Form({ buttonText }: IFromProps) {
 	const title: IInputHook = useInput(savedItem ? savedItem.title : "");
 	const [keywords, setKeywords] = useState<ITag[]>([]);
 	const [tags, setTags] = useState<ITag[]>([]);
-	const [series, setSeries] = useState<ITag[]>([]);
+	const [series, setSeries] = useState<ISeriesTag[]>([]);
 	const description: IInputHook = useInput(
 		savedItem ? savedItem.description : ""
 	);
 
-	const handleSubmit = async () => {
+	const handleSubmitForm = async () => {
 		const editorContent = await getEditorContent(content, title.value);
 
 		const dataPayload =
@@ -96,7 +97,7 @@ export default function Form({ buttonText }: IFromProps) {
 							value={content}
 							setContent={setContent}
 						/>
-						<SeriesInput />
+						<SeriesInput value={series} setValue={setSeries} />
 					</>
 				)}
 
@@ -124,7 +125,7 @@ export default function Form({ buttonText }: IFromProps) {
 				<button
 					className={styles.form_button}
 					type="button"
-					onClick={handleSubmit}
+					onClick={handleSubmitForm}
 				>
 					{submitButtonIsLoading ? "Loading..." : buttonText}
 				</button>
