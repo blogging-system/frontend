@@ -7,7 +7,12 @@ export interface ITagsInput {
 	required?: boolean;
 }
 
+export interface ITag {
+	_id: string;
+	name: string;
+}
+
 export interface ITagsProps extends ITagsInput {
-	value: string[];
-	setValue: (e: string[]) => void;
+	value: ITag[];
+	setValue: (e: ITag[]) => void;
 }

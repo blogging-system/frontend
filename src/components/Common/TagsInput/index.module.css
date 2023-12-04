@@ -46,13 +46,35 @@
 }
 
 .tags_input_item_close_icon {
-	margin: 3px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	padding-left: 10px;
+	margin: 3px 3px 3px 10px;
 	font-size: 20px;
 	cursor: pointer;
+}
+.loading_icon {
+	width: 20px;
+	height: 20px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+	font-size: 17px;
+	margin: 3px 3px 3px 10px;
+	animation: rotate-loading 1s infinite linear;
+}
+
+@keyframes rotate-loading {
+	0% {
+		transform: rotate(0deg);
+	}
+	50% {
+		transform: rotate(180deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
 }
 
 .tags_input_items_list input {

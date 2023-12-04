@@ -9,7 +9,8 @@ import { PathHelper } from "@/helpers/path/path.helper";
 import { useHandleSubmit } from "@/hooks/form/useHandleSubmitForm";
 import Editor from "../../Editor/components";
 import { getEditorContent } from "@/helpers/editor/getEditorContent";
-import { FormEvent, useState } from "react";
+import { useState } from "react";
+import { ITag } from "../../TagsInput/index.types";
 
 /**
  * PostForm component for rendering a form with various input fields.
@@ -34,9 +35,9 @@ export default function Form({ buttonText }: IFromProps) {
 	const imageUrl: IInputHook = useInput(savedItem ? savedItem.imageUrl : "");
 	const [content, setContent] = useState(savedItem ? savedItem.content : "");
 	const title: IInputHook = useInput(savedItem ? savedItem.title : "");
-	const [keywords, setKeywords] = useState<string[]>([]);
-	const [tags, setTags] = useState<string[]>([]);
-	const [series, setSeries] = useState<string[]>([]);
+	const [keywords, setKeywords] = useState<ITag[]>([]);
+	const [tags, setTags] = useState<ITag[]>([]);
+	const [series, setSeries] = useState<ITag[]>([]);
 	const description: IInputHook = useInput(
 		savedItem ? savedItem.description : ""
 	);

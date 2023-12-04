@@ -1,7 +1,10 @@
 import { useState } from "react";
 import styles from "./index.module.css";
-import { ITagsInput, ITagsProps } from "./index.types";
+import { ITagsProps } from "./index.types";
 import { AiFillCloseCircle } from "react-icons/ai";
+import { handleApiRequest } from "@/helpers/services/handleApiRequest.helper";
+import { TAGS_ENDPOINTS } from "@/enums/endpoints/tags";
+import { ImSpinner4 } from "react-icons/im";
 
 /**
  * TagsInput component allows users to enter and display tags.
@@ -18,21 +21,42 @@ const TagsInput = ({
 	value,
 	setValue,
 }: ITagsProps) => {
-	const handleAddTag = (e: React.KeyboardEvent<HTMLInputElement>) => {
+	const [isLoading, setIsLoading] = useState(false);
+	const handleAddTag = async (e: React.KeyboardEvent<HTMLInputElement>) => {
 		const { key, currentTarget } = e;
 
 		if (key === "Enter") {
-			const newTag = currentTarget.value.trim();
-			if (newTag && !value.includes(newTag)) {
-				setValue([...value, newTag]);
+			const { data, error } = await handleApiRequest({
+				endpoint: `${TAGS_ENDPOINTS.CREATE_TAG}`,
+				method: "POST",
+				dataPayload: { name: currentTarget.value },
+			});
+
+			const newTag = data;
+
+			if (data) {
+				setValue([...value, { _id: newTag._id, name: newTag.name }]);
 			}
 			currentTarget.value = "";
 		}
 	};
 
-	const handleRemoveTag = (index: number) => {
-		const updatedTags = value.filter((_, i) => i !== index);
-		setValue(updatedTags);
+	const handleRemoveTag = async (_id: string) => {
+		setIsLoading(true);
+
+		const { error } = await handleApiRequest({
+			endpoint: `${TAGS_ENDPOINTS.CREATE_TAG}/${_id}`,
+			method: "DELETE",
+		});
+
+		if (error) {
+			throw error;
+		} else {
+			const updatedTags = value.filter(tag => tag._id !== _id);
+			setValue(updatedTags);
+		}
+
+		setIsLoading(false);
 	};
 
 	return (
@@ -46,17 +70,24 @@ const TagsInput = ({
 						{value.map((el, i) => (
 							<li className={styles.tags_input_item} key={i}>
 								{prefix && <span>{prefix}</span>}
-								{el}
-								<span
-									className={styles.tags_input_item_close_icon}
-									onClick={() => handleRemoveTag(i)}
-								>
-									<AiFillCloseCircle />
-								</span>
+								{el.name}
+								{!isLoading ? (
+									<span
+										className={styles.tags_input_item_close_icon}
+										onClick={() => handleRemoveTag(el._id)}
+									>
+										<AiFillCloseCircle />
+									</span>
+								) : (
+									<span className={styles.loading_icon}>
+										<ImSpinner4 />
+									</span>
+								)}
 							</li>
 						))}
 					</ul>
 				)}
+
 				<input
 					id="tagsInput"
 					type="text"
