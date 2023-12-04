@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styles from "./index.module.css";
-import { ITagsInput } from "./index.types";
+import { ITagsInput, ITagsProps } from "./index.types";
 import { AiFillCloseCircle } from "react-icons/ai";
 
 /**
@@ -11,24 +11,28 @@ import { AiFillCloseCircle } from "react-icons/ai";
  * @param {string} [props.prefix="#"] - The prefix to be added to each tag.
  * @returns {JSX.Element} - Rendered component
  */
-const TagsInput = ({ label = "", prefix = "#", required }: ITagsInput) => {
-	const [tags, setTags] = useState<string[]>([]);
-
+const TagsInput = ({
+	label = "",
+	prefix = "#",
+	required,
+	value,
+	setValue,
+}: ITagsProps) => {
 	const handleAddTag = (e: React.KeyboardEvent<HTMLInputElement>) => {
 		const { key, currentTarget } = e;
 
 		if (key === "Enter") {
 			const newTag = currentTarget.value.trim();
-			if (newTag && !tags.includes(newTag)) {
-				setTags([...tags, newTag]);
+			if (newTag && !value.includes(newTag)) {
+				setValue([...value, newTag]);
 			}
 			currentTarget.value = "";
 		}
 	};
 
 	const handleRemoveTag = (index: number) => {
-		const updatedTags = tags.filter((_, i) => i !== index);
-		setTags(updatedTags);
+		const updatedTags = value.filter((_, i) => i !== index);
+		setValue(updatedTags);
 	};
 
 	return (
@@ -37,9 +41,9 @@ const TagsInput = ({ label = "", prefix = "#", required }: ITagsInput) => {
 				{`${label} ${required ? "*" : ""}`}
 			</label>
 			<div className={styles.tags_input_items_list}>
-				{tags.length > 0 && (
+				{value.length > 0 && (
 					<ul className={styles.tags_input_items}>
-						{tags.map((el, i) => (
+						{value.map((el, i) => (
 							<li className={styles.tags_input_item} key={i}>
 								{prefix && <span>{prefix}</span>}
 								{el}

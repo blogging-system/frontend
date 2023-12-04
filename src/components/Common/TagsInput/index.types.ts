@@ -6,3 +6,8 @@ export interface ITagsInput {
 	prefix?: string;
 	required?: boolean;
 }
+
+export interface ITagsProps extends ITagsInput {
+	value: string[];
+	setValue: (e: string[]) => void;
+}
