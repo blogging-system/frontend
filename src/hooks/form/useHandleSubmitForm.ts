@@ -26,7 +26,7 @@ export const useHandleSubmit = () => {
 		path: isPostOrSeries,
 	});
 
-	const submit = async <D>(e: FormEvent<HTMLFormElement>, dataPayload: D) => {
+	const submit = async <D>(dataPayload: D) => {
 		/**
 		 * Submits the form data to the API.
 		 *
@@ -35,7 +35,6 @@ export const useHandleSubmit = () => {
 		 * @return {Promise<void>} A promise that resolves when the submission is complete.
 		 */
 
-		e.preventDefault();
 		setSubmitButtonIsLoading(true);
 
 		if (isFormCreateOrUpdate === "create") {

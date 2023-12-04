@@ -53,6 +53,7 @@ button {
 }
 
 .ql-editing {
+	top: 10px !important;
 	left: 50% !important;
 	transform: translateX(-50%) !important;
 }
