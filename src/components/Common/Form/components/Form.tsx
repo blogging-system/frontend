@@ -13,6 +13,7 @@ import { useState } from "react";
 import { ITag } from "../../TagsInput/types/index.types";
 import SeriesInput from "../../Series";
 import { ISeriesTag } from "../../Series/types/index.types";
+import { getTagsId } from "../helpers/getTagsId";
 
 /**
  * PostForm component for rendering a form with various input fields.
@@ -37,8 +38,10 @@ export default function Form({ buttonText }: IFromProps) {
 	const imageUrl: IInputHook = useInput(savedItem ? savedItem.imageUrl : "");
 	const [content, setContent] = useState(savedItem ? savedItem.content : "");
 	const title: IInputHook = useInput(savedItem ? savedItem.title : "");
-	const [keywords, setKeywords] = useState<ITag[]>([]);
-	const [tags, setTags] = useState<ITag[]>([]);
+	const [keywords, setKeywords] = useState<ITag[]>(
+		savedItem ? savedItem.keywords : []
+	);
+	const [tags, setTags] = useState<ITag[]>(savedItem ? savedItem.tags : []);
 	const [selectedSeries, setSelectedSeries] = useState<ISeriesTag[]>([]);
 	const description: IInputHook = useInput(
 		savedItem ? savedItem.description : ""
@@ -53,8 +56,8 @@ export default function Form({ buttonText }: IFromProps) {
 						title: title.value,
 						description: description.value,
 						content: editorContent,
-						tags: tags,
-						keywords: keywords,
+						tags: getTagsId(tags),
+						keywords: getTagsId(keywords),
 						series: selectedSeries,
 						imageUrl: imageUrl.value,
 				  }
