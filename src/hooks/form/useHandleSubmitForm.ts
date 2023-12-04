@@ -4,7 +4,7 @@ import { FormEvent, useState } from "react";
 import { IListItem } from "@/components/Common/List/types/index.types";
 import { getSavedItemLocalStorage } from "@/helpers/local-storage/localStorage.helper";
 import { handleApiRequest } from "@/helpers/services/handleApiRequest.helper";
-import { handleUpdateSubmit } from "@/components/Common/Form/helpers/update/update.helper";
+import { handleUpdateSubmit } from "@/components/Common/Form/helpers/update.helper";
 
 /**
  * Submits the form data to the API.

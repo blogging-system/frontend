@@ -5,6 +5,7 @@ import { login } from "../services/login.service";
 import styles from "../styles/index.module.css";
 import useInput from "@/hooks/inputs/useInput";
 import { FormEvent, useEffect, useState } from "react";
+import { handleApiRequest } from "@/helpers/services/handleApiRequest.helper";
 
 export default function LogIn() {
 	const email = useInput("");
