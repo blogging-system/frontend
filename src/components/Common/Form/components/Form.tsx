@@ -10,6 +10,9 @@ import { useHandleSubmit } from "@/hooks/form/useHandleSubmitForm";
 import Editor from "../../Editor/components";
 import { getEditorContent } from "@/helpers/editor/getEditorContent";
 import { useState } from "react";
+import { ITag } from "../../TagsInput/types/index.types";
+import SeriesInput from "../../Series";
+import { ISeriesTag } from "../../Series/types/index.types";
 
 /**
  * PostForm component for rendering a form with various input fields.
@@ -19,7 +22,7 @@ import { useState } from "react";
  * @param getSavedItemLocalStorage - Function to get the current edit item from local storage
  * @returns {JSX.Element} - Rendered component
  */
-export default function Form({ buttonText, target }: IFromProps) {
+export default function Form({ buttonText }: IFromProps) {
 	const { submit, savedItem, submitButtonIsLoading } = useHandleSubmit();
 
 	const { slug } = useParams();
@@ -31,37 +34,42 @@ export default function Form({ buttonText, target }: IFromProps) {
 		redirect(`/dashboard/${isPostOrSeries}/home`);
 	}
 
+	const imageUrl: IInputHook = useInput(savedItem ? savedItem.imageUrl : "");
+	const [content, setContent] = useState(savedItem ? savedItem.content : "");
 	const title: IInputHook = useInput(savedItem ? savedItem.title : "");
+	const [keywords, setKeywords] = useState<ITag[]>([]);
+	const [tags, setTags] = useState<ITag[]>([]);
+	const [selectedSeries, setSelectedSeries] = useState<ISeriesTag[]>([]);
 	const description: IInputHook = useInput(
 		savedItem ? savedItem.description : ""
 	);
-	const [content, setContent] = useState(savedItem ? savedItem.content : "");
 
-	const imageUrl: IInputHook = useInput(savedItem ? savedItem.imageUrl : "");
+	const handleSubmitForm = async () => {
+		const editorContent = await getEditorContent(content, title.value);
 
-	const dataPayload =
-		isPostOrSeries === "posts"
-			? {
-					title: title.value,
-					description: description.value,
-					content: content,
-					tags: [],
-					keywords: [],
-					series: [],
-					imageUrl: imageUrl.value,
-			  }
-			: {
-					title: title.value,
-					description: description.value,
-					imageUrl: imageUrl.value,
-			  };
+		const dataPayload =
+			isPostOrSeries === "posts"
+				? {
+						title: title.value,
+						description: description.value,
+						content: editorContent,
+						tags: tags,
+						keywords: keywords,
+						series: selectedSeries,
+						imageUrl: imageUrl.value,
+				  }
+				: {
+						title: title.value,
+						description: description.value,
+						imageUrl: imageUrl.value,
+				  };
 
-	const htmlElements = getEditorContent(content, title.value);
-	console.log("👨🏼‍💻 ~ Form ~ htmlElements:", htmlElements);
+		submit(dataPayload);
+	};
 
 	return (
 		<div className={styles.form_wrapper}>
-			<form className={styles.form} onSubmit={e => submit(e, dataPayload)}>
+			<form className={styles.form}>
 				<FormItem
 					type="text"
 					label="Title"
@@ -82,20 +90,31 @@ export default function Form({ buttonText, target }: IFromProps) {
 					{...description}
 				/>
 
-				{target === "series" ? (
-					<div className={styles.form_item}>
-						<TagsInput label="Items" prefix="" />
-					</div>
-				) : (
-					<Editor title={title.value} value={content} setContent={setContent} />
+				{isPostOrSeries === "posts" && (
+					<>
+						<Editor
+							title={title.value}
+							value={content}
+							setContent={setContent}
+						/>
+						<SeriesInput
+							selectedSeries={selectedSeries}
+							setSelectedSeries={setSelectedSeries}
+						/>
+					</>
 				)}
 
 				<div className={styles.form_item}>
-					<TagsInput label="Tags" />
+					<TagsInput label="Tags" value={tags} setValue={setTags} />
 				</div>
 
 				<div className={styles.form_item}>
-					<TagsInput label="Keywords" prefix="" />
+					<TagsInput
+						label="Keywords"
+						prefix=""
+						value={keywords}
+						setValue={setKeywords}
+					/>
 				</div>
 
 				<FormItem
@@ -106,7 +125,11 @@ export default function Form({ buttonText, target }: IFromProps) {
 					{...imageUrl}
 				/>
 
-				<button className={styles.form_button} type="submit">
+				<button
+					className={styles.form_button}
+					type="button"
+					onClick={handleSubmitForm}
+				>
 					{submitButtonIsLoading ? "Loading..." : buttonText}
 				</button>
 			</form>

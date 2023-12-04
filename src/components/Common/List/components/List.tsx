@@ -10,7 +10,6 @@ import { useAppDispatch, useAppSelector } from "@/rtk/hooks";
 import { fetchList } from "@/rtk/slices/listSlice";
 import { IListItem } from "../types/index.types";
 import { useSplit } from "@/hooks/path/useSplit";
-import Editor from "../../Editor/components";
 
 /**
  * Represents a list component that displays a list of items and pagination controls.
