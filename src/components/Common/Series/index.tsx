@@ -5,7 +5,11 @@ import { AiFillCloseCircle } from "react-icons/ai";
 import { ImSpinner4 } from "react-icons/im";
 import { handleApiRequest } from "@/helpers/services/handleApiRequest.helper";
 
-const SeriesInput = ({ prefix = "#", value, setValue }: ISeriesProps) => {
+const SeriesInput = ({
+	prefix = "#",
+	selectedSeries,
+	setSelectedSeries,
+}: ISeriesProps) => {
 	const [suggestSeries, setSuggestSeries] = useState<ISeriesTag[]>([]);
 	const [allSeries, setAllSeries] = useState<ISeriesTag[] | null>(null);
 
@@ -59,9 +63,9 @@ const SeriesInput = ({ prefix = "#", value, setValue }: ISeriesProps) => {
 					Series
 				</label>
 				<div className={styles.series_input_items_list}>
-					{value.length > 0 && (
+					{selectedSeries.length > 0 && (
 						<ul className={styles.series_input_items}>
-							{value.map((el, i) => (
+							{selectedSeries.map((el, i) => (
 								<li className={styles.series_input_item} key={i}>
 									<p>
 										{prefix && <span>{prefix}</span>}

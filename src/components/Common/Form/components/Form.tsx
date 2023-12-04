@@ -39,7 +39,7 @@ export default function Form({ buttonText }: IFromProps) {
 	const title: IInputHook = useInput(savedItem ? savedItem.title : "");
 	const [keywords, setKeywords] = useState<ITag[]>([]);
 	const [tags, setTags] = useState<ITag[]>([]);
-	const [series, setSeries] = useState<ISeriesTag[]>([]);
+	const [selectedSeries, setSelectedSeries] = useState<ISeriesTag[]>([]);
 	const description: IInputHook = useInput(
 		savedItem ? savedItem.description : ""
 	);
@@ -55,7 +55,7 @@ export default function Form({ buttonText }: IFromProps) {
 						content: editorContent,
 						tags: tags,
 						keywords: keywords,
-						series: series,
+						series: selectedSeries,
 						imageUrl: imageUrl.value,
 				  }
 				: {
@@ -97,7 +97,10 @@ export default function Form({ buttonText }: IFromProps) {
 							value={content}
 							setContent={setContent}
 						/>
-						<SeriesInput value={series} setValue={setSeries} />
+						<SeriesInput
+							selectedSeries={selectedSeries}
+							setSelectedSeries={setSelectedSeries}
+						/>
 					</>
 				)}
 

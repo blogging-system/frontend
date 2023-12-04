@@ -5,7 +5,6 @@ export interface ISeriesTag {
 
 export interface ISeriesProps {
 	prefix?: string;
-	required?: boolean;
-	value: ISeriesTag[];
-	setValue: (e: ISeriesTag[]) => void;
+	selectedSeries: ISeriesTag[];
+	setSelectedSeries: (e: ISeriesTag[]) => void;
 }
