@@ -21,7 +21,6 @@ import { useSplit } from "@/hooks/path/useSplit";
 export default function List() {
 	const [items, setItems] = useState<IListItem[]>([]);
 	const [loadingItems, setLoadingItems] = useState<boolean>(true);
-	const [errorMsg, setErrorMsg] = useState<string>("");
 
 	const dispatch = useAppDispatch();
 	const { list, isLoading, error } = useAppSelector(state => state.list);
@@ -42,13 +41,7 @@ export default function List() {
 	useEffect(() => {
 		setItems(list);
 		setLoadingItems(isLoading);
-
-		if (error && error.response) {
-			setErrorMsg(error.response.data.message);
-		} else if (error && !error.response) {
-			setErrorMsg(error.message);
-		}
-	}, [list, isLoading, error]);
+	}, [list, isLoading]);
 
 	return (
 		<div className={styles.list_wrapper}>
@@ -57,7 +50,7 @@ export default function List() {
 			) : items ? (
 				<ListItems items={items} />
 			) : (
-				<h1>{errorMsg}</h1>
+				<h1>{error}</h1>
 			)}
 			<ListPagination />
 		</div>

@@ -25,6 +25,17 @@
 	padding: 5px;
 }
 
+.list_item_input {
+	width: 100%;
+	border: 3px solid rgba(205, 205, 205, 0.404);
+	padding: 5px;
+	border-radius: 5px;
+}
+
+.list_item_input:focus {
+	border-color: #ed9d093a;
+}
+
 .list_item span {
 	max-width: 100px;
 }

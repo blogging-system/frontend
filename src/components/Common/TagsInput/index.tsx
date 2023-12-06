@@ -1,7 +1,6 @@
 import styles from "./styles/index.module.css";
 import { ITagsProps } from "./types/index.types";
 import { AiFillCloseCircle } from "react-icons/ai";
-import { ImSpinner4 } from "react-icons/im";
 import { useHandleAddTag } from "@/hooks/form/useHandleAddTag";
 import { useHandleRemoveTags } from "@/hooks/form/useHandleRemoveTags";
 
@@ -24,13 +23,11 @@ const TagsInput = ({
 
 	const { handleAddTag } = useHandleAddTag({ value, setValue, metadata });
 
-	const { isLoading, handleRemoveTag } = useHandleRemoveTags({
+	const { handleRemoveTag } = useHandleRemoveTags({
 		metadata,
 		value,
 		setValue,
 	});
-
-	console.log(value);
 
 	return (
 		<div className={styles.tags_input_wrapper}>
@@ -38,7 +35,7 @@ const TagsInput = ({
 				{`${label} ${required ? "*" : ""}`}
 			</label>
 			<div className={styles.tags_input_items_list}>
-				{/* {value.length > 0 && (
+				{value.length > 0 && (
 					<ul className={styles.tags_input_items}>
 						{value.map((el, i) => (
 							<li className={styles.tags_input_item} key={i}>
@@ -46,23 +43,16 @@ const TagsInput = ({
 									{prefix && <span>{prefix}</span>}
 									{el.name}
 								</p>
-								{!el._id &&
-									(!isLoading ? (
-										<span
-											className={styles.tags_input_item_close_icon}
-											onClick={() => handleRemoveTag(el._id)}
-										>
-											<AiFillCloseCircle />
-										</span>
-									) : (
-										<span className={styles.loading_icon}>
-											<ImSpinner4 />
-										</span>
-									))}
+								<span
+									className={styles.tags_input_item_close_icon}
+									onClick={() => handleRemoveTag(el._id)}
+								>
+									<AiFillCloseCircle />
+								</span>
 							</li>
 						))}
 					</ul>
-				)} */}
+				)}
 
 				<input
 					id="tagsInput"

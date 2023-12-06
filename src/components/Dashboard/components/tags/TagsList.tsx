@@ -1,45 +1,37 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import styles from "../../styles/tagsList.module.css";
 import { useParams } from "next/navigation";
 import TagListItem from "./TagListItem";
-import { ITag } from "@/components/Common/TagsInput/types/index.types";
-import axios from "axios";
-import { appConfig } from "@/config/app.config";
+import { useAppDispatch, useAppSelector } from "@/rtk/hooks";
+import { fetchTagsList } from "@/rtk/slices/tagsListSlice";
 
 const TagsList = () => {
 	const { slug } = useParams();
-	const [tagsList, setTagsList] = useState<ITag[]>([]);
+
+	const dispatch = useAppDispatch();
+
+	const { tagsList, error, isLoading } = useAppSelector(
+		state => state.tagsList
+	);
 
 	useEffect(() => {
-		(async () => {
-			const { data } = await axios(
-				`${appConfig.public}/${slug[slug.length - 1]}`,
-				{
-					method: "GET",
-					headers: {
-						"Content-Type": "application/json",
-					},
-				}
-			);
-
-			if (data) {
-				setTagsList(data);
-			}
-		})();
+		dispatch(fetchTagsList(slug[slug.length - 1]));
 	}, []);
 
 	console.log(tagsList);
 
 	return (
 		<div className={styles.tags_list_wrapper}>
-			{tagsList.length > 0 ? (
+			{tagsList ? (
 				<ul className={styles.list_items}>
 					{tagsList.map((tag, i) => (
 						<TagListItem key={i} tag={tag} />
 					))}
 				</ul>
-			) : (
+			) : !error || isLoading ? (
 				<h1>Loading...</h1>
+			) : (
+				error
 			)}
 		</div>
 	);
