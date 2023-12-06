@@ -1,4 +1,4 @@
 export const appConfig = {
-	privet: "http://localhost:3000/admin",
-	public: "http://localhost:3000",
+	privet: "https://api.ahmedelgaidi.com/admin",
+	public: "https://api.ahmedelgaidi.com",
 };
