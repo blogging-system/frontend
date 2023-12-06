@@ -11,9 +11,11 @@ import Editor from "../../Editor/components";
 import { getEditorContent } from "@/helpers/editor/getEditorContent";
 import { useState } from "react";
 import { ITag } from "../../TagsInput/types/index.types";
-import SeriesInput from "../../Series";
+import SeriesInput from "../../Series/components";
 import { ISeriesTag } from "../../Series/types/index.types";
 import { getTagsId } from "../helpers/getTagsId";
+import { getTags } from "../helpers/getTags";
+import { getSeriesId } from "../helpers/getSeriesId";
 
 /**
  * PostForm component for rendering a form with various input fields.
@@ -42,7 +44,9 @@ export default function Form({ buttonText }: IFromProps) {
 		savedItem ? savedItem.keywords : []
 	);
 	const [tags, setTags] = useState<ITag[]>(savedItem ? savedItem.tags : []);
-	const [selectedSeries, setSelectedSeries] = useState<ISeriesTag[]>([]);
+	const [selectedSeries, setSelectedSeries] = useState<ISeriesTag[]>(
+		savedItem ? savedItem.series : []
+	);
 	const description: IInputHook = useInput(
 		savedItem ? savedItem.description : ""
 	);
@@ -50,15 +54,25 @@ export default function Form({ buttonText }: IFromProps) {
 	const handleSubmitForm = async () => {
 		const editorContent = await getEditorContent(content, title.value);
 
+		// Get tags and keywords from the backend
+		const tagsWithId = await getTags({
+			tags: tags,
+			metadata: "tags",
+		});
+		const keywordsWithId = await getTags({
+			tags: keywords,
+			metadata: "keywords",
+		});
+
 		const dataPayload =
 			isPostOrSeries === "posts"
 				? {
 						title: title.value,
 						description: description.value,
 						content: editorContent,
-						tags: getTagsId(tags),
-						keywords: getTagsId(keywords),
-						series: selectedSeries,
+						tags: getTagsId(tagsWithId),
+						keywords: getTagsId(keywordsWithId),
+						series: getSeriesId(selectedSeries),
 						imageUrl: imageUrl.value,
 				  }
 				: {

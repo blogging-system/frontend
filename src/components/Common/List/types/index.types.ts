@@ -1,3 +1,5 @@
+import { ISeriesTag } from "../../Series/types/index.types";
+
 /**
  * Represents an item in a list with a title and number of views.
  */
@@ -10,7 +12,7 @@ export interface IListItem {
 	views: number;
 	tags: ITag[];
 	keywords: IKeyword[];
-	series: ISerie[];
+	series: ISeriesTag[];
 	isPublished: boolean;
 	createdAt: string;
 	updatedAt: string;
