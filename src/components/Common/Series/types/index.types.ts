@@ -1,7 +1,13 @@
 export interface ISeriesTag {
 	_id: string;
-	title: string;
 	slug: string;
+	description?: string;
+	imageUrl?: string;
+	isPublished?: boolean;
+	title?: string;
+	views?: number;
+	updatedAt?: string;
+	createdAt?: string;
 }
 
 export interface ISeriesProps {

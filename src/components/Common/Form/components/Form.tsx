@@ -44,7 +44,9 @@ export default function Form({ buttonText }: IFromProps) {
 		savedItem ? savedItem.keywords : []
 	);
 	const [tags, setTags] = useState<ITag[]>(savedItem ? savedItem.tags : []);
-	const [selectedSeries, setSelectedSeries] = useState<ISeriesTag[]>([]);
+	const [selectedSeries, setSelectedSeries] = useState<ISeriesTag[]>(
+		savedItem ? savedItem.series : []
+	);
 	const description: IInputHook = useInput(
 		savedItem ? savedItem.description : ""
 	);

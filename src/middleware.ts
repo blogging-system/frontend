@@ -15,7 +15,7 @@ const middleware = async (request: NextRequest, response: NextResponse) => {
 	if (!request.nextUrl.pathname.includes("auth") && !user) {
 		return NextResponse.redirect(new URL("/auth/login", request.url));
 	} else if (request.nextUrl.pathname.includes("auth") && user) {
-		return NextResponse.redirect(new URL("/dashboard", request.url));
+		return NextResponse.redirect(new URL("/dashboard/posts/home", request.url));
 	}
 };
 

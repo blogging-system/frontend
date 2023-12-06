@@ -38,7 +38,7 @@ const TagsInput = ({
 				{`${label} ${required ? "*" : ""}`}
 			</label>
 			<div className={styles.tags_input_items_list}>
-				{value.length > 0 && (
+				{/* {value.length > 0 && (
 					<ul className={styles.tags_input_items}>
 						{value.map((el, i) => (
 							<li className={styles.tags_input_item} key={i}>
@@ -62,7 +62,7 @@ const TagsInput = ({
 							</li>
 						))}
 					</ul>
-				)}
+				)} */}
 
 				<input
 					id="tagsInput"

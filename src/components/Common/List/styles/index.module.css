@@ -41,7 +41,7 @@
 }
 
 .list_item_button {
-	min-width: 70px;
+	width: 85px;
 	font-size: 16px;
 	font-weight: 600;
 	text-align: center;
