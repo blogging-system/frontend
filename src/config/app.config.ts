@@ -1,3 +1,4 @@
 export const appConfig = {
-	apiUrl: "http://localhost:3000/admin",
+	privet: "http://localhost:3000/admin",
+	public: "http://localhost:3000",
 };

@@ -9,6 +9,10 @@ import { getUser } from "./services/auth/getUser";
 const middleware = async (request: NextRequest, response: NextResponse) => {
 	// Redirects
 
+	if (request.nextUrl.pathname === "/dashboard") {
+		return NextResponse.redirect(new URL("/dashboard/posts/home", request.url));
+	}
+
 	// if not authenticated redirect to login page
 	const user = await getUser(request);
 
