@@ -18,8 +18,6 @@ const TagsList = () => {
 		dispatch(fetchTagsList(slug[slug.length - 1]));
 	}, []);
 
-	console.log(tagsList);
-
 	return (
 		<div className={styles.tags_list_wrapper}>
 			{tagsList ? (

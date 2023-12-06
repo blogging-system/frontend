@@ -43,12 +43,26 @@ const listSlice = createSlice({
 	name: "list",
 	reducers: {
 		deleteItem: (state, action) => {
-			console.log(action);
 			const filtered = state.tagsList.filter(
 				item => item._id !== action.payload
 			);
 
 			state.tagsList = filtered;
+		},
+
+		updateItem: (state, action) => {
+			const updatedList = state.tagsList.map(item => {
+				if (item._id === action.payload._id) {
+					return {
+						...item,
+						name: action.payload.name,
+					};
+				} else {
+					return item;
+				}
+			});
+
+			state.tagsList = updatedList;
 		},
 	},
 	extraReducers: builder => {
@@ -67,4 +81,4 @@ const listSlice = createSlice({
 });
 
 export default listSlice.reducer;
-export const { deleteItem } = listSlice.actions;
+export const { deleteItem, updateItem } = listSlice.actions;

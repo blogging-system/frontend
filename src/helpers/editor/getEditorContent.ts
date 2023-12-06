@@ -7,7 +7,6 @@ export const getEditorContent = async (value: string, alt: string) => {
 
 	const uploadPromises = images.map(async (img: any) => {
 		const imageUrl = await uploadCloudinaryFile(img.attributes.src.value);
-		console.log(imageUrl);
 		img.setAttribute("src", imageUrl);
 		img.setAttribute("alt", alt.replace(" ", "-"));
 	});

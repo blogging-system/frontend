@@ -29,6 +29,8 @@ export const handleApiRequest = async <D>({
 		const errorMsg = error.response
 			? error.response.data.message
 			: error.message;
+
+		alert(errorMsg);
 		return {
 			error: errorMsg,
 			data: null,
