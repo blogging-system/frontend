@@ -17,7 +17,7 @@ export const handleApiRequest = async <D>({
 	dataPayload,
 }: IHandleApiRequest<D>) => {
 	try {
-		const { data } = await axiosInstance(`${appConfig.privet}/${endpoint}`, {
+		const { data } = await axiosInstance(`${appConfig.private}/${endpoint}`, {
 			method,
 			data: dataPayload,
 		});
