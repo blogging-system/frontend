@@ -2,7 +2,7 @@ import styles from "./styles/index.module.css";
 import { ITagsProps } from "./types/index.types";
 import { AiFillCloseCircle } from "react-icons/ai";
 import { ImSpinner4 } from "react-icons/im";
-import { useHandleAddTags } from "@/hooks/form/useHandleAddTags";
+import { useHandleAddTag } from "@/hooks/form/useHandleAddTag";
 import { useHandleRemoveTags } from "@/hooks/form/useHandleRemoveTags";
 
 /**
@@ -22,13 +22,15 @@ const TagsInput = ({
 }: ITagsProps) => {
 	const metadata = label.toLowerCase();
 
-	const { handleAddTag } = useHandleAddTags({ value, setValue, metadata });
+	const { handleAddTag } = useHandleAddTag({ value, setValue, metadata });
 
 	const { isLoading, handleRemoveTag } = useHandleRemoveTags({
 		metadata,
 		value,
 		setValue,
 	});
+
+	console.log(value);
 
 	return (
 		<div className={styles.tags_input_wrapper}>

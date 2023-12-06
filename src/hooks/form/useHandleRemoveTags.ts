@@ -1,5 +1,4 @@
 import { ITagsPropsHook } from "@/components/Common/TagsInput/types/index.types";
-import { METADATA_ENDPOINTS } from "@/enums/endpoints/metadata";
 import { handleApiRequest } from "@/helpers/services/handleApiRequest.helper";
 import { useState } from "react";
 
@@ -14,13 +13,7 @@ export const useHandleRemoveTags = ({
 		setIsLoading(true);
 
 		const { error } = await handleApiRequest({
-			endpoint: `${
-				metadata === "tags"
-					? METADATA_ENDPOINTS.TAG
-					: metadata === "keywords"
-					? METADATA_ENDPOINTS.KEYWORDS
-					: null
-			}/${_id}`,
+			endpoint: `${metadata}/${_id}`,
 			method: "DELETE",
 		});
 

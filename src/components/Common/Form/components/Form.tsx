@@ -14,6 +14,7 @@ import { ITag } from "../../TagsInput/types/index.types";
 import SeriesInput from "../../Series";
 import { ISeriesTag } from "../../Series/types/index.types";
 import { getTagsId } from "../helpers/getTagsId";
+import { getTags } from "../helpers/getTags";
 
 /**
  * PostForm component for rendering a form with various input fields.
@@ -50,14 +51,26 @@ export default function Form({ buttonText }: IFromProps) {
 	const handleSubmitForm = async () => {
 		const editorContent = await getEditorContent(content, title.value);
 
+		// Get tags and keywords from the backend
+		const tagsWithId = await getTags({
+			tags: tags,
+			metadata: "tags",
+		});
+		const keywordsWithId = await getTags({
+			tags: keywords,
+			metadata: "keywords",
+		});
+
+		console.log(tagsWithId);
+
 		const dataPayload =
 			isPostOrSeries === "posts"
 				? {
 						title: title.value,
 						description: description.value,
 						content: editorContent,
-						tags: getTagsId(tags),
-						keywords: getTagsId(keywords),
+						tags: getTagsId(tagsWithId),
+						keywords: getTagsId(keywordsWithId),
 						series: selectedSeries,
 						imageUrl: imageUrl.value,
 				  }

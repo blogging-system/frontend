@@ -1,4 +1,5 @@
 import { ITarget } from "@/hooks/inputs/types/target.type";
+import { ITag } from "../../TagsInput/types/index.types";
 
 /**
  * Interface representing the props for the FormItem component.
@@ -18,4 +19,9 @@ export interface IFormItem {
 export interface IFromProps {
 	buttonText: string | undefined;
 	target: string | undefined;
+}
+
+export interface IGetTagsProps {
+	tags: ITag[];
+	metadata: string;
 }
