@@ -60,6 +60,7 @@
 	margin: 3px 3px 3px 10px;
 	font-size: 20px;
 	cursor: pointer;
+	color: white;
 }
 .loading_icon {
 	width: 20px;
@@ -112,11 +113,13 @@
 	border-bottom: 3px solid rgba(205, 205, 205, 0.404);
 }
 
-.suggest_series_list_item {
+.suggest_series_list_item button {
+	width: 100%;
 	padding: 10px;
+	text-align: start;
 }
 
-.suggest_series_list_item:hover {
+.suggest_series_list_item button:hover {
 	background-color: rgba(205, 205, 205, 0.404);
 	cursor: pointer;
 }

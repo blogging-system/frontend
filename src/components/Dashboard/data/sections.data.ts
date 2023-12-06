@@ -33,4 +33,20 @@ export const sections: Record<string, ISectionData> = {
 			update: "Update Series",
 		},
 	},
+	tags: {
+		links: [
+			"Home",
+			"New",
+			"Latest",
+			"Trending",
+			"Popular",
+			"Unpopular",
+			"Published",
+			"Unpublished",
+		],
+		formButtonText: {
+			new: "Create Series",
+			update: "Update Series",
+		},
+	},
 };

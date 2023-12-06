@@ -17,7 +17,7 @@ export const handleApiRequest = async <D>({
 	dataPayload,
 }: IHandleApiRequest<D>) => {
 	try {
-		const { data } = await axiosInstance(`${appConfig.apiUrl}/${endpoint}`, {
+		const { data } = await axiosInstance(`${appConfig.private}/${endpoint}`, {
 			method,
 			data: dataPayload,
 		});
@@ -25,9 +25,14 @@ export const handleApiRequest = async <D>({
 			data,
 			error: null,
 		};
-	} catch (error) {
+	} catch (error: any) {
+		const errorMsg = error.response
+			? error.response.data.message
+			: error.message;
+
+		alert(errorMsg);
 		return {
-			error,
+			error: errorMsg,
 			data: null,
 		};
 	}

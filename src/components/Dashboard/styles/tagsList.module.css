@@ -1,11 +1,11 @@
-.list_wrapper {
+.tags_list_wrapper {
+	max-width: 1300px;
 	height: calc(100vh - 170px);
+	padding: 20px;
 	display: flex;
 	flex-direction: column;
-	border: 3px solid rgba(205, 205, 205, 0.404);
 	border-radius: 10px;
-	padding: 20px 10px;
-	overflow-y: scroll;
+	margin: 80px auto;
 }
 
 .list_items {
@@ -25,15 +25,19 @@
 	padding: 5px;
 }
 
-.list_item span {
-	max-width: 100px;
+.list_item_input {
+	width: 100%;
+	border: 3px solid rgba(205, 205, 205, 0.404);
+	padding: 5px;
+	border-radius: 5px;
 }
 
-.list_item p {
-	width: 250px;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
+.list_item_input:focus {
+	border-color: #ed9d093a;
+}
+
+.list_item span {
+	max-width: 100px;
 }
 
 .list_item_buttons_wrapper {

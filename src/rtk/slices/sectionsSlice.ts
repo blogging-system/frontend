@@ -82,6 +82,20 @@ const initialState: IState = {
 				update: "Update Series",
 			},
 		},
+		tags: {
+			links: [],
+			formButtonText: {
+				new: "Create Tag",
+				update: "Update Tag",
+			},
+		},
+		keywords: {
+			links: [],
+			formButtonText: {
+				new: "Create keyword",
+				update: "Update keyword",
+			},
+		},
 	},
 	isLoading: true,
 };

@@ -1,3 +1,4 @@
 export const appConfig = {
-	apiUrl: "https://api.ahmedelgaidi.com/admin",
+	private: "https://api.ahmedelgaidi.com/admin",
+	public: "https://api.ahmedelgaidi.com",
 };
