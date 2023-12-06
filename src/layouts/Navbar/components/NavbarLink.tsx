@@ -2,10 +2,10 @@ import Link from "next/link";
 import React from "react";
 import { INavbarLinkProps } from "../types/navbarLink.types";
 import styles from "../styles/index.module.css";
-import { useParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 const NavbarLink = ({ href, label }: INavbarLinkProps) => {
-	const { slug } = useParams();
+	const slug = usePathname().split("/");
 
 	return (
 		<li className={styles.navbar_item}>
