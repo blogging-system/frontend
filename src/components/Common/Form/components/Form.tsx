@@ -11,10 +11,11 @@ import Editor from "../../Editor/components";
 import { getEditorContent } from "@/helpers/editor/getEditorContent";
 import { useState } from "react";
 import { ITag } from "../../TagsInput/types/index.types";
-import SeriesInput from "../../Series";
+import SeriesInput from "../../Series/components";
 import { ISeriesTag } from "../../Series/types/index.types";
 import { getTagsId } from "../helpers/getTagsId";
 import { getTags } from "../helpers/getTags";
+import { getSeriesId } from "../helpers/getSeriesId";
 
 /**
  * PostForm component for rendering a form with various input fields.
@@ -61,8 +62,6 @@ export default function Form({ buttonText }: IFromProps) {
 			metadata: "keywords",
 		});
 
-		console.log(tagsWithId);
-
 		const dataPayload =
 			isPostOrSeries === "posts"
 				? {
@@ -71,7 +70,7 @@ export default function Form({ buttonText }: IFromProps) {
 						content: editorContent,
 						tags: getTagsId(tagsWithId),
 						keywords: getTagsId(keywordsWithId),
-						series: selectedSeries,
+						series: getSeriesId(selectedSeries),
 						imageUrl: imageUrl.value,
 				  }
 				: {
