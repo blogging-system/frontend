@@ -12,19 +12,23 @@ export const useHandleRemoveTags = ({
 	const handleRemoveTag = async (_id: string) => {
 		setIsLoading(true);
 
-		const { error } = await handleApiRequest({
-			endpoint: `${metadata}/${_id}`,
-			method: "DELETE",
-		});
+		let error;
 
-		setIsLoading(false);
+		if (_id) {
+			const data = await handleApiRequest({
+				endpoint: `${metadata}/${_id}`,
+				method: "DELETE",
+			});
+
+			error = data.error;
+		}
 
 		if (!error) {
 			const updatedTags = value.filter(tag => tag._id !== _id);
 			setValue(updatedTags);
-		} else {
-			throw error;
 		}
+
+		setIsLoading(false);
 	};
 
 	return {

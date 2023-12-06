@@ -46,18 +46,19 @@ const TagsInput = ({
 									{prefix && <span>{prefix}</span>}
 									{el.name}
 								</p>
-								{!isLoading ? (
-									<span
-										className={styles.tags_input_item_close_icon}
-										onClick={() => handleRemoveTag(el._id)}
-									>
-										<AiFillCloseCircle />
-									</span>
-								) : (
-									<span className={styles.loading_icon}>
-										<ImSpinner4 />
-									</span>
-								)}
+								{!el._id &&
+									(!isLoading ? (
+										<span
+											className={styles.tags_input_item_close_icon}
+											onClick={() => handleRemoveTag(el._id)}
+										>
+											<AiFillCloseCircle />
+										</span>
+									) : (
+										<span className={styles.loading_icon}>
+											<ImSpinner4 />
+										</span>
+									))}
 							</li>
 						))}
 					</ul>
