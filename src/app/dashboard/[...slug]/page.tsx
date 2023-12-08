@@ -1,9 +1,9 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import Dashboard from "@/components/Dashboard/components/Dashboard";
+import Dashboard from "@/shared/components/Dashboard/components/Dashboard";
 import { redirect } from "next/navigation";
-import { sections } from "@/components/Dashboard/data/sections.data";
+import { sections } from "@/shared/components/Dashboard/data/sections.data";
 
 export default function DashboardPage() {
 	const { slug } = useParams();
