@@ -49,6 +49,8 @@ const TagListItem = ({ tag }: { tag: ITag }) => {
 		}
 	};
 
+	console.log(isEdit);
+
 	useEffect(() => {
 		handleUpdateButtonText();
 	}, [value, name]);
@@ -62,6 +64,7 @@ const TagListItem = ({ tag }: { tag: ITag }) => {
 				className={styles.list_item_input}
 				onChange={e => setValue(e.currentTarget.value)}
 				readOnly={!isEdit}
+				disabled={!isEdit}
 			/>
 			<div className={styles.list_item_buttons_wrapper}>
 				<button className={styles.list_item_button} onClick={handleEditTag}>
