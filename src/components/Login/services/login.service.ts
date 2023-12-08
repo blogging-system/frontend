@@ -33,7 +33,7 @@ export const login = async ({ email, password }: ILoginData) => {
 		};
 	} catch (error: any) {
 		return {
-			error: error.response.data.message,
+			error: error.response?.data.message,
 		};
 	}
 };
