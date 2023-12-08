@@ -3,10 +3,9 @@
 import React, { useState, useRef, useEffect } from "react";
 import styles from "../../styles/tagsList.module.css";
 import { ITag } from "@/components/Common/TagsInput/types/index.types";
-import { handleApiRequest } from "@/helpers/services/handleApiRequest.helper";
 import { useParams } from "next/navigation";
 import { useAppDispatch } from "@/rtk/hooks";
-import { deleteItem, updateItem } from "@/rtk/slices/tagsListSlice";
+import { updateItem } from "@/rtk/slices/tagsListSlice";
 import { useHandleRemoveTag } from "@/hooks/tags/useHandleRemoveTag";
 import { useHandleUpdateTag } from "@/hooks/tags/useHandleUpdateTag";
 
@@ -25,7 +24,10 @@ const TagListItem = ({ tag }: { tag: ITag }) => {
 
 	const dispatch = useAppDispatch();
 
-	const { handleRemoveTag } = useHandleRemoveTag({ currentSlug, _id });
+	const { handleRemoveTag, isLoading } = useHandleRemoveTag({
+		currentSlug,
+		_id,
+	});
 	const { handleUpdateTag } = useHandleUpdateTag({ currentSlug, _id, value });
 
 	const handleUpdateButtonText = () => {
@@ -48,8 +50,6 @@ const TagListItem = ({ tag }: { tag: ITag }) => {
 			dispatch(updateItem({ _id, name: value }));
 		}
 	};
-
-	console.log(isEdit);
 
 	useEffect(() => {
 		handleUpdateButtonText();
@@ -74,7 +74,7 @@ const TagListItem = ({ tag }: { tag: ITag }) => {
 					className={`${styles.list_item_button} ${styles.list_item_button_active}`}
 					onClick={handleRemoveTag}
 				>
-					Delete
+					{isLoading ? "Loading..." : "Delete"}
 				</button>
 			</div>
 		</li>
