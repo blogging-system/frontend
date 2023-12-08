@@ -1,47 +1,27 @@
 import React from "react";
 import styles from "../styles/index.module.css";
 import { IListItem } from "../types/index.types";
+<<<<<<< HEAD:src/shared/components/Common/List/components/ListItem.tsx
 import { usePathname } from "next/navigation";
 import { saveItemLocalStorage } from "@/shared/helpers/local-storage/localStorage.helper";
 import { useAppDispatch } from "@/shared/rtk/hooks";
 import { deleteItem, togglePublishItem } from "@/shared/rtk/slices/listSlice";
 import { PathHelper } from "@/shared/helpers/path/path.helper";
 import { handleApiRequest } from "@/shared/helpers/services/handleApiRequest.helper";
+=======
+import { useHandleItemOperations } from "@/hooks/list/usehandleItemOperations";
+
+/**
+ * Renders a single list item.
+ *
+ * @param {IListItem} item - The item to be rendered.
+ * @return {JSX.Element} The rendered list item.
+ */
+>>>>>>> fdf80734e79afe2ffffb2014e9d6d3b975137d1c:src/components/Common/List/components/ListItem.tsx
 
 const ListItem = ({ item }: { item: IListItem }) => {
-	const currentPath = usePathname();
-
-	const isUpdatePostOrSeries = currentPath.includes("posts")
-		? "posts"
-		: "series";
-
-	const handleItemOperation = async (buttonOperation: string) => {
-		if (buttonOperation === "edit") {
-			saveItemLocalStorage(item, isUpdatePostOrSeries);
-		} else if (buttonOperation === "delete") {
-			dispatch(deleteItem(item._id));
-
-			//! access data or error for the modal
-			const { data, error } = await handleApiRequest({
-				endpoint: `/${isPostsOrSeries}/${item._id}`,
-				method: "DELETE",
-			});
-		} else if (buttonOperation === "publish") {
-			//! access data or error for the modal
-			const { data, error } = await handleApiRequest({
-				endpoint: `/${isPostsOrSeries}/${
-					item.isPublished ? "unpublish" : "publish"
-				}/${item._id}`,
-				method: "POST",
-			});
-			dispatch(togglePublishItem(item._id));
-			dispatch(deleteItem(item._id));
-		}
-	};
-
-	const dispatch = useAppDispatch();
-
-	const isPostsOrSeries = PathHelper.isPathPostsOrSeries(currentPath);
+	const { handleItemOperations, loader } = useHandleItemOperations();
+	const { isLoading, buttonOperation } = loader;
 
 	return (
 		<li className={styles.list_item}>
@@ -50,21 +30,25 @@ const ListItem = ({ item }: { item: IListItem }) => {
 			<div className={styles.list_item_buttons_wrapper}>
 				<button
 					className={styles.list_item_button}
-					onClick={() => handleItemOperation("publish")}
+					onClick={() => handleItemOperations("publish", item)}
 				>
-					{item.isPublished ? "Unpublish" : "Publish"}
+					{buttonOperation === "publish"
+						? "Loading..."
+						: item.isPublished
+						? "Unpublish"
+						: "Publish"}
 				</button>
 				<button
-					onClick={() => handleItemOperation("edit")}
+					onClick={() => handleItemOperations("edit", item)}
 					className={styles.list_item_button}
 				>
 					Edit
 				</button>
 				<button
 					className={`${styles.list_item_button} ${styles.list_item_button_active}`}
-					onClick={() => handleItemOperation("delete")}
+					onClick={() => handleItemOperations("delete", item)}
 				>
-					Delete
+					{buttonOperation === "delete" ? "Loading..." : "Delete"}
 				</button>
 			</div>
 		</li>

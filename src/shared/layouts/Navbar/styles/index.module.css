@@ -1,5 +1,6 @@
 .navbar_container {
 	position: fixed;
+	top: 0;
 	width: 100%;
 	background-color: #fef8e5;
 }
@@ -45,6 +46,11 @@
 .navbar_logout {
 	margin: 0 30px;
 	font-weight: 900;
+}
+
+.navbar_logout {
+	border-bottom: 4px solid transparent;
+	margin: 0 30px;
 }
 
 .navbar_item_link,

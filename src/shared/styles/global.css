@@ -23,6 +23,9 @@ ul {
 }
 
 button {
+	background-color: transparent;
+	border: none;
+	font-size: 16px;
 	cursor: pointer;
 }
 
@@ -32,4 +35,29 @@ button {
 *::-webkit-scrollbar-thumb {
 	background-color: #903101e6;
 	border-radius: 10px;
+}
+
+.quill {
+	border-radius: 10px;
+	overflow: hidden;
+	border: 3px solid rgba(205, 205, 205, 0.404);
+}
+
+.ql-container.ql-snow,
+.ql-toolbar.ql-snow {
+	border: none !important;
+}
+
+.ql-toolbar.ql-snow {
+	border-bottom: 3px solid rgba(205, 205, 205, 0.404) !important;
+}
+
+.ql-editing {
+	top: 10px !important;
+	left: 50% !important;
+	transform: translateX(-50%) !important;
+}
+
+.ql-editing::before {
+	content: "Enter URL" !important;
 }

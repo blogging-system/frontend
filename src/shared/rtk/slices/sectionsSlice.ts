@@ -1,25 +1,53 @@
 import { ISectionData } from "@/shared/components/Dashboard/types/index.types";
 import { IAnalyticsDataItem } from "../../components/Common/Home/types/index.types";
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { handleApiRequest } from "@/helpers/services/handleApiRequest.helper";
+import { ANALYTICS_API_ENDPOINTS } from "@/enums/endpoints/analytics.enum";
+
+export const fetchAllAnalyticsData = createAsyncThunk(
+	"uiData/uiDataSlice",
+	async (currentSection: string) => {
+		const res = await Promise.all([
+			await handleApiRequest({
+				endpoint: `${currentSection}/${ANALYTICS_API_ENDPOINTS.COUNT}`,
+				method: "GET",
+			}),
+			await handleApiRequest({
+				endpoint: `${currentSection}/${ANALYTICS_API_ENDPOINTS.PUBLISHED_COUNT}`,
+				method: "GET",
+			}),
+			await handleApiRequest({
+				endpoint: `${currentSection}/${ANALYTICS_API_ENDPOINTS.UNPUBLISHED_COUNT}`,
+				method: "GET",
+			}),
+		]);
+
+		const data = res.map(res => res.data.count);
+
+		return {
+			currentSection,
+			data,
+		};
+	}
+);
 
 interface IState {
-	postsAnalyticsData: IAnalyticsDataItem[];
+	posts: IAnalyticsDataItem[];
 	sections: Record<string, ISectionData>;
-	seriesAnalyticsData: IAnalyticsDataItem[];
+	series: IAnalyticsDataItem[];
+	isLoading: boolean;
 }
 
 const initialState: IState = {
-	postsAnalyticsData: [
-		{ title: "Total Posts Views:", value: 0, unit: "Views" },
+	posts: [
 		{ title: "Total Posts:", value: 0, unit: "Posts" },
 		{ title: "Total Published Posts:", value: 0, unit: "Posts" },
 		{ title: "Total Unpublished Posts:", value: 0, unit: "Posts" },
 	],
-	seriesAnalyticsData: [
-		{ title: "Total Series Views:", value: 1200, unit: "Views" },
-		{ title: "Total Series:", value: 900, unit: "Series" },
-		{ title: "Total Published Series:", value: 700, unit: "Series" },
-		{ title: "Total Unpublished Series:", value: 200, unit: "Series" },
+	series: [
+		{ title: "Total Series:", value: 0, unit: "Series" },
+		{ title: "Total Published Series:", value: 0, unit: "Series" },
+		{ title: "Total Unpublished Series:", value: 0, unit: "Series" },
 	],
 	sections: {
 		posts: {
@@ -54,13 +82,49 @@ const initialState: IState = {
 				update: "Update Series",
 			},
 		},
+		tags: {
+			links: [],
+			formButtonText: {
+				new: "Create Tag",
+				update: "Update Tag",
+			},
+		},
+		keywords: {
+			links: [],
+			formButtonText: {
+				new: "Create keyword",
+				update: "Update keyword",
+			},
+		},
 	},
+	isLoading: true,
 };
 
 const uiDataSlice = createSlice({
 	initialState,
 	name: "uiData",
 	reducers: {},
+	extraReducers: builder => {
+		builder.addCase(fetchAllAnalyticsData.fulfilled, (state, action) => {
+			if (action.payload.currentSection.includes("posts")) {
+				state.posts.map((item, index) => {
+					item.value = action.payload.data[index];
+				});
+			} else {
+				state.series.map((item, index) => {
+					item.value = action.payload.data[index];
+				});
+			}
+
+			state.isLoading = false;
+		});
+		builder.addCase(fetchAllAnalyticsData.pending, state => {
+			state.isLoading = true;
+		});
+		builder.addCase(fetchAllAnalyticsData.rejected, state => {
+			state.isLoading = false;
+		});
+	},
 });
 
 export default uiDataSlice.reducer;

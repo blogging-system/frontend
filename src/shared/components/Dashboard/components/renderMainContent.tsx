@@ -1,8 +1,14 @@
 import { DashboardSections } from "../types/index.types";
+<<<<<<< HEAD:src/shared/components/Dashboard/components/renderMainContent.tsx
 import Form from "@/shared/components/Common/Form/components/Form";
 import Home from "@/shared/components/Common/Home/components";
 import List from "@/shared/components/Common/List/components/List";
 import { analyticsDataByPath } from "../data/analytics.data";
+=======
+import Form from "@/components/Common/Form/components/Form";
+import Home from "@/components/Common/Home/components";
+import List from "@/components/Common/List/components/List";
+>>>>>>> fdf80734e79afe2ffffb2014e9d6d3b975137d1c:src/components/Dashboard/components/renderMainContent.tsx
 
 /**
  * Renders the main content based on the current section and path.
@@ -33,8 +39,7 @@ export function renderMainContent(
 	}
 
 	if (isHomeSection) {
-		const homeData = analyticsDataByPath[currentPath] || [];
-		return <Home analyticsData={homeData} />;
+		return <Home />;
 	}
 
 	return <List />;

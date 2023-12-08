@@ -1,5 +1,10 @@
 "use client";
+<<<<<<< HEAD:src/shared/components/Common/Breadcrumbs/components/index.tsx
 import { PathHelper } from "@/shared/helpers/path/path.helper";
+=======
+
+import { PathHelper } from "@/helpers/path/path.helper";
+>>>>>>> fdf80734e79afe2ffffb2014e9d6d3b975137d1c:src/components/Common/Breadcrumbs/components/index.tsx
 import styles from "../styles/index.module.css";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
@@ -14,9 +19,11 @@ export default function Breadcrumbs() {
 
 	const capitalizedPaths = PathHelper.capitalizePath(pathname);
 	const lowerCasedPaths = PathHelper.lowercasePath(pathname);
-	const lastIndex = pathname.includes("pageNumber")
-		? capitalizedPaths.length - 2
-		: capitalizedPaths.length - 1;
+	const lastIndex = PathHelper.getLastBreadcrumbIndex(
+		pathname,
+		capitalizedPaths,
+		"pageNumber"
+	);
 
 	return (
 		<div className={styles.breadcrumbs_paths}>

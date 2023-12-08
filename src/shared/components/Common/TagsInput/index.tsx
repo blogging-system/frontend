@@ -1,7 +1,8 @@
-import { useState } from "react";
-import styles from "./index.module.css";
-import { ITagsInput } from "./index.types";
+import styles from "./styles/index.module.css";
+import { ITagsProps } from "./types/index.types";
 import { AiFillCloseCircle } from "react-icons/ai";
+import { useHandleAddTag } from "@/hooks/form/useHandleAddTag";
+import { useHandleRemoveTags } from "@/hooks/form/useHandleRemoveTags";
 
 /**
  * TagsInput component allows users to enter and display tags.
@@ -11,25 +12,22 @@ import { AiFillCloseCircle } from "react-icons/ai";
  * @param {string} [props.prefix="#"] - The prefix to be added to each tag.
  * @returns {JSX.Element} - Rendered component
  */
-const TagsInput = ({ label = "", prefix = "#", required }: ITagsInput) => {
-	const [tags, setTags] = useState<string[]>([]);
+const TagsInput = ({
+	label = "",
+	prefix = "#",
+	required,
+	value,
+	setValue,
+}: ITagsProps) => {
+	const metadata = label.toLowerCase();
 
-	const handleAddTag = (e: React.KeyboardEvent<HTMLInputElement>) => {
-		const { key, currentTarget } = e;
+	const { handleAddTag } = useHandleAddTag({ value, setValue, metadata });
 
-		if (key === "Enter") {
-			const newTag = currentTarget.value.trim();
-			if (newTag && !tags.includes(newTag)) {
-				setTags([...tags, newTag]);
-			}
-			currentTarget.value = "";
-		}
-	};
-
-	const handleRemoveTag = (index: number) => {
-		const updatedTags = tags.filter((_, i) => i !== index);
-		setTags(updatedTags);
-	};
+	const { handleRemoveTag } = useHandleRemoveTags({
+		metadata,
+		value,
+		setValue,
+	});
 
 	return (
 		<div className={styles.tags_input_wrapper}>
@@ -37,15 +35,17 @@ const TagsInput = ({ label = "", prefix = "#", required }: ITagsInput) => {
 				{`${label} ${required ? "*" : ""}`}
 			</label>
 			<div className={styles.tags_input_items_list}>
-				{tags.length > 0 && (
+				{value.length > 0 && (
 					<ul className={styles.tags_input_items}>
-						{tags.map((el, i) => (
+						{value.map((el, i) => (
 							<li className={styles.tags_input_item} key={i}>
-								{prefix && <span>{prefix}</span>}
-								{el}
+								<p>
+									{prefix && <span>{prefix}</span>}
+									{el.name}
+								</p>
 								<span
 									className={styles.tags_input_item_close_icon}
-									onClick={() => handleRemoveTag(i)}
+									onClick={() => handleRemoveTag(el._id)}
 								>
 									<AiFillCloseCircle />
 								</span>
@@ -53,6 +53,7 @@ const TagsInput = ({ label = "", prefix = "#", required }: ITagsInput) => {
 						))}
 					</ul>
 				)}
+
 				<input
 					id="tagsInput"
 					type="text"

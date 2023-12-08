@@ -1,12 +1,11 @@
 import { IListItem } from "@/shared/components/Common/List/types/index.types";
 import { handleApiRequest } from "@/shared/helpers/services/handleApiRequest.helper";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { AxiosError } from "axios";
 
 interface IState {
 	list: IListItem[];
 	isLoading: boolean;
-	error: AxiosError | null;
+	error: any;
 }
 
 const initialState: IState = {
@@ -18,7 +17,10 @@ const initialState: IState = {
 export const fetchList = createAsyncThunk(
 	"list/listSlice",
 	async (endpoint: string) => {
-		const { data, error } = await handleApiRequest({ endpoint, method: "GET" });
+		const { data, error } = await handleApiRequest({
+			endpoint,
+			method: "GET",
+		});
 
 		return {
 			data,
@@ -58,6 +60,9 @@ const listSlice = createSlice({
 		});
 		builder.addCase(fetchList.pending, state => {
 			state.isLoading = true;
+		});
+		builder.addCase(fetchList.rejected, (state, action) => {
+			state.isLoading = false;
 		});
 	},
 });

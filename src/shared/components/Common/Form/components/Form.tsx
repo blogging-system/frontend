@@ -2,9 +2,9 @@ import useInput from "@/shared/hooks/inputs/useInput";
 import TagsInput from "../../TagsInput";
 import FormItem from "./FormItem";
 import styles from "../styles/form.module.css";
-import { redirect, useParams, useRouter } from "next/navigation";
-import { useState } from "react";
+import { redirect, useParams } from "next/navigation";
 import { IFromProps } from "../types/index.types";
+<<<<<<< HEAD:src/shared/components/Common/Form/components/Form.tsx
 import { getSavedItemLocalStorage } from "../../../../helpers/local-storage/localStorage.helper";
 import { FormEvent } from "react";
 import { IListItem } from "../../List/types/index.types";
@@ -12,6 +12,20 @@ import { handleUpdateSubmit } from "../helpers/update/update.helper";
 import { IInputHook } from "@/shared/hooks/inputs/types/inputHook.type";
 import { handleApiRequest } from "@/shared/helpers/services/handleApiRequest.helper";
 import { PathHelper } from "@/shared/helpers/path/path.helper";
+=======
+import { IInputHook } from "@/hooks/inputs/types/inputHook.type";
+import { PathHelper } from "@/helpers/path/path.helper";
+import { useHandleSubmit } from "@/hooks/form/useHandleSubmitForm";
+import Editor from "../../Editor/components";
+import { getEditorContent } from "@/helpers/editor/getEditorContent";
+import { useState } from "react";
+import { ITag } from "../../TagsInput/types/index.types";
+import SeriesInput from "../../Series/components";
+import { ISeriesTag } from "../../Series/types/index.types";
+import { getTagsId } from "../helpers/getTagsId";
+import { getTags } from "../helpers/getTags";
+import { getSeriesId } from "../helpers/getSeriesId";
+>>>>>>> fdf80734e79afe2ffffb2014e9d6d3b975137d1c:src/components/Common/Form/components/Form.tsx
 
 /**
  * PostForm component for rendering a form with various input fields.
@@ -21,49 +35,54 @@ import { PathHelper } from "@/shared/helpers/path/path.helper";
  * @param getSavedItemLocalStorage - Function to get the current edit item from local storage
  * @returns {JSX.Element} - Rendered component
  */
-export default function Form({ buttonText, target }: IFromProps) {
-	const [submitButtonIsLoading, setSubmitButtonIsLoading] = useState(false);
+export default function Form({ buttonText }: IFromProps) {
+	const { submit, savedItem, submitButtonIsLoading } = useHandleSubmit();
 
 	const { slug } = useParams();
-	const { back } = useRouter();
 
 	const isPostOrSeries = PathHelper.isPathPostsOrSeries(slug.toString());
-	const isFormCreateOrUpdate = slug.includes("update") ? "update" : "create";
-
-	const savedItem: IListItem = getSavedItemLocalStorage({
-		slug: slug[slug.length - 1],
-		path: isPostOrSeries,
-	});
 
 	// if there's no saved item in local storage redirect to home
 	if (!savedItem && slug.includes("update")) {
 		redirect(`/dashboard/${isPostOrSeries}/home`);
 	}
 
+	const imageUrl: IInputHook = useInput(savedItem ? savedItem.imageUrl : "");
+	const [content, setContent] = useState(savedItem ? savedItem.content : "");
 	const title: IInputHook = useInput(savedItem ? savedItem.title : "");
+	const [keywords, setKeywords] = useState<ITag[]>(
+		savedItem ? savedItem.keywords : []
+	);
+	const [tags, setTags] = useState<ITag[]>(savedItem ? savedItem.tags : []);
+	const [selectedSeries, setSelectedSeries] = useState<ISeriesTag[]>(
+		savedItem ? savedItem.series : []
+	);
 	const description: IInputHook = useInput(
 		savedItem ? savedItem.description : ""
 	);
-	const content: IInputHook = useInput(savedItem ? savedItem.content : "");
-	const imageUrl: IInputHook = useInput(savedItem ? savedItem.imageUrl : "");
 
-	console.log(imageUrl);
+	const handleSubmitForm = async () => {
+		const editorContent = await getEditorContent(content, title.value);
 
-	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
-		setSubmitButtonIsLoading(true);
-
-		const apiUrl = `/${isPostOrSeries}?sort=-1&pageSize=5&pageNumber=1`;
+		// Get tags and keywords from the backend
+		const tagsWithId = await getTags({
+			tags: tags,
+			metadata: "tags",
+		});
+		const keywordsWithId = await getTags({
+			tags: keywords,
+			metadata: "keywords",
+		});
 
 		const dataPayload =
 			isPostOrSeries === "posts"
 				? {
 						title: title.value,
 						description: description.value,
-						content: content.value,
-						tags: [],
-						keywords: [],
-						series: [],
+						content: editorContent,
+						tags: getTagsId(tagsWithId),
+						keywords: getTagsId(keywordsWithId),
+						series: getSeriesId(selectedSeries),
 						imageUrl: imageUrl.value,
 				  }
 				: {
@@ -72,41 +91,12 @@ export default function Form({ buttonText, target }: IFromProps) {
 						imageUrl: imageUrl.value,
 				  };
 
-		if (isFormCreateOrUpdate === "create") {
-			const { data, error } = await handleApiRequest({
-				endpoint: apiUrl,
-				dataPayload,
-				method: "POST",
-			});
-
-			if (data && !error) {
-				back();
-				setSubmitButtonIsLoading(false);
-			} else if (error && !data) {
-				console.log(error);
-				setSubmitButtonIsLoading(false);
-			}
-
-			if (data || error) {
-				setSubmitButtonIsLoading(false);
-			}
-		} else {
-			const { data, error } = await handleUpdateSubmit({
-				id: savedItem._id,
-				slug: slug,
-				isUpdatePostOrSeries: isPostOrSeries,
-				dataPayload,
-			});
-
-			if (data || error) {
-				setSubmitButtonIsLoading(false);
-			}
-		}
+		submit(dataPayload);
 	};
 
 	return (
 		<div className={styles.form_wrapper}>
-			<form className={styles.form} onSubmit={handleSubmit}>
+			<form className={styles.form}>
 				<FormItem
 					type="text"
 					label="Title"
@@ -127,28 +117,31 @@ export default function Form({ buttonText, target }: IFromProps) {
 					{...description}
 				/>
 
-				{target === "series" ? (
-					<div className={styles.form_item}>
-						<TagsInput label="Items" prefix="" />
-					</div>
-				) : (
-					<FormItem
-						label="Content"
-						name="content"
-						type="textarea"
-						placeholder="Please enter the content"
-						required={true}
-						rowsNumber={20}
-						{...content}
-					/>
+				{isPostOrSeries === "posts" && (
+					<>
+						<Editor
+							title={title.value}
+							value={content}
+							setContent={setContent}
+						/>
+						<SeriesInput
+							selectedSeries={selectedSeries}
+							setSelectedSeries={setSelectedSeries}
+						/>
+					</>
 				)}
 
 				<div className={styles.form_item}>
-					<TagsInput label="Tags" />
+					<TagsInput label="Tags" value={tags} setValue={setTags} />
 				</div>
 
 				<div className={styles.form_item}>
-					<TagsInput label="Keywords" prefix="" />
+					<TagsInput
+						label="Keywords"
+						prefix=""
+						value={keywords}
+						setValue={setKeywords}
+					/>
 				</div>
 
 				<FormItem
@@ -159,7 +152,11 @@ export default function Form({ buttonText, target }: IFromProps) {
 					{...imageUrl}
 				/>
 
-				<button className={styles.form_button} type="submit">
+				<button
+					className={styles.form_button}
+					type="button"
+					onClick={handleSubmitForm}
+				>
 					{submitButtonIsLoading ? "Loading..." : buttonText}
 				</button>
 			</form>
