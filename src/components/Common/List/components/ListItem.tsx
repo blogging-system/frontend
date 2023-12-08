@@ -11,7 +11,8 @@ import { useHandleItemOperations } from "@/hooks/list/usehandleItemOperations";
  */
 
 const ListItem = ({ item }: { item: IListItem }) => {
-	const { handleItemOperations } = useHandleItemOperations();
+	const { handleItemOperations, loader } = useHandleItemOperations();
+	const { isLoading, buttonOperation } = loader;
 
 	return (
 		<li className={styles.list_item}>
@@ -22,7 +23,11 @@ const ListItem = ({ item }: { item: IListItem }) => {
 					className={styles.list_item_button}
 					onClick={() => handleItemOperations("publish", item)}
 				>
-					{item.isPublished ? "Unpublish" : "Publish"}
+					{buttonOperation === "publish"
+						? "Loading..."
+						: item.isPublished
+						? "Unpublish"
+						: "Publish"}
 				</button>
 				<button
 					onClick={() => handleItemOperations("edit", item)}
@@ -34,7 +39,7 @@ const ListItem = ({ item }: { item: IListItem }) => {
 					className={`${styles.list_item_button} ${styles.list_item_button_active}`}
 					onClick={() => handleItemOperations("delete", item)}
 				>
-					Delete
+					{buttonOperation === "delete" ? "Loading..." : "Delete"}
 				</button>
 			</div>
 		</li>
