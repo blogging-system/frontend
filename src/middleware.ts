@@ -9,7 +9,10 @@ import { getUser } from "./services/auth/getUser";
 const middleware = async (request: NextRequest, response: NextResponse) => {
 	// Redirects
 
-	if (request.nextUrl.pathname === "/dashboard") {
+	if (
+		request.nextUrl.pathname === "/dashboard" ||
+		request.nextUrl.pathname === "/"
+	) {
 		return NextResponse.redirect(new URL("/dashboard/posts/home", request.url));
 	}
 

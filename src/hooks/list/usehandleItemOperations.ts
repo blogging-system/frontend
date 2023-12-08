@@ -1,10 +1,10 @@
 import { usePathname, useRouter } from "next/navigation";
 import { saveItemLocalStorage } from "@/helpers/local-storage/localStorage.helper";
-import { useAppDispatch } from "@/rtk/hooks";
 import { PathHelper } from "@/helpers/path/path.helper";
-import { deleteItem, togglePublishItem } from "@/rtk/slices/listSlice";
-import { handleApiRequest } from "@/helpers/services/handleApiRequest.helper";
 import { IListItem } from "@/components/Common/List/types/index.types";
+import { useState } from "react";
+import { useHandleDeleteItem } from "./useHandleDeleteItem";
+import { useHandlePublishItem } from "./useHandlePublishItem";
 
 /**
  * Generates a function comment for the given function body in a markdown code block with the correct language syntax.
@@ -15,11 +15,18 @@ import { IListItem } from "@/components/Common/List/types/index.types";
  */
 
 export const useHandleItemOperations = () => {
+	const [loader, setLoader] = useState({
+		isLoading: false,
+		buttonOperation: "",
+	});
+
 	const currentPath = usePathname();
-	const dispatch = useAppDispatch();
 	const { push } = useRouter();
 
 	const isPostsOrSeries = PathHelper.isPathPostsOrSeries(currentPath);
+
+	const { handleDeleteItem } = useHandleDeleteItem();
+	const { handlePublishItem } = useHandlePublishItem();
 
 	const handleItemOperations = async (
 		buttonOperation: string,
@@ -29,27 +36,19 @@ export const useHandleItemOperations = () => {
 			saveItemLocalStorage(item, isPostsOrSeries);
 			push(`/dashboard/${isPostsOrSeries}/update/${item.slug}`);
 		} else if (buttonOperation === "delete") {
-			dispatch(deleteItem(item._id));
-
-			//! access data or error for the modal
-			const { data, error } = await handleApiRequest({
-				endpoint: `${isPostsOrSeries}/${item._id}`,
-				method: "DELETE",
+			handleDeleteItem({
+				_id: item._id,
+				isPostsOrSeries,
+				setLoader,
+				buttonOperation,
 			});
 		} else if (buttonOperation === "publish") {
-			//! access data or error for the modal
-			const { data, error } = await handleApiRequest({
-				endpoint: `${isPostsOrSeries}/${
-					item.isPublished ? "unpublish" : "publish"
-				}/${item._id}`,
-				method: "POST",
-			});
-			dispatch(togglePublishItem(item._id));
-			dispatch(deleteItem(item._id));
+			handlePublishItem({ item, isPostsOrSeries, setLoader, buttonOperation });
 		}
 	};
 
 	return {
 		handleItemOperations,
+		loader,
 	};
 };

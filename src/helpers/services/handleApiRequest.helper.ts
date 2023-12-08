@@ -30,7 +30,6 @@ export const handleApiRequest = async <D>({
 			? error.response.data.message
 			: error.message;
 
-		alert(errorMsg);
 		return {
 			error: errorMsg,
 			data: null,

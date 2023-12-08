@@ -11,8 +11,6 @@ export const useHandleAddTag = ({ value, setValue }: ITagsPropsHook) => {
 			if (!isDuplicated) {
 				setValue([...value, { _id: "", name: newTagName }]);
 				currentTarget.value = "";
-			} else {
-				alert("Is Duplicated");
 			}
 		}
 	};
