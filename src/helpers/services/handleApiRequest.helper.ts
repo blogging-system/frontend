@@ -1,6 +1,6 @@
-import { appConfig } from "@/config/app.config";
-import { IHandleApiRequest } from "./types";
-import axiosInstance from "@/services/axiosInstance";
+import { appConfig } from '@/config/app.config'
+import { IHandleApiRequest } from '@/shared/helpers/services/types'
+import axiosInstance from '@/shared/services/axiosInstance'
 
 /**
  * Handles an API request.
@@ -11,28 +11,22 @@ import axiosInstance from "@/services/axiosInstance";
  * @return {Promise<{ data: any; error: any; }>} A promise that resolves to an object containing the response data or error.
  */
 
-export const handleApiRequest = async <D>({
-	endpoint,
-	method,
-	dataPayload,
-}: IHandleApiRequest<D>) => {
-	try {
-		const { data } = await axiosInstance(`${appConfig.private}/${endpoint}`, {
-			method,
-			data: dataPayload,
-		});
-		return {
-			data,
-			error: null,
-		};
-	} catch (error: any) {
-		const errorMsg = error.response
-			? error.response.data.message
-			: error.message;
+export const handleApiRequest = async <D>({ endpoint, method, dataPayload }: IHandleApiRequest<D>) => {
+  try {
+    const { data } = await axiosInstance(`${appConfig.private}/${endpoint}`, {
+      method,
+      data: dataPayload,
+    })
+    return {
+      data,
+      error: null,
+    }
+  } catch (error: any) {
+    const errorMsg = error.response ? error.response.data.message : error.message
 
-		return {
-			error: errorMsg,
-			data: null,
-		};
-	}
-};
+    return {
+      error: errorMsg,
+      data: null,
+    }
+  }
+}
