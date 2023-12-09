@@ -16,6 +16,7 @@ import { ISeriesTag } from "../../Series/types/index.types";
 import { getTagsId } from "../helpers/getTagsId";
 import { getTags } from "../helpers/getTags";
 import { getSeriesId } from "../helpers/getSeriesId";
+import PrimaryModal from "../../Modals/components/PrimaryModal";
 
 /**
  * PostForm component for rendering a form with various input fields.
@@ -37,6 +38,7 @@ export default function Form({ buttonText }: IFromProps) {
 		redirect(`/dashboard/${isPostOrSeries}/home`);
 	}
 
+	const [isOpenModal, setIsOpenModal] = useState(false);
 	const imageUrl: IInputHook = useInput(savedItem ? savedItem.imageUrl : "");
 	const [content, setContent] = useState(savedItem ? savedItem.content : "");
 	const title: IInputHook = useInput(savedItem ? savedItem.title : "");
@@ -85,71 +87,80 @@ export default function Form({ buttonText }: IFromProps) {
 	};
 
 	return (
-		<div className={styles.form_wrapper}>
-			<form className={styles.form}>
-				<FormItem
-					type="text"
-					label="Title"
-					name="title"
-					placeholder="Please enter the title"
-					autoFocus={true}
-					required={true}
-					{...title}
-				/>
-
-				<FormItem
-					label="Description"
-					name="content"
-					placeholder="Please enter the content"
-					type="textarea"
-					rowsNumber={3}
-					required={true}
-					{...description}
-				/>
-
-				{isPostOrSeries === "posts" && (
-					<>
-						<Editor
-							title={title.value}
-							value={content}
-							setContent={setContent}
-						/>
-						<SeriesInput
-							selectedSeries={selectedSeries}
-							setSelectedSeries={setSelectedSeries}
-						/>
-					</>
-				)}
-
-				<div className={styles.form_item}>
-					<TagsInput label="Tags" value={tags} setValue={setTags} />
-				</div>
-
-				<div className={styles.form_item}>
-					<TagsInput
-						label="Keywords"
-						prefix=""
-						value={keywords}
-						setValue={setKeywords}
+		<>
+			<PrimaryModal
+				title="Are your sure?"
+				msg={`Confirm to ${buttonText}!`}
+				isOpen={isOpenModal}
+				confirmEvent={() => handleSubmitForm()}
+				setIsOpenModal={setIsOpenModal}
+			/>
+			<div className={styles.form_wrapper}>
+				<form className={styles.form}>
+					<FormItem
+						type="text"
+						label="Title"
+						name="title"
+						placeholder="Please enter the title"
+						autoFocus={true}
+						required={true}
+						{...title}
 					/>
-				</div>
 
-				<FormItem
-					type="url"
-					label="Cover Image URL"
-					name="coverImageUrl"
-					placeholder="Please enter the image URL"
-					{...imageUrl}
-				/>
+					<FormItem
+						label="Description"
+						name="content"
+						placeholder="Please enter the content"
+						type="textarea"
+						rowsNumber={3}
+						required={true}
+						{...description}
+					/>
 
-				<button
-					className={styles.form_button}
-					type="button"
-					onClick={handleSubmitForm}
-				>
-					{submitButtonIsLoading ? "Loading..." : buttonText}
-				</button>
-			</form>
-		</div>
+					{isPostOrSeries === "posts" && (
+						<>
+							<Editor
+								title={title.value}
+								value={content}
+								setContent={setContent}
+							/>
+							<SeriesInput
+								selectedSeries={selectedSeries}
+								setSelectedSeries={setSelectedSeries}
+							/>
+						</>
+					)}
+
+					<div className={styles.form_item}>
+						<TagsInput label="Tags" value={tags} setValue={setTags} />
+					</div>
+
+					<div className={styles.form_item}>
+						<TagsInput
+							label="Keywords"
+							prefix=""
+							value={keywords}
+							setValue={setKeywords}
+						/>
+					</div>
+
+					<FormItem
+						type="url"
+						label="Cover Image URL"
+						name="coverImageUrl"
+						placeholder="Please enter the image URL"
+						{...imageUrl}
+					/>
+
+					<button
+						className={styles.form_button}
+						type="button"
+						onClick={() => setIsOpenModal(true)}
+					>
+						{submitButtonIsLoading ? "Loading..." : buttonText}
+					</button>
+				</form>
+			</div>
+		</>
 	);
 }

@@ -1,0 +1,18 @@
+.primary_button {
+	width: 85px;
+	font-size: 16px;
+	font-weight: 600;
+	text-align: center;
+	padding: 5px;
+	margin: 5px;
+	border-radius: 5px;
+	background-color: #fae28c3a;
+	color: #903101e6;
+	border: 3px solid rgba(205, 205, 205, 0.404);
+}
+
+.primary_button:hover,
+.primary_button_active {
+	background-color: #903101e6;
+	color: white;
+}
