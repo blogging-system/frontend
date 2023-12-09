@@ -8,6 +8,7 @@ import { useAppDispatch } from "@/rtk/hooks";
 import { updateItem } from "@/rtk/slices/tagsListSlice";
 import { useHandleRemoveTag } from "@/hooks/tags/useHandleRemoveTag";
 import { useHandleUpdateTag } from "@/hooks/tags/useHandleUpdateTag";
+import PrimaryButton from "@/components/Common/Buttons/PrimaryButton";
 
 const TagListItem = ({ tag }: { tag: ITag }) => {
 	const [value, setValue] = useState(tag.name);
@@ -67,15 +68,13 @@ const TagListItem = ({ tag }: { tag: ITag }) => {
 				disabled={!isEdit}
 			/>
 			<div className={styles.list_item_buttons_wrapper}>
-				<button className={styles.list_item_button} onClick={handleEditTag}>
-					{updateButtonText}
-				</button>
-				<button
-					className={`${styles.list_item_button} ${styles.list_item_button_active}`}
-					onClick={handleRemoveTag}
-				>
-					{isLoading ? "Loading..." : "Delete"}
-				</button>
+				<PrimaryButton name={updateButtonText} click={handleEditTag} />
+				<PrimaryButton
+					name={"Delete"}
+					click={handleRemoveTag}
+					isLoading={isLoading}
+					active={true}
+				/>
 			</div>
 		</li>
 	);

@@ -1,7 +1,6 @@
 .breadcrumbs_paths {
 	display: flex;
-	margin-left: 35px;
-	padding: 30px 0;
+	margin: 35px 0;
 }
 
 .breadcrumbs_path {

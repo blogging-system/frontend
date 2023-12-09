@@ -2,6 +2,7 @@ import React from "react";
 import styles from "../styles/index.module.css";
 import { IListItem } from "../types/index.types";
 import { useHandleItemOperations } from "@/hooks/list/usehandleItemOperations";
+import PrimaryButton from "../../Buttons/PrimaryButton";
 
 /**
  * Renders a single list item.
@@ -19,28 +20,21 @@ const ListItem = ({ item }: { item: IListItem }) => {
 			<p>{item.title}</p>
 			<span>{item.views} views</span>
 			<div className={styles.list_item_buttons_wrapper}>
-				<button
-					className={styles.list_item_button}
-					onClick={() => handleItemOperations("publish", item)}
-				>
-					{buttonOperation === "publish"
-						? "Loading..."
-						: item.isPublished
-						? "Unpublish"
-						: "Publish"}
-				</button>
-				<button
-					onClick={() => handleItemOperations("edit", item)}
-					className={styles.list_item_button}
-				>
-					Edit
-				</button>
-				<button
-					className={`${styles.list_item_button} ${styles.list_item_button_active}`}
-					onClick={() => handleItemOperations("delete", item)}
-				>
-					{buttonOperation === "delete" ? "Loading..." : "Delete"}
-				</button>
+				<PrimaryButton
+					name={item.isPublished ? "Unpublish" : "Publish"}
+					click={() => handleItemOperations("publish", item)}
+					isLoading={buttonOperation === "publish" && isLoading}
+				/>
+				<PrimaryButton
+					name={"Edit"}
+					click={() => handleItemOperations("edit", item)}
+				/>
+				<PrimaryButton
+					name={"Delete"}
+					click={() => handleItemOperations("delete", item)}
+					isLoading={buttonOperation === "delete" && isLoading}
+					active={true}
+				/>
 			</div>
 		</li>
 	);
