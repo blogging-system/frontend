@@ -3,5 +3,5 @@ export interface IPrimaryButton<E> {
 	type?: "button" | "submit";
 	active?: boolean;
 	isLoading?: boolean;
-	click: () => void;
+	click?: () => void;
 }

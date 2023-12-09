@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { IPrimaryButton } from "./types/index.types";
 import styles from "./styles/primaryButton.module.css";
 
