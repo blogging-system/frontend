@@ -13,6 +13,10 @@ html {
 	scroll-behavior: smooth;
 }
 
+body {
+	position: relative;
+}
+
 a {
 	text-decoration: none;
 	cursor: pointer;

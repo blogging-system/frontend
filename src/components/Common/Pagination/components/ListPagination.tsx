@@ -9,6 +9,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { PathHelper } from "@/helpers/path/path.helper";
 import { handleApiRequest } from "@/helpers/services/handleApiRequest.helper";
+import { generateQueryString } from "@/helpers/queries-url/generateQueryString";
 
 /**
  * ListPagination component displays a pagination control with left and right arrows.
@@ -26,6 +27,8 @@ export default function ListPagination() {
 	const currentQueriesP = pathname.split("&");
 
 	const paginationActive = Number(currentQueriesP[2].split("=")[1]);
+
+	const pageSize = Number(currentQueriesP[1].split("=")[1]);
 
 	const isPostOrSeries = PathHelper.isPathPostsOrSeries(pathname);
 
@@ -56,27 +59,18 @@ export default function ListPagination() {
 			>
 				<BsFillArrowLeftSquareFill />
 			</Link>
-			<PaginationLink
-				paginationNumber={1}
-				paginationActive={paginationActive}
-			/>
 
-			{Array.from(Array(5)).map((_, index) => {
-				if (index > 1) {
-					return (
-						<PaginationLink
-							key={index}
-							paginationNumber={index}
-							paginationActive={paginationActive}
-						/>
-					);
-				}
+			{Array.from(
+				Array(countItems >= pageSize ? pageSize / countItems : 1)
+			).map((_, index) => {
+				return (
+					<PaginationLink
+						key={index}
+						paginationNumber={index + 1}
+						paginationActive={paginationActive}
+					/>
+				);
 			})}
-
-			<PaginationLink
-				paginationNumber={countItems}
-				paginationActive={paginationActive}
-			/>
 
 			<Link
 				href={`./${paginationActive < countItems ? paginationActive + 1 : 1}`}
