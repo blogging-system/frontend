@@ -3,5 +3,5 @@ export interface IPrimaryModal {
 	msg: string;
 	isOpen: boolean;
 	setIsOpenModal: (e: boolean) => void;
-	confirmEvent: () => Promise<void>;
+	confirmEvent: () => Promise<void> | void;
 }

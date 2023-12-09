@@ -9,11 +9,13 @@ import { updateItem } from "@/rtk/slices/tagsListSlice";
 import { useHandleRemoveTag } from "@/hooks/tags/useHandleRemoveTag";
 import { useHandleUpdateTag } from "@/hooks/tags/useHandleUpdateTag";
 import PrimaryButton from "@/components/Common/Buttons/PrimaryButton";
+import PrimaryModal from "@/components/Common/Modals/components/PrimaryModal";
 
 const TagListItem = ({ tag }: { tag: ITag }) => {
 	const [value, setValue] = useState(tag.name);
 	const [isEdit, setIsEdit] = useState(false);
 	const [updateButtonText, setUpdateButtonText] = useState("Edit");
+	const [isOpenModal, setIsOpenModal] = useState(false);
 
 	const { _id, name } = tag;
 	const { slug } = useParams();
@@ -57,26 +59,36 @@ const TagListItem = ({ tag }: { tag: ITag }) => {
 	}, [value, name]);
 
 	return (
-		<li className={styles.list_item}>
-			<input
-				ref={inputRef}
-				type="text"
-				value={value}
-				className={styles.list_item_input}
-				onChange={e => setValue(e.currentTarget.value)}
-				readOnly={!isEdit}
-				disabled={!isEdit}
+		<>
+			<PrimaryModal
+				title="Are your sure?"
+				msg={`Confirm to Delete: ${name}!`}
+				isOpen={isOpenModal}
+				confirmEvent={() => handleRemoveTag()}
+				setIsOpenModal={setIsOpenModal}
 			/>
-			<div className={styles.list_item_buttons_wrapper}>
-				<PrimaryButton name={updateButtonText} click={handleEditTag} />
-				<PrimaryButton
-					name={"Delete"}
-					click={handleRemoveTag}
-					isLoading={isLoading}
-					active={true}
+
+			<li className={styles.list_item}>
+				<input
+					ref={inputRef}
+					type="text"
+					value={value}
+					className={styles.list_item_input}
+					onChange={e => setValue(e.currentTarget.value)}
+					readOnly={!isEdit}
+					disabled={!isEdit}
 				/>
-			</div>
-		</li>
+				<div className={styles.list_item_buttons_wrapper}>
+					<PrimaryButton name={updateButtonText} click={handleEditTag} />
+					<PrimaryButton
+						name={"Delete"}
+						click={() => setIsOpenModal(true)}
+						isLoading={isLoading}
+						active={true}
+					/>
+				</div>
+			</li>
+		</>
 	);
 };
 
