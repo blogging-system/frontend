@@ -1,4 +1,4 @@
 export const appConfig = {
-	private: "http://localhost:3000/admin",
-	public: "http://localhost:3000",
+	private: "https://api.ahmedelgaidi.com/admin",
+	public: "https://api.ahmedelgaidi.com",
 };
