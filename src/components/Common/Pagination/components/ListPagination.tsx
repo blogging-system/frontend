@@ -6,10 +6,9 @@ import {
 import PaginationLink from "./PaginationLink";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { PathHelper } from "@/helpers/path/path.helper";
 import { handleApiRequest } from "@/helpers/services/handleApiRequest.helper";
-import { generateQueryString } from "@/helpers/queries-url/generateQueryString";
 
 /**
  * ListPagination component displays a pagination control with left and right arrows.
@@ -25,14 +24,13 @@ export default function ListPagination() {
 	const pathname = usePathname();
 
 	const currentQueriesP = pathname.split("&");
-
-	const paginationActive = Number(currentQueriesP[2].split("=")[1]);
-
-	const pageSize = Number(currentQueriesP[1].split("=")[1]);
-
 	const isPostOrSeries = PathHelper.isPathPostsOrSeries(pathname);
 
-	async function handleCountItem() {
+	const pageNumber = Number(currentQueriesP[2].split("=")[1]);
+	const pageSize = Number(currentQueriesP[1].split("=")[1]);
+	const sort = Number(currentQueriesP[0].split("=")[1]);
+
+	(async () => {
 		try {
 			const { data } = await handleApiRequest({
 				endpoint: `${isPostOrSeries}/analytics/count`,
@@ -43,38 +41,48 @@ export default function ListPagination() {
 			console.log(error);
 			setCountItems(0);
 		}
-	}
-
-	useEffect(() => {
-		handleCountItem();
-	}, []);
+	})();
 
 	return (
 		<div className={styles.list_pagination}>
 			<Link
-				href={`./${
-					paginationActive > 1 ? paginationActive - 1 : paginationActive
+				href={`./sort=${sort}&pageSize=${pageSize}&pageNumber=${
+					pageNumber > 1 ? pageNumber - 1 : pageNumber
 				}`}
-				className={styles.list_pagination_icon}
+				className={`${styles.list_pagination_icon} ${
+					pageNumber <= 1 ? styles.list_pagination_icon_disabled : ""
+				}`}
 			>
 				<BsFillArrowLeftSquareFill />
 			</Link>
+			{Array.from(Array(Math.ceil(countItems / pageSize))).map((_, index) => {
+				const nextPageNumber = index + 1;
 
-			{Array.from(
-				Array(countItems >= pageSize ? pageSize / countItems : 1)
-			).map((_, index) => {
-				return (
-					<PaginationLink
-						key={index}
-						paginationNumber={index + 1}
-						paginationActive={paginationActive}
-					/>
-				);
+				if (
+					nextPageNumber >= pageNumber - 2 &&
+					nextPageNumber <= pageNumber + 2 &&
+					nextPageNumber <= Math.ceil(countItems / pageSize)
+				) {
+					return (
+						<PaginationLink
+							key={index}
+							paginationNumber={nextPageNumber}
+							paginationActive={pageNumber}
+							href={`./sort=${sort}&pageSize=${pageSize}&pageNumber=${nextPageNumber}`}
+						/>
+					);
+				}
 			})}
 
 			<Link
-				href={`./${paginationActive < countItems ? paginationActive + 1 : 1}`}
-				className={styles.list_pagination_icon}
+				href={`./sort=${sort}&pageSize=${pageSize}&pageNumber=${
+					pageNumber + 1
+				}`}
+				className={`${styles.list_pagination_icon} ${
+					pageSize * pageNumber >= countItems
+						? styles.list_pagination_icon_disabled
+						: ""
+				}`}
 			>
 				<BsFillArrowRightSquareFill />
 			</Link>
