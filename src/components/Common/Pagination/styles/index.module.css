@@ -15,6 +15,10 @@
 	border: none;
 	cursor: pointer;
 }
+.list_pagination_icon_disabled {
+	opacity: 0.5;
+	pointer-events: none;
+}
 
 .list_pagination_item {
 	border-radius: 10%;

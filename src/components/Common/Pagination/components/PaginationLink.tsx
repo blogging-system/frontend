@@ -6,10 +6,11 @@ import { IPaginationLink } from "../types/index.types";
 const PaginationLink = ({
 	paginationNumber,
 	paginationActive,
+	href,
 }: IPaginationLink) => {
 	return (
 		<Link
-			href={`./sort=-1&pageSize=5&pageNumber=${paginationNumber}`}
+			href={href}
 			className={`${styles.list_pagination_item} ${
 				paginationNumber === paginationActive
 					? styles.list_pagination_item_active
