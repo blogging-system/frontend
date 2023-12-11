@@ -14,7 +14,7 @@ export const generatePaginationHref = (
 ) => {
 	const currentPageNumber: string = replaceString.split("=")[1];
 
-	const nextPage = replaceString.replace(
+	const nextPage: string = replaceString.replace(
 		currentPageNumber,
 		increasedPage.toString()
 	);

@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from "@/rtk/hooks";
 import { fetchList } from "@/rtk/slices/listSlice";
 import { IListItem } from "../types/index.types";
 import { useSplit } from "@/hooks/path/useSplit";
+import { handleApiRequest } from "@/helpers/services/handleApiRequest.helper";
 
 /**
  * Represents a list component that displays a list of items and pagination controls.
@@ -20,6 +21,7 @@ import { useSplit } from "@/hooks/path/useSplit";
  */
 export default function List() {
 	const [items, setItems] = useState<IListItem[]>([]);
+	const [paginationCount, setPaginationCount] = useState<number>(0);
 	const [loadingItems, setLoadingItems] = useState<boolean>(true);
 
 	const dispatch = useAppDispatch();
@@ -45,6 +47,17 @@ export default function List() {
 		setLoadingItems(isLoading);
 	}, [list, isLoading]);
 
+	(async () => {
+		const { data } = await handleApiRequest({
+			endpoint: `${isPostsOrSeries}/analytics/count`,
+			method: "GET",
+		});
+
+		const { count } = data;
+
+		setPaginationCount(count);
+	})();
+
 	return (
 		<div className={styles.list_wrapper}>
 			{loadingItems ? (
@@ -55,7 +68,7 @@ export default function List() {
 				<h1>{error}</h1>
 			)}
 			<ListPagination
-				count={7}
+				count={paginationCount}
 				pageSize={pageSize}
 				pageNumber={pageNumber}
 				prev={`./sort=${sort}&pageSize=${pageSize}&pageNumber=${
