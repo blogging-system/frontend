@@ -27,7 +27,9 @@ export default function List() {
 
 	const pathname = usePathname();
 	const currentQueries = useSplit(pathname, "&");
-	const paginationActive = useSplit(currentQueries[2], "=")[0];
+	const pageNumber = Number(currentQueries[2].split("=")[1]);
+	const pageSize = Number(currentQueries[1].split("=")[1]);
+	const sort = Number(currentQueries[0].split("=")[1]);
 	const isPostsOrSeries = PathHelper.isPathPostsOrSeries(pathname);
 
 	const endpoint = `${isPostsOrSeries}/${getSidebarActiveListItem(
@@ -36,7 +38,7 @@ export default function List() {
 
 	useEffect(() => {
 		dispatch(fetchList(endpoint));
-	}, [paginationActive]);
+	}, [pageSize]);
 
 	useEffect(() => {
 		setItems(list);
@@ -52,7 +54,18 @@ export default function List() {
 			) : (
 				<h1>{error}</h1>
 			)}
-			<ListPagination />
+			<ListPagination
+				count={7}
+				pageSize={pageSize}
+				pageNumber={pageNumber}
+				prev={`./sort=${sort}&pageSize=${pageSize}&pageNumber=${
+					pageNumber > 1 ? pageNumber - 1 : pageNumber
+				}`}
+				next={`./sort=${sort}&pageSize=${pageSize}&pageNumber=${
+					pageNumber + 1
+				}`}
+				replaceString={`pageNumber=${pageNumber}`}
+			/>
 		</div>
 	);
 }
