@@ -1,7 +1,7 @@
 import styles from "../styles/index.module.css";
 import ListItems from "./ListItems";
 import ListPagination from "../../Pagination/components/ListPagination";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { usePathname } from "next/navigation";
 import { generateQueryString } from "@/helpers/queries-url/generateQueryString";
 import { PathHelper } from "@/helpers/path/path.helper";
@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from "@/rtk/hooks";
 import { fetchList } from "@/rtk/slices/listSlice";
 import { IListItem } from "../types/index.types";
 import { useSplit } from "@/hooks/path/useSplit";
+import { handleApiRequest } from "@/helpers/services/handleApiRequest.helper";
 
 /**
  * Represents a list component that displays a list of items and pagination controls.
@@ -20,6 +21,7 @@ import { useSplit } from "@/hooks/path/useSplit";
  */
 export default function List() {
 	const [items, setItems] = useState<IListItem[]>([]);
+	const [paginationCount, setPaginationCount] = useState<number>(0);
 	const [loadingItems, setLoadingItems] = useState<boolean>(true);
 
 	const dispatch = useAppDispatch();
@@ -27,7 +29,9 @@ export default function List() {
 
 	const pathname = usePathname();
 	const currentQueries = useSplit(pathname, "&");
-	const paginationActive = useSplit(currentQueries[2], "=")[0];
+	const pageNumber = Number(currentQueries[2].split("=")[1]);
+	const pageSize = Number(currentQueries[1].split("=")[1]);
+	const sort = Number(currentQueries[0].split("=")[1]);
 	const isPostsOrSeries = PathHelper.isPathPostsOrSeries(pathname);
 
 	const endpoint = `${isPostsOrSeries}/${getSidebarActiveListItem(
@@ -36,12 +40,23 @@ export default function List() {
 
 	useEffect(() => {
 		dispatch(fetchList(endpoint));
-	}, [paginationActive]);
+	}, [pageSize]);
 
 	useEffect(() => {
 		setItems(list);
 		setLoadingItems(isLoading);
 	}, [list, isLoading]);
+
+	(async () => {
+		const { data } = await handleApiRequest({
+			endpoint: `${isPostsOrSeries}/analytics/count`,
+			method: "GET",
+		});
+
+		const { count } = data;
+
+		setPaginationCount(count);
+	})();
 
 	return (
 		<div className={styles.list_wrapper}>
@@ -52,7 +67,18 @@ export default function List() {
 			) : (
 				<h1>{error}</h1>
 			)}
-			<ListPagination />
+			<ListPagination
+				count={paginationCount}
+				pageSize={pageSize}
+				pageNumber={pageNumber}
+				prev={`./sort=${sort}&pageSize=${pageSize}&pageNumber=${
+					pageNumber > 1 ? pageNumber - 1 : pageNumber
+				}`}
+				next={`./sort=${sort}&pageSize=${pageSize}&pageNumber=${
+					pageNumber + 1
+				}`}
+				replaceString={`pageNumber=${pageNumber}`}
+			/>
 		</div>
 	);
 }
