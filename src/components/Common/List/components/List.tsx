@@ -1,7 +1,7 @@
 import styles from "../styles/index.module.css";
 import ListItems from "./ListItems";
 import ListPagination from "../../Pagination/components/ListPagination";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { usePathname } from "next/navigation";
 import { generateQueryString } from "@/helpers/queries-url/generateQueryString";
 import { PathHelper } from "@/helpers/path/path.helper";

@@ -43,7 +43,7 @@ export default function ListPagination({
 				if (
 					nextPageNumber >= pageNumber - 2 &&
 					nextPageNumber <= pageNumber + 2 &&
-					nextPageNumber <= Math.ceil(count / pageSize)
+					nextPageNumber <= Math.floor(count / pageSize)
 				) {
 					return (
 						<PaginationLink
@@ -59,7 +59,16 @@ export default function ListPagination({
 					);
 				}
 			})}
-
+			...
+			<PaginationLink
+				paginationNumber={Math.ceil(count / pageSize)}
+				paginationActive={pageNumber}
+				href={generatePaginationHref(
+					currentPath,
+					replaceString,
+					Math.ceil(count / pageSize)
+				)}
+			/>
 			<Link
 				href={next}
 				className={`${styles.list_pagination_icon} ${
